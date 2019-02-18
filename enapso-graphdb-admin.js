@@ -1,20 +1,46 @@
 // Innotrade Enapso GraphDB Admin
 // (C) Copyright 2019 Innotrade GmbH, Herzogenrath, NRW, Germany
 
+// For further detalils please also refer to the GraphDB admin documentation at:
+// http://graphdb.ontotext.com/documentation/free/devhub/workbench-rest-api/location-and-repository-tutorial.html
+
 const https = require('https');
 const http = require('http');
 const fs = require("fs");
 const request = require('request-promise');
 
+// require the Enapso GraphDB Client package
+const EnapsoGraphDBClient = require("enapso-graphdb-client");
+
 const EnapsoGraphDBAdmin = {
 
-    USERNAME: process.env.GRAPHDB_USERNAME,
-    PASSWORD: process.env.GRAPHDB_PASSWORD,
-    REPOSITORY: process.env.GRAPHDB_REPOSITORY,
-    BASEURL: process.env.GRAPHDB_BASEURL,
+    QUERY_URL: process.env.GRAPHDB_QUERY_URL || 'http://localhost:7200/repositories/Test',
+    UPDATE_URL: process.env.GRAPHDB_UPDATE_URL || 'http://localhost:7200/repositories/Test/statements',
+    USERNAME: process.env.GRAPHDB_USERNAME || "Test",
+    PASSWORD: process.env.GRAPHDB_PASSWORD || "Test",
+    REPOSITORY: process.env.GRAPHDB_REPOSITORY || "Test",
+    BASEURL: process.env.GRAPHDB_BASEURL || "http://localhost:7200",
+    DEFAULT_PREFIXES: [
+        EnapsoGraphDBClient.PREFIX_OWL,
+        EnapsoGraphDBClient.PREFIX_RDF,
+        EnapsoGraphDBClient.PREFIX_RDFS
+    ],
 
-    uploadFromURL: async function (aOptions) {
+    listRepositories: async function (aOptions) {
+        let options = {
+            method: 'GET',
+            uri: this.BASEURL + '/rest/repositories',
+            headers: {
+                'Accept': 'application/sparql-results+json,application/json',
+            },
+            json: true
+        };
+        return request(options);
+    },
+
+    upload: async function (aOptions) {
         aOptions = aOptions || {};
+        /*
         let lFromURL = aOptions.url;
         let lRepository = aOptions.repository || this.REPOSITORY;
         let lUsername = aOptions.username || this.USERNAME;
@@ -23,15 +49,16 @@ const EnapsoGraphDBAdmin = {
         let lBaseURI = aOptions.baseURI;
         let lFormat = aOptions.format;
         let lName = aOptions.name;
+        */
 
         let lConfig = {
-            "baseURI": lBaseURI,
-            "context": "",
-            "data": lFromURL,
+            "baseURI": aOptions.baseURI,
+            "context": aOptions.context,
+            "data": aOptions.data,  // lFromURL
             "forceSerial": true,
-            "format": lFormat,
+            "format": aOptions.format, // lFormat,
             "message": 'message',
-            "name": lName,
+            "name": "", // lName,
             "parserSettings": {
                 "failOnUnknownDataTypes": false,
                 "failOnUnknownLanguageTags": false,
@@ -56,20 +83,71 @@ const EnapsoGraphDBAdmin = {
             'Accept': 'application/json'
         };
 
-        if (lUsername && lPassword) {
+        if (this.USERNAME && this.PASSWORD) {
             lHeaders.Authorization =
-                'Basic ' + Buffer.from(lUsername + ':' + lPassword).toString('base64');
+                'Basic ' + Buffer.from(this.USERNAME + ':' + this.PASSWORD).toString('base64');
         }
 
         let options = {
             method: 'POST',
-            uri: lBaseURL + '/rest/data/import/upload/' + lRepository + '/url',
+            // uri: this.BASEURL + '/rest/data/import/upload/' + this.REPOSITORY, // + '/url',
+            uri: this.BASEURL + '/rest/data/import/upload/' + this.REPOSITORY + '/text',
             body: lConfig,
             headers: lHeaders,
             json: true
         };
 
         return request(options);
+    },
+
+    uploadFile: async function (aOptions) {
+        let lBuffer = fs.readFileSync(aOptions.filename);
+        await this.upload({
+            data: lBuffer.toString(),
+            format: aOptions.format,
+            baseURI: aOptions.baseURI,
+            context: aOptions.context
+        });
+    },
+
+    demo: async function () {
+        let lRes;
+        // lRes = await this.listRepositories();
+        // console.log(JSON.stringify(lRes, null, 2));
+        lRes = await this.uploadFile({
+            filename: 'ontologies/test.owl',
+            format: "application/rdf+xml",
+            baseURI: "http://ont.enapso.com/test#",
+            context: "http://ont.enapso.com/test"
+        });
+
+        // instantiate the GraphDB endpoint
+        var graphDBEndpoint = new EnapsoGraphDBClient.Endpoint({
+            queryURL: this.QUERY_URL,
+            updateURL: this.UPDATE_URL,
+            username: this.USERNAME,
+            password: this.PASSWORD,
+            prefixes: this.DEFAULT_PREFIXES
+        });
+
+        let query = `
+            select * 
+                FROM <http://ont.enapso.com/test>
+            where {
+                ?s ?p ?o
+            }
+         `;
+        let resultset, binding = await graphDBEndpoint.query(query);
+        // if a result was successfully returned
+        if (binding.success) {
+            // transform the bindings into a more convenient result format (optional)
+            resultset = EnapsoGraphDBClient.transformBindingsToResultSet(binding, {
+                // drop the prefixes for easier resultset readability (optional)
+                dropPrefixes: false
+            });
+        }
+
+        console.log("\nResultset:\n" + JSON.stringify(resultset, null, 2));
     }
 
 }
