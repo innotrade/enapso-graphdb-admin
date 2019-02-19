@@ -63,4 +63,76 @@ uploadFileDemo: async function () {
     });
     return lRes;
 }
+```javascript
+
+## Listing all repositories configured in your GraphDB instance
+
+```javascript
+listRepositoriesDemo: async function () {
+    var lRes = await EnapsoGraphDBAdmin.listRepositories({
+    });
+    return lRes;
+}
+```
+
+### Result
+
+```json
+[
+  {
+    "id": "SYSTEM",
+    "title": "System configuration repository",
+    "uri": "http://localhost:7200/repositories/SYSTEM",
+    "externalUrl": "http://[your-ip or hostname]:7200/repositories/SYSTEM",
+    "type": "system",
+    "sesameType": "openrdf:SystemRepository",
+    "location": "",
+    "readable": true,
+    "writable": true,
+    "unsupported": false,
+    "local": true
+  },
+  :
+  {
+    "id": "Test",
+    "title": "Test",
+    "uri": "http://localhost:7200/repositories/Test",
+    "externalUrl": "http://[your-ip or hostname]:7200/repositories/Test",
+    "type": "free",
+    "sesameType": "graphdb:FreeSailRepository",
+    "location": "",
+    "readable": true,
+    "writable": true,
+    "unsupported": false,
+    "local": true
+  }
+]  
+```
+
+## Listing all locations configured in your GraphDB instance
+
+```javascript
+listLocationsDemo: async function () {
+    var lRes = await EnapsoGraphDBAdmin.listLocations({
+    });
+    return lRes;
+}
+```
+
+### Result
+
+```json
+[
+  {
+    "uri": "",
+    "label": "Local",
+    "username": null,
+    "password": null,
+    "active": true,
+    "local": true,
+    "system": true,
+    "errorMsg": null,
+    "defaultRepository": null
+  }
+]
 ```

@@ -38,6 +38,18 @@ const EnapsoGraphDBAdmin = {
         return request(options);
     },
 
+    listLocations: async function (aOptions) {
+        let options = {
+            method: 'GET',
+            uri: this.BASEURL + '/rest/locations',
+            headers: {
+                'Accept': 'application/sparql-results+json,application/json',
+            },
+            json: true
+        };
+        return request(options);
+    },
+
     upload: async function (aOptions) {
         aOptions = aOptions || {};
         /*

@@ -36,6 +36,20 @@ const EnapsoGraphDBAdminDemo = {
             baseURI: "http://ont.enapso.com/test#",
             context: "http://ont.enapso.com/test"
         });
+        return { 
+            message: lRes
+        };
+    },
+
+    listRepositoriesDemo: async function () {
+        var lRes = await EnapsoGraphDBAdmin.listRepositories({
+        });
+        return lRes;
+    },
+
+    listLocationsDemo: async function () {
+        var lRes = await EnapsoGraphDBAdmin.listLocations({
+        });
         return lRes;
     },
 
@@ -56,7 +70,7 @@ const EnapsoGraphDBAdminDemo = {
                 dropPrefixes: false
             });
         }
-        return JSON.stringify(resultset, null, 2);
+        return resultset
     }
 
 };
