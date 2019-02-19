@@ -1,11 +1,11 @@
 
 
 module.exports = (Object.freeze({
-    queryURL: process.env.QUERY_URL || 'localhost:7200/repositories/Test',
-    updateURL: process.env.UPDATE_URL || 'localhost:7200/repositories/Test/statements',
+    queryURL: process.env.GRAPHDB_QUERY_URL || 'localhost:7200/repositories/Test',
+    updateURL: process.env.GRAPHDB_UPDATE_URL || 'localhost:7200/repositories/Test/statements',
     username: 'Test',
     password: 'Test',
-    
+
     prefixes: {
         PREFIX_OWL: {
             "prefix": 'owl',

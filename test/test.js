@@ -1,20 +1,23 @@
+// Innotrade Enapso GraphDB Admin Automated Test Suite
+// (C) Copyright 2019 Innotrade GmbH, Herzogenrath, NRW, Germany
+
 const chai = require('chai');
 const should = require('chai').should;
 const expect = require('chai').expect;
-const EnapsoGraphDBClient = require("enapso-graphdb-client");
+const EnapsoGraphDBAdmin = require("../enapso-graphdb-admin");
 const testConfig = require("./config");
 
 
-describe("Upload test", () => {
+describe("Enapso GraphDB Admin Tests", () => {
 
     // before(function (done) { setTimeout(function () { done(); }, 500); });
 
-    it('It should upload an ontology to GraphDB', (done) => {
+    it('List all repositories of local GraphDB instance', (done) => {
 
         EnapsoGraphDBAdmin.listRepositories({
-            method: 'POST',
-            uri: lBaseURL + '/rest/repositories',
+
         }).then(result => {
+            // console.log(result);
             expect(result).to.exist;
             done();
         })
