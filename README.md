@@ -63,7 +63,7 @@ uploadFileDemo: async function () {
     });
     return lRes;
 }
-```javascript
+```
 
 ## Listing all repositories configured in your GraphDB instance
 
