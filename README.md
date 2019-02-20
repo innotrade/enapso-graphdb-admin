@@ -12,7 +12,7 @@ Examples and documentation are pending and will be published soon.
 
 # Example
 
-## Instantiating an Enapso GraphDB Client and Admin Client
+## Instantiate an Enapso GraphDB and Admin Client
 
 ```javascript
 const EnapsoGraphDBClient = require("enapso-graphdb-client");
@@ -65,7 +65,7 @@ uploadFileDemo: async function () {
 }
 ```
 
-## Listing all repositories configured in your GraphDB instance
+## List all repositories configured in your GraphDB instance
 
 ```javascript
 getRepositoriesDemo: async function () {
@@ -110,10 +110,10 @@ getRepositoriesDemo: async function () {
 ]  
 ```
 
-## Clearing an entire repository in your GraphDB instance
+## Clear an entire repository of your GraphDB instance
 
-**Caution! This removed all triples of the given repository! This operation cannot be undone!**
-This entire repository will be emptied, i.e. all data of this repository will be removed. The repository itself remains.
+**Caution! This removes ALL triples of the given repository! This operation cannot be undone!**
+The entire repository will be emptied, i.e. all data of this repository will be removed. The repository remains active.
 
 ```javascript
 clearRepositoryDemo: async function () {
@@ -132,7 +132,7 @@ clearRepositoryDemo: async function () {
 }
 ```
 
-## Listing all users configured in your GraphDB instance
+## List all users configured in your GraphDB instance
 
 ```javascript
 getUsersDemo: async function () {
@@ -177,7 +177,7 @@ getUsersDemo: async function () {
 ]
 ```
 
-## Listing all contexts used in a given repository
+## List all contexts used in a given repository
 
 ```javascript
 getContextsDemo: async function () {
@@ -202,10 +202,10 @@ getContextsDemo: async function () {
 }
 ```
 
-## Clearing an entire context in a given repository of your GraphDB instance
+## Clear an entire context in a given repository of your GraphDB instance
 
 **Caution! This removes ALL triples of the given context! This operation cannot be undone!**
-The entire context will be emptied, i.e. all data from this context will be removed. The repository and other contexts remain untouched.
+The entire context will be emptied, i.e. all data from this context will be removed. The repository and other contexts remain active.
 
 ```javascript
 clearContextDemo: async function () {

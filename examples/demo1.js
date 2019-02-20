@@ -44,6 +44,16 @@ const EnapsoGraphDBAdminDemo = {
         };
     },
 
+    downloadToFileDemo: async function () {
+        var lRes = await EnapsoGraphDBAdmin.downloadRepository({
+            repository: GRAPHDB_REPOSITORY,
+            format: EnapsoGraphDBClient.FORMAT_TURTLE,
+            context: "http://ont.enapso.com/test"
+        });
+        // todo: Create and use downloadToMemory and then saveToFile!
+        return lRes;
+    },
+
     getRepositoriesDemo: async function () {
         var lRes = await EnapsoGraphDBAdmin.getRepositories({
         });

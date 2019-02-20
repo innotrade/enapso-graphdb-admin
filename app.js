@@ -29,7 +29,7 @@ console.log("Enapso GraphDB Admin Demo");
     // lists all contexts (named graphs) configured in the "Test" Repository your GraphDB instance
     lRes = await EnapsoGraphDBAdminDemo.getContextsDemo();
     console.log("Contexts:\n" + JSON.stringify(lRes, null, 2));
-   
+
     // clear the test context in the test repository
     lRes = await EnapsoGraphDBAdminDemo.clearContextDemo();
     console.log("Clear Context:\n" + JSON.stringify(lRes, null, 2));
@@ -47,5 +47,12 @@ console.log("Enapso GraphDB Admin Demo");
     setTimeout(async function () {
         lRes = await EnapsoGraphDBAdminDemo.queryDemo();
         console.log("Result:\n" + JSON.stringify(lRes, null, 2));
+
+        // downloads a repository operated in your GraphDB instance
+        lRes = await EnapsoGraphDBAdminDemo.downloadToFileDemo();
+        console.log("Download:\n" + lRes);
+
     }, 2000);
+
+
 })();

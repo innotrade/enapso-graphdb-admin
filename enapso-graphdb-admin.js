@@ -57,6 +57,15 @@ const EnapsoGraphDBAdmin = {
         return request(options);
     },
 
+    downloadRepository: async function (aOptions = { repository: "Test", format: EnapsoGraphDBClient.FORMAT_TURTLE }) {
+        let options = {
+            method: 'GET',
+            uri: this.BASEURL + '/repositories/' + aOptions.repository + '/statements'
+                + '?infer=false&Accept=' + encodeURIComponent(aOptions.format.type)
+        };
+        return request(options);
+    },
+
     clearRepository: async function (aOptions = { repository: "Test" }) {
         let lEndpoint = this.getGraphDBEndpoint({ repository: aOptions.repository });
         let lRes = lEndpoint.update(
