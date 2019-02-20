@@ -110,6 +110,28 @@ getRepositoriesDemo: async function () {
 ]  
 ```
 
+## Clearing an entire repository in your GraphDB instance
+
+**Caution! This removed all triples of the given repository! This operation cannot be undone!**
+This entire repository will be emptied, i.e. all data of this repository will be removed. The repository itself remains.
+
+```javascript
+clearRepositoryDemo: async function () {
+    let lRes = await EnapsoGraphDBAdmin.clearRepository({
+        repository: "Test"
+    });
+    return lRes;
+}
+```
+
+### Result
+
+```json
+{
+  "success": true
+}
+```
+
 ## Listing all users configured in your GraphDB instance
 
 ```javascript
@@ -177,6 +199,29 @@ getContextsDemo: async function () {
       "contextID": "http://ont.enapso.com/test"
     }
   ]
+}
+```
+
+## Clearing an entire context in a given repository of your GraphDB instance
+
+**Caution! This removes ALL triples of the given context! This operation cannot be undone!**
+The entire context will be emptied, i.e. all data from this context will be removed. The repository and other contexts remain untouched.
+
+```javascript
+clearContextDemo: async function () {
+    let lRes = await EnapsoGraphDBAdmin.clearContext({
+        repository: "Test",
+        context: "http://ont.enapso.com/test"
+    });
+    return lRes;
+}
+```
+
+### Result
+
+```json
+{
+  "success": true
 }
 ```
 

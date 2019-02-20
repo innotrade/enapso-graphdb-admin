@@ -14,8 +14,8 @@ const EnapsoGraphDBClient = require("enapso-graphdb-client");
 
 const EnapsoGraphDBAdmin = {
 
-    QUERY_URL: process.env.GRAPHDB_QUERY_URL || 'http://localhost:7200/repositories/Test',
-    UPDATE_URL: process.env.GRAPHDB_UPDATE_URL || 'http://localhost:7200/repositories/Test/statements',
+    QUERY_URL: process.env.GRAPHDB_QUERY_URL || 'http://localhost:7200/repositories/{repositoryID}',
+    UPDATE_URL: process.env.GRAPHDB_UPDATE_URL || 'http://localhost:7200/repositories/{repositoryID}/statements',
     USERNAME: process.env.GRAPHDB_USERNAME || "Test",
     PASSWORD: process.env.GRAPHDB_PASSWORD || "Test",
     REPOSITORY: process.env.GRAPHDB_REPOSITORY || "Test",
@@ -25,6 +25,25 @@ const EnapsoGraphDBAdmin = {
         EnapsoGraphDBClient.PREFIX_RDF,
         EnapsoGraphDBClient.PREFIX_RDFS
     ],
+
+    // the GraphDB endpoint for queries and updates
+    graphDBEndpoints: {},
+
+    // instantiate the GraphDB endpoint 
+    getGraphDBEndpoint: function (aOptions = { repository: this.REPOSITORY }) {
+        let lRepo = aOptions.repository;
+        if (!this.graphDBEndpoints[lRepo]) {
+            this.graphDBEndpoints[lRepo] =
+                new EnapsoGraphDBClient.Endpoint({
+                    queryURL: this.QUERY_URL.replace(/\{repositoryID\}/ig, lRepo),
+                    updateURL: this.UPDATE_URL.replace(/\{repositoryID\}/ig, lRepo),
+                    username: this.USERNAME,
+                    password: this.PASSWORD,
+                    prefixes: this.DEFAULT_PREFIXES
+                });
+        }
+        return this.graphDBEndpoints[lRepo];
+    },
 
     getRepositories: async function (aOptions) {
         let options = {
@@ -36,6 +55,14 @@ const EnapsoGraphDBAdmin = {
             json: true
         };
         return request(options);
+    },
+
+    clearRepository: async function (aOptions = { repository: "Test" }) {
+        let lEndpoint = this.getGraphDBEndpoint({ repository: aOptions.repository });
+        let lRes = lEndpoint.update(
+            `CLEAR ALL`
+        );
+        return lRes;
     },
 
     getLocations: async function (aOptions) {
@@ -77,6 +104,14 @@ const EnapsoGraphDBAdmin = {
             // drop the prefixes for easier resultset readability (optional)
             dropPrefixes: false
         });
+        return lRes;
+    },
+
+    clearContext: async function (aOptions = { repository: "Test", context: "Test" }) {
+        let lEndpoint = this.getGraphDBEndpoint({ repository: aOptions.repository });
+        let lRes = lEndpoint.update(
+            `CLEAR GRAPH <${aOptions.context}>`
+        );
         return lRes;
     },
 

@@ -9,6 +9,11 @@ console.log("Enapso GraphDB Admin Demo");
 (async () => {
     var lRes;
 
+    // clears the entire "Test" repository
+    // CAUTION! This operation cannot be undone!
+    // lRes = await EnapsoGraphDBAdminDemo.clearRepositoryDemo();
+    // console.log("Clear Repository:\n" + JSON.stringify(lRes, null, 2));
+
     // lists all repositories operated in your GraphDB instance
     lRes = await EnapsoGraphDBAdminDemo.getRepositoriesDemo();
     console.log("Repositories:\n" + JSON.stringify(lRes, null, 2));
@@ -24,6 +29,10 @@ console.log("Enapso GraphDB Admin Demo");
     // lists all contexts (named graphs) configured in the "Test" Repository your GraphDB instance
     lRes = await EnapsoGraphDBAdminDemo.getContextsDemo();
     console.log("Contexts:\n" + JSON.stringify(lRes, null, 2));
+   
+    // clear the test context in the test repository
+    lRes = await EnapsoGraphDBAdminDemo.clearContextDemo();
+    console.log("Clear Context:\n" + JSON.stringify(lRes, null, 2));
 
     // should return 0 rows, after deleting named graph
     lRes = await EnapsoGraphDBAdminDemo.queryDemo();
@@ -35,7 +44,7 @@ console.log("Enapso GraphDB Admin Demo");
 
     // should return some rows according to imported graph
     // give GraphDB some seconds to import the delivered graph asynchronously
-    setTimeout(async function() {
+    setTimeout(async function () {
         lRes = await EnapsoGraphDBAdminDemo.queryDemo();
         console.log("Result:\n" + JSON.stringify(lRes, null, 2));
     }, 2000);

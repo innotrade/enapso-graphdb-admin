@@ -10,7 +10,9 @@ const
     GRAPHDB_UPDATE_URL = 'http://localhost:7200/repositories/Test/statements',
     GRAPHDB_REPOSITORY = 'Test',
     GRAPHDB_USERNAME = 'Test',
-    GRAPHDB_PASSWORD = 'Test';
+    GRAPHDB_PASSWORD = 'Test',
+    GRAPHDB_TEST_CONTEXT = 'http://ont.enapso.com/test'
+    ;
 
 // the default prefixes for all SPARQL queries
 const DEFAULT_PREFIXES = [
@@ -48,6 +50,13 @@ const EnapsoGraphDBAdminDemo = {
         return lRes;
     },
 
+    clearRepositoryDemo: async function () {
+        let lRes = await EnapsoGraphDBAdmin.clearRepository({
+            repository: GRAPHDB_REPOSITORY
+        });
+        return lRes;
+    },
+
     getLocationsDemo: async function () {
         var lRes = await EnapsoGraphDBAdmin.getLocations({
         });
@@ -67,10 +76,18 @@ const EnapsoGraphDBAdminDemo = {
         return lRes;
     },
 
+    clearContextDemo: async function () {
+        let lRes = await EnapsoGraphDBAdmin.clearContext({
+            repository: GRAPHDB_REPOSITORY,
+            context: GRAPHDB_TEST_CONTEXT
+        });
+        return lRes;
+    },
+
     queryDemo: async function() {
         let query = `
             select * 
-                FROM <http://ont.enapso.com/test>
+                FROM <${GRAPHDB_TEST_CONTEXT}>
             where {
                 ?s ?p ?o
             }
