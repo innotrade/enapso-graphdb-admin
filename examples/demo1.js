@@ -8,6 +8,7 @@ const EnapsoGraphDBAdmin = require("../enapso-graphdb-admin");
 const
     GRAPHDB_QUERY_URL = 'http://localhost:7200/repositories/Test',
     GRAPHDB_UPDATE_URL = 'http://localhost:7200/repositories/Test/statements',
+    GRAPHDB_REPOSITORY = 'Test',
     GRAPHDB_USERNAME = 'Test',
     GRAPHDB_PASSWORD = 'Test';
 
@@ -30,7 +31,7 @@ const EnapsoGraphDBAdminDemo = {
     }),
 
     uploadFileDemo: async function () {
-        var lRes = await EnapsoGraphDBAdmin.uploadFile({
+        var lRes = await EnapsoGraphDBAdmin.uploadFromFile({
             filename: 'ontologies/test.owl',
             format: "application/rdf+xml",
             baseURI: "http://ont.enapso.com/test#",
@@ -41,14 +42,21 @@ const EnapsoGraphDBAdminDemo = {
         };
     },
 
-    listRepositoriesDemo: async function () {
-        var lRes = await EnapsoGraphDBAdmin.listRepositories({
+    getRepositoriesDemo: async function () {
+        var lRes = await EnapsoGraphDBAdmin.getRepositories({
         });
         return lRes;
     },
 
-    listLocationsDemo: async function () {
-        var lRes = await EnapsoGraphDBAdmin.listLocations({
+    getLocationsDemo: async function () {
+        var lRes = await EnapsoGraphDBAdmin.getLocations({
+        });
+        return lRes;
+    },
+
+    getContextsDemo: async function () {
+        let lRes = await EnapsoGraphDBAdmin.getContexts({
+            repository: GRAPHDB_REPOSITORY
         });
         return lRes;
     },
@@ -70,7 +78,7 @@ const EnapsoGraphDBAdminDemo = {
                 dropPrefixes: false
             });
         }
-        return resultset
+        return resultset;
     }
 
 };

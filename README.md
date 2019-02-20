@@ -24,6 +24,7 @@ const EnapsoGraphDBAdmin = require("enapso-graphdb-admin");
 const
     GRAPHDB_QUERY_URL = 'http://localhost:7200/repositories/Test',
     GRAPHDB_UPDATE_URL = 'http://localhost:7200/repositories/Test/statements',
+    GRAPHDB_REPOSITORY = 'Test',
     GRAPHDB_USERNAME = 'Test',
     GRAPHDB_PASSWORD = 'Test';
 
@@ -47,7 +48,6 @@ const EnapsoGraphDBAdminDemo = {
 
     :
     :
-
 }
 ```
 
@@ -68,8 +68,8 @@ uploadFileDemo: async function () {
 ## Listing all repositories configured in your GraphDB instance
 
 ```javascript
-listRepositoriesDemo: async function () {
-    var lRes = await EnapsoGraphDBAdmin.listRepositories({
+getRepositoriesDemo: async function () {
+    var lRes = await EnapsoGraphDBAdmin.getRepositories({
     });
     return lRes;
 }
@@ -83,7 +83,7 @@ listRepositoriesDemo: async function () {
     "id": "SYSTEM",
     "title": "System configuration repository",
     "uri": "http://localhost:7200/repositories/SYSTEM",
-    "externalUrl": "http://[your-ip or hostname]:7200/repositories/SYSTEM",
+    "externalUrl": "http://[your ip or hostname]:7200/repositories/SYSTEM",
     "type": "system",
     "sesameType": "openrdf:SystemRepository",
     "location": "",
@@ -93,11 +93,12 @@ listRepositoriesDemo: async function () {
     "local": true
   },
   :
+  :
   {
     "id": "Test",
     "title": "Test",
     "uri": "http://localhost:7200/repositories/Test",
-    "externalUrl": "http://[your-ip or hostname]:7200/repositories/Test",
+    "externalUrl": "http://[your ip or hostname]:7200/repositories/Test",
     "type": "free",
     "sesameType": "graphdb:FreeSailRepository",
     "location": "",
@@ -109,11 +110,35 @@ listRepositoriesDemo: async function () {
 ]  
 ```
 
+## Listing all contexts configured in your GraphDB instance
+
+```javascript
+getContextsDemo: async function () {
+    let lRes = await EnapsoGraphDBAdmin.getContexts({
+        repository: GRAPHDB_REPOSITORY
+    });
+    return lRes;
+}
+```
+### Result
+
+```json
+{
+  "total": 1,
+  "success": true,
+  "records": [
+    {
+      "contextID": "http://ont.enapso.com/test"
+    }
+  ]
+}
+```
+
 ## Listing all locations configured in your GraphDB instance
 
 ```javascript
-listLocationsDemo: async function () {
-    var lRes = await EnapsoGraphDBAdmin.listLocations({
+getLocationsDemo: async function () {
+    var lRes = await EnapsoGraphDBAdmin.getLocations({
     });
     return lRes;
 }

@@ -1,7 +1,7 @@
 // Innotrade Enapso GraphDB Admin
 // (C) Copyright 2019 Innotrade GmbH, Herzogenrath, NRW, Germany
 
-// For further detalils please also refer to the GraphDB admin documentation at:
+// For further detalils please also refer to the GraphDB admin documentation at: http://localhost:7200/webapi
 // http://graphdb.ontotext.com/documentation/free/devhub/workbench-rest-api/location-and-repository-tutorial.html
 
 const https = require('https');
@@ -26,7 +26,7 @@ const EnapsoGraphDBAdmin = {
         EnapsoGraphDBClient.PREFIX_RDFS
     ],
 
-    listRepositories: async function (aOptions) {
+    getRepositories: async function (aOptions) {
         let options = {
             method: 'GET',
             uri: this.BASEURL + '/rest/repositories',
@@ -38,7 +38,7 @@ const EnapsoGraphDBAdmin = {
         return request(options);
     },
 
-    listLocations: async function (aOptions) {
+    getLocations: async function (aOptions) {
         let options = {
             method: 'GET',
             uri: this.BASEURL + '/rest/locations',
@@ -48,6 +48,24 @@ const EnapsoGraphDBAdmin = {
             json: true
         };
         return request(options);
+    },
+
+    getContexts: async function (aOptions) {
+        let options = {
+            method: 'GET',
+            uri: this.BASEURL + "/repositories/" + aOptions.repository + "/contexts",
+            headers: {
+                'Accept': 'application/sparql-results+json,application/json',
+            },
+            json: true
+        };
+        var lRes = await request(options);
+        // transform the bindings into a more convenient result format (optional)
+        lRes = EnapsoGraphDBClient.transformBindingsToResultSet(lRes, {
+            // drop the prefixes for easier resultset readability (optional)
+            dropPrefixes: false
+        });
+        return lRes;
     },
 
     upload: async function (aOptions) {
@@ -112,10 +130,30 @@ const EnapsoGraphDBAdmin = {
         return request(options);
     },
 
-    uploadFile: async function (aOptions) {
+    uploadFromFile: async function (aOptions) {
         let lBuffer = fs.readFileSync(aOptions.filename);
         var lRes = await this.upload({
             data: lBuffer.toString(),
+            format: aOptions.format,
+            baseURI: aOptions.baseURI,
+            context: aOptions.context
+        });
+        return lRes;
+    },
+
+    uploadFromURL: async function (aOptions) {
+        var lRes = await this.upload({
+            data: aOptions.URL,
+            format: aOptions.format,
+            baseURI: aOptions.baseURI,
+            context: aOptions.context
+        });
+        return lRes;
+    },
+
+    uploadFromData: async function (aOptions) {
+        var lRes = await this.upload({
+            data: aOptions.data,
             format: aOptions.format,
             baseURI: aOptions.baseURI,
             context: aOptions.context

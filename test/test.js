@@ -12,10 +12,18 @@ describe("Enapso GraphDB Admin Tests", () => {
 
     // before(function (done) { setTimeout(function () { done(); }, 500); });
 
-    it('List all repositories of local GraphDB instance', (done) => {
+    it('Get all repositories of local GraphDB instance', (done) => {
+        EnapsoGraphDBAdmin.getRepositories({
+        }).then(result => {
+            // console.log(result);
+            expect(result).to.exist;
+            done();
+        })
+    });
 
-        EnapsoGraphDBAdmin.listRepositories({
-
+    it('Get all contexts of the "Test" repository of local GraphDB instance', (done) => {
+        EnapsoGraphDBAdmin.getContexts({
+            repository: "Test"
         }).then(result => {
             // console.log(result);
             expect(result).to.exist;
