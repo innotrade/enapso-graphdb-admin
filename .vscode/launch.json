@@ -9,12 +9,6 @@
             "request": "launch",
             "name": "Launch Demo",
             "program": "${workspaceFolder}/app.js"
-        },
-        {
-            "type": "node",
-            "request": "launch",
-            "name": "Run Testsuite",
-            "program": "${workspaceFolder}/test/test.js"
         }
     ]
 }

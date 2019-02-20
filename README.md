@@ -1,20 +1,18 @@
 # enapso-graphdb-admin
 Enapso Ontotext GraphDB 8.x Administrator for JavaScript
 
-Admin client for OntoText GraphDB to easily perform administrative operations against your RDF stores, your OWL ontologies or knowledge graphs in nodes.js applications.
-This client supports an easy import of existing RDF stores and ontologies to Ontotext GraphDB by upload via file, strings or URLs in numerous formats.
+Admin client for OntoText GraphDB to easily perform administrative operations against your RDF stores, your OWL ontologies or knowledge graphs in nodes.js applications. This client supports an easy import of existing RDF stores and ontologies to Ontotext GraphDB by upload via file, strings or URLs in numerous formats.
 
-Future versions of this client will support the creation and listing of new repositories, the location and cluster management of Ontotext GraphDB as well as an easy export.
-Any questions and suggestions are welcome.
+Future versions of this client will support the creation and listing of new repositories, the location and cluster management of Ontotext GraphDB as well as an easy export. Any questions and suggestions are welcome.
 
 This project is currently work-in-progress and will be subject to further changes until its version 1.0.
 Examples and documentation are pending and will be published soon.
 
+**The following demos require a running GraphDB 8.x instance on localhost at port 7200. The demos as well as the automated tests require a fully working Ontotext GraphDB repository "Test" and a user "Test" with the password "Test" being set up, which has read/write access to the "Test" Repository.**
+
 # Example
 
 ## Instantiating an Enapso GraphDB Client and Admin Client
-
-The following demos require a running GraphDB 8.x instance on localhost at port 7200. The demo as well as the automated tests require a fully working Ontotext GraphDB repository "Test" and user "Test" with the password "Test", which has read/write access to the "Test" Repository.
 
 ```javascript
 const EnapsoGraphDBClient = require("enapso-graphdb-client");
@@ -22,8 +20,10 @@ const EnapsoGraphDBAdmin = require("enapso-graphdb-admin");
 
 // connection data to the running GraphDB instance
 const
-    GRAPHDB_QUERY_URL = 'http://localhost:7200/repositories/Test',
-    GRAPHDB_UPDATE_URL = 'http://localhost:7200/repositories/Test/statements',
+    GRAPHDB_QUERY_URL = 
+        'http://localhost:7200/repositories/Test',
+    GRAPHDB_UPDATE_URL = 
+        'http://localhost:7200/repositories/Test/statements',
     GRAPHDB_REPOSITORY = 'Test',
     GRAPHDB_USERNAME = 'Test',
     GRAPHDB_PASSWORD = 'Test';
@@ -55,7 +55,7 @@ const EnapsoGraphDBAdminDemo = {
 
 ```javascript
 uploadFileDemo: async function () {
-    var lRes = await EnapsoGraphDBAdmin.uploadFile({
+    var lRes = await EnapsoGraphDBAdmin.uploadFromFile({
         filename: 'ontologies/test.owl',
         format: "application/rdf+xml",
         baseURI: "http://ont.enapso.com/test#",
@@ -110,7 +110,52 @@ getRepositoriesDemo: async function () {
 ]  
 ```
 
-## Listing all contexts configured in your GraphDB instance
+## Listing all users configured in your GraphDB instance
+
+```javascript
+getUsersDemo: async function () {
+    var lRes = await EnapsoGraphDBAdmin.getUsers({
+    });
+    return lRes;
+}
+```
+
+### Result
+
+```json
+[
+  {
+    "username": "Test",
+    "password": "",
+    "grantedAuthorities": [
+      "WRITE_REPO_Test",
+      "READ_REPO_Test",
+      "ROLE_USER"
+    ],
+    "appSettings": {
+      "DEFAULT_SAMEAS": true,
+      "DEFAULT_INFERENCE": true,
+      "EXECUTE_COUNT": true
+    },
+    "dateCreated": 1549545975380
+  },
+  {
+    "username": "admin",
+    "password": "",
+    "grantedAuthorities": [
+      "ROLE_ADMIN"
+    ],
+    "appSettings": {
+      "DEFAULT_INFERENCE": true,
+      "DEFAULT_SAMEAS": true,
+      "EXECUTE_COUNT": true
+    },
+    "dateCreated": 1478943858311
+  }
+]
+```
+
+## Listing all contexts used in a given repository
 
 ```javascript
 getContextsDemo: async function () {
@@ -120,6 +165,7 @@ getContextsDemo: async function () {
     return lRes;
 }
 ```
+
 ### Result
 
 ```json

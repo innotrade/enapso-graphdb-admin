@@ -50,6 +50,18 @@ const EnapsoGraphDBAdmin = {
         return request(options);
     },
 
+    getUsers: async function (aOptions) {
+        let options = {
+            method: 'GET',
+            uri: this.BASEURL + '/rest/security/user',
+            headers: {
+                'Accept': 'application/sparql-results+json,application/json',
+            },
+            json: true
+        };
+        return request(options);
+    },
+
     getContexts: async function (aOptions) {
         let options = {
             method: 'GET',

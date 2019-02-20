@@ -37,7 +37,7 @@ const EnapsoGraphDBAdminDemo = {
             baseURI: "http://ont.enapso.com/test#",
             context: "http://ont.enapso.com/test"
         });
-        return { 
+        return {
             message: lRes
         };
     },
@@ -50,6 +50,12 @@ const EnapsoGraphDBAdminDemo = {
 
     getLocationsDemo: async function () {
         var lRes = await EnapsoGraphDBAdmin.getLocations({
+        });
+        return lRes;
+    },
+
+    getUsersDemo: async function () {
+        var lRes = await EnapsoGraphDBAdmin.getUsers({
         });
         return lRes;
     },

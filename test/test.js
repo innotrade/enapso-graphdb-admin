@@ -21,6 +21,15 @@ describe("Enapso GraphDB Admin Tests", () => {
         })
     });
 
+    it('Get all users of local GraphDB instance', (done) => {
+        EnapsoGraphDBAdmin.getUsers({
+        }).then(result => {
+            // console.log(result);
+            expect(result).to.exist;
+            done();
+        })
+    });
+
     it('Get all contexts of the "Test" repository of local GraphDB instance', (done) => {
         EnapsoGraphDBAdmin.getContexts({
             repository: "Test"

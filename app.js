@@ -17,6 +17,10 @@ console.log("Enapso GraphDB Admin Demo");
     lRes = await EnapsoGraphDBAdminDemo.getLocationsDemo();
     console.log("Locations:\n" + JSON.stringify(lRes, null, 2));
 
+    // lists all users configured in your GraphDB instance
+    lRes = await EnapsoGraphDBAdminDemo.getUsersDemo();
+    console.log("Users:\n" + JSON.stringify(lRes, null, 2));
+
     // lists all contexts (named graphs) configured in the "Test" Repository your GraphDB instance
     lRes = await EnapsoGraphDBAdminDemo.getContextsDemo();
     console.log("Contexts:\n" + JSON.stringify(lRes, null, 2));
