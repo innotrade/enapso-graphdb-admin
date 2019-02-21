@@ -10,6 +10,8 @@ Examples and documentation are pending and will be published soon.
 
 **The following demos require a running GraphDB 8.x instance on localhost at port 7200. The demos as well as the automated tests require a fully working Ontotext GraphDB repository "Test" and a user "Test" with the password "Test" being set up, which has read/write access to the "Test" Repository.**
 
+To discuss questions and suggestions with the GraphDB community, we'll be happy to meet you in our forum at https://www.innotrade.com/forum/.
+
 # Example
 
 ## Instantiate an Enapso GraphDB and Admin Client
@@ -65,6 +67,40 @@ uploadFileDemo: async function () {
 }
 ```
 
+## Download a graph from GraphDB to a text variable
+
+For the available export formats, please refer to the EnapsoGraphDBClient.FORMAT_xxx constants.
+The context is optional. If you do not pass a context, the entire repository is exported.
+
+```javascript
+downloadToTextDemo: async function () {
+    var lRes = await EnapsoGraphDBAdmin.downloadRepositoryToText({
+        repository: GRAPHDB_REPOSITORY,
+        format: EnapsoGraphDBClient.FORMAT_TURTLE,
+        context: "http://ont.enapso.com/test"
+    });
+    return lRes;
+}
+```
+
+## Download a graph from GraphDB directly to a local file
+
+For the available export formats, please refer to the EnapsoGraphDBClient.FORMAT_xxx constants.
+The context is optional. If you do not pass a context, the entire repository is exported.
+
+```javascript
+downloadToFileDemo: async function () {
+    let lFormat = EnapsoGraphDBClient.FORMAT_TURTLE;
+    var lRes = await EnapsoGraphDBAdmin.downloadRepositoryToFile({
+        repository: GRAPHDB_REPOSITORY,
+        format: lFormat,
+        context: "http://ont.enapso.com/test",
+        filename: "ontologies/test" + lFormat.extension
+    });
+    return lRes;
+}
+```
+
 ## List all repositories configured in your GraphDB instance
 
 ```javascript
@@ -82,7 +118,7 @@ getRepositoriesDemo: async function () {
   {
     "id": "SYSTEM",
     "title": "System configuration repository",
-    "uri": "http://localhost:7200/repositories/SYSTEM",
+    "uri": "http://[your ip or hostname]:7200/repositories/SYSTEM",
     "externalUrl": "http://[your ip or hostname]:7200/repositories/SYSTEM",
     "type": "system",
     "sesameType": "openrdf:SystemRepository",
@@ -97,7 +133,7 @@ getRepositoriesDemo: async function () {
   {
     "id": "Test",
     "title": "Test",
-    "uri": "http://localhost:7200/repositories/Test",
+    "uri": "http://[your ip or hostname]:7200/repositories/Test",
     "externalUrl": "http://[your ip or hostname]:7200/repositories/Test",
     "type": "free",
     "sesameType": "graphdb:FreeSailRepository",

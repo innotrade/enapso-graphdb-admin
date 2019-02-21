@@ -57,13 +57,30 @@ const EnapsoGraphDBAdmin = {
         return request(options);
     },
 
-    downloadRepository: async function (aOptions = { repository: "Test", format: EnapsoGraphDBClient.FORMAT_TURTLE }) {
+    downloadRepositoryToText: async function (aOptions = {
+        repository: "Test",
+        format: EnapsoGraphDBClient.FORMAT_TURTLE,
+        context: null
+    }) {
         let options = {
             method: 'GET',
             uri: this.BASEURL + '/repositories/' + aOptions.repository + '/statements'
                 + '?infer=false&Accept=' + encodeURIComponent(aOptions.format.type)
+                + (aOptions.context ? '&context=' + encodeURIComponent('<' + aOptions.context) + '>' : '')
         };
         return request(options);
+    },
+
+    downloadRepositoryToFile: async function (aOptions = {
+        repository: "Test",
+        format: EnapsoGraphDBClient.FORMAT_TURTLE,
+        context: null,
+        filename: "statements" + EnapsooGraphDBClient.FORMAT_TURTLE.extension
+    }) {
+        var lRes = await this.downloadRepositoryToText(aOptions);
+        // todo: Implement error handling
+        fs.writeFileSync(aOptions.filename, lRes);
+        return lRes;
     },
 
     clearRepository: async function (aOptions = { repository: "Test" }) {

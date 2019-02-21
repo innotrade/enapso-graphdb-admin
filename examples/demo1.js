@@ -34,7 +34,7 @@ const EnapsoGraphDBAdminDemo = {
 
     uploadFileDemo: async function () {
         var lRes = await EnapsoGraphDBAdmin.uploadFromFile({
-            filename: 'ontologies/test.owl',
+            filename: "ontologies/test.owl",
             format: "application/rdf+xml",
             baseURI: "http://ont.enapso.com/test#",
             context: "http://ont.enapso.com/test"
@@ -44,13 +44,23 @@ const EnapsoGraphDBAdminDemo = {
         };
     },
 
-    downloadToFileDemo: async function () {
-        var lRes = await EnapsoGraphDBAdmin.downloadRepository({
+    downloadToTextDemo: async function () {
+        var lRes = await EnapsoGraphDBAdmin.downloadRepositoryToText({
             repository: GRAPHDB_REPOSITORY,
             format: EnapsoGraphDBClient.FORMAT_TURTLE,
             context: "http://ont.enapso.com/test"
         });
-        // todo: Create and use downloadToMemory and then saveToFile!
+        return lRes;
+    },
+
+    downloadToFileDemo: async function () {
+        let lFormat = EnapsoGraphDBClient.FORMAT_TURTLE;
+        var lRes = await EnapsoGraphDBAdmin.downloadRepositoryToFile({
+            repository: GRAPHDB_REPOSITORY,
+            format: lFormat,
+            context: "http://ont.enapso.com/test",
+            filename: "ontologies/test" + lFormat.extension
+        });
         return lRes;
     },
 
