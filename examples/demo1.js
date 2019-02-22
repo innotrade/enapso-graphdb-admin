@@ -7,8 +7,6 @@ const EnapsoGraphDBAdmin = require("../enapso-graphdb-admin");
 // connection data to the running GraphDB instance
 const
     GRAPHDB_BASE_URL = 'http://localhost:7200',
-    GRAPHDB_QUERY_URL = 'http://localhost:7200/repositories/Test',
-    GRAPHDB_UPDATE_URL = 'http://localhost:7200/repositories/Test/statements',
     GRAPHDB_REPOSITORY = 'Test',
     GRAPHDB_USERNAME = 'Test',
     GRAPHDB_PASSWORD = 'Test',
@@ -25,8 +23,6 @@ const DEFAULT_PREFIXES = [
 const EnapsoGraphDBAdminDemo = {
 
     GRAPHDB_BASE_URL: GRAPHDB_BASE_URL,
-    GRAPHDB_QUERY_URL: GRAPHDB_QUERY_URL,
-    GRAPHDB_UPDATE_URL: GRAPHDB_UPDATE_URL,
     GRAPHDB_REPOSITORY: GRAPHDB_REPOSITORY,
     GRAPHDB_USERNAME: GRAPHDB_USERNAME,
     GRAPHDB_PASSWORD: GRAPHDB_PASSWORD,
@@ -35,10 +31,7 @@ const EnapsoGraphDBAdminDemo = {
     // instantiate the GraphDB endpoint
     graphDBEndpoint: new EnapsoGraphDBClient.Endpoint({
         baseURL: GRAPHDB_BASE_URL,
-        queryURL: GRAPHDB_QUERY_URL,
-        updateURL: GRAPHDB_UPDATE_URL,
-        username: GRAPHDB_USERNAME,
-        password: GRAPHDB_PASSWORD,
+        repository: GRAPHDB_REPOSITORY,
         prefixes: DEFAULT_PREFIXES
     }),
 

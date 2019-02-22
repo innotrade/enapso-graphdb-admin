@@ -15,11 +15,10 @@ const EnapsoGraphDBClient = require("enapso-graphdb-client");
 const EnapsoGraphDBAdmin = {
 
     BASE_URL: process.env.GRAPHDB_BASE_URL || 'http://localhost:7200',
-    QUERY_URL: process.env.GRAPHDB_QUERY_URL || 'http://localhost:7200/repositories/{repositoryID}',
-    UPDATE_URL: process.env.GRAPHDB_UPDATE_URL || 'http://localhost:7200/repositories/{repositoryID}/statements',
     USERNAME: process.env.GRAPHDB_USERNAME || "Test",
     PASSWORD: process.env.GRAPHDB_PASSWORD || "Test",
     REPOSITORY: process.env.GRAPHDB_REPOSITORY || "Test",
+
     DEFAULT_PREFIXES: [
         EnapsoGraphDBClient.PREFIX_OWL,
         EnapsoGraphDBClient.PREFIX_RDF,
@@ -27,33 +26,30 @@ const EnapsoGraphDBAdmin = {
     ],
 
     // the GraphDB endpoint for queries and updates
-    graphDBEndpoints: {},
+    mEndpoints: {},
 
     // instantiate the GraphDB endpoint 
-    getGraphDBEndpoint: function (aOptions = { repository: this.REPOSITORY }) {
-        let lRepo = aOptions.repository;
-        if (!this.graphDBEndpoints[lRepo]) {
-            this.graphDBEndpoints[lRepo] =
+    getEndpoint: function (aRepository) {
+        if (!this.mEndpoints[aRepository]) {
+            this.mEndpoints[aRepository] =
                 new EnapsoGraphDBClient.Endpoint({
-                    queryURL: this.QUERY_URL.replace(/\{repositoryID\}/ig, lRepo),
-                    updateURL: this.UPDATE_URL.replace(/\{repositoryID\}/ig, lRepo),
-                    username: this.USERNAME,
-                    password: this.PASSWORD,
+                    baseURL: this.BASE_URL,
+                    repository: aRepository,
                     prefixes: this.DEFAULT_PREFIXES
                 });
         }
-        return this.graphDBEndpoints[lRepo];
+        return this.mEndpoints[aRepository];
     },
 
-    getHeaders: function () {
+    getHeaders: function (aOptions = { repository: 'Test' }) {
+        let lEndpoint = this.getEndpoint(aOptions.repository);
         return {
             "Accept":
                 "application/sparql-results+json,application/json",
-            "Content-Type": 
+            "Content-Type":
                 "application/json",
             "Authorization":
-                "Basic " + Buffer.from(this.USERNAME +
-                    ":" + this.PASSWORD).toString('base64')
+                lEndpoint.getAuthenticationHeader()
         }
     },
 
@@ -65,6 +61,10 @@ const EnapsoGraphDBAdmin = {
             json: true
         };
         return request(options);
+    },
+
+    createRepository: async function(aOptions) {
+
     },
 
     downloadRepositoryToText: async function (aOptions = {
@@ -95,7 +95,7 @@ const EnapsoGraphDBAdmin = {
     },
 
     clearRepository: async function (aOptions = { repository: "Test" }) {
-        let lEndpoint = this.getGraphDBEndpoint({ repository: aOptions.repository });
+        let lEndpoint = this.getEndpoint({ repository: aOptions.repository });
         let lRes = lEndpoint.update(
             `CLEAR ALL`
         );
@@ -139,7 +139,7 @@ const EnapsoGraphDBAdmin = {
     },
 
     clearContext: async function (aOptions = { repository: "Test", context: "Test" }) {
-        let lEndpoint = this.getGraphDBEndpoint({ repository: aOptions.repository });
+        let lEndpoint = this.getEndpoint({ repository: aOptions.repository });
         let lRes = lEndpoint.update(
             `CLEAR GRAPH <${aOptions.context}>`
         );
@@ -189,7 +189,7 @@ const EnapsoGraphDBAdmin = {
         let options = {
             method: 'POST',
             // uri: this.BASEURL + '/rest/data/import/upload/' + this.REPOSITORY, // + '/url',
-            uri: this.BASEURL + '/rest/data/import/upload/' + this.REPOSITORY + '/text',
+            uri: this.getEndpoint(this.REPOSITORY).getBaseURL() + '/rest/data/import/upload/' + this.REPOSITORY + '/text',
             body: lConfig,
             headers: this.getHeaders(),
             json: true

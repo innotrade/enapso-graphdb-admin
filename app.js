@@ -11,7 +11,9 @@ console.log("Enapso GraphDB Admin Demo");
     var lRes;
 
     // lists all repositories operated in your GraphDB instance
-    lRes = await EnapsoGraphDBAdminDemo.getEndpoint.login(
+    lRes = await EnapsoGraphDBAdminDemo.getEndpoint({
+        repository: EnapsoGraphDBAdminDemo.GRAPHDB_REPOSITORY
+    }).login(
         EnapsoGraphDBAdminDemo.GRAPHDB_USERNAME, 
         EnapsoGraphDBAdminDemo.GRAPHDB_PASSWORD
     );
