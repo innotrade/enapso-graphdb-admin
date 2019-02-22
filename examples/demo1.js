@@ -47,7 +47,7 @@ const EnapsoGraphDBAdminDemo = {
     downloadToTextDemo: async function () {
         var lRes = await EnapsoGraphDBAdmin.downloadRepositoryToText({
             repository: GRAPHDB_REPOSITORY,
-            format: EnapsoGraphDBClient.FORMAT_TURTLE,
+            format: EnapsoGraphDBClient.FORMAT_TURTLE.type,
             context: "http://ont.enapso.com/test"
         });
         return lRes;
@@ -57,7 +57,7 @@ const EnapsoGraphDBAdminDemo = {
         let lFormat = EnapsoGraphDBClient.FORMAT_TURTLE;
         var lRes = await EnapsoGraphDBAdmin.downloadRepositoryToFile({
             repository: GRAPHDB_REPOSITORY,
-            format: lFormat,
+            format: lFormat.type,
             context: "http://ont.enapso.com/test",
             filename: "ontologies/test" + lFormat.extension
         });

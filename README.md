@@ -76,7 +76,7 @@ The context is optional. If you do not pass a context, the entire repository is 
 downloadToTextDemo: async function () {
     var lRes = await EnapsoGraphDBAdmin.downloadRepositoryToText({
         repository: GRAPHDB_REPOSITORY,
-        format: EnapsoGraphDBClient.FORMAT_TURTLE,
+        format: EnapsoGraphDBClient.FORMAT_TURTLE.type,
         context: "http://ont.enapso.com/test"
     });
     return lRes;
@@ -93,7 +93,7 @@ downloadToFileDemo: async function () {
     let lFormat = EnapsoGraphDBClient.FORMAT_TURTLE;
     var lRes = await EnapsoGraphDBAdmin.downloadRepositoryToFile({
         repository: GRAPHDB_REPOSITORY,
-        format: lFormat,
+        format: lFormat.type,
         context: "http://ont.enapso.com/test",
         filename: "ontologies/test" + lFormat.extension
     });
