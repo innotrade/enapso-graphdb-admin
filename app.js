@@ -2,12 +2,25 @@
 // (C) Copyright 2019 Innotrade GmbH, Herzogenrath, NRW, Germany
 
 // require the Enapso GraphDB Admin Demo module
+const EnapsoGraphDBClient = require("enapso-graphdb-client");
 const EnapsoGraphDBAdminDemo = require("./examples/demo1");
 
 console.log("Enapso GraphDB Admin Demo");
 
 (async () => {
     var lRes;
+
+    // lists all repositories operated in your GraphDB instance
+    lRes = await EnapsoGraphDBAdminDemo.getEndpoint.login(
+        EnapsoGraphDBAdminDemo.GRAPHDB_USERNAME, 
+        EnapsoGraphDBAdminDemo.GRAPHDB_PASSWORD
+    );
+    console.log("Login:\n" + JSON.stringify(lRes, null, 2));
+
+        // downloads a repository operated in your GraphDB instance
+        lRes = await EnapsoGraphDBAdminDemo.uploadFileDemo();
+        console.log("Upload File:\n" + JSON.stringify(lRes, null, 2));
+        return;    
 
     // clears the entire "Test" repository
     // CAUTION! This operation cannot be undone!

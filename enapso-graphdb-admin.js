@@ -14,12 +14,12 @@ const EnapsoGraphDBClient = require("enapso-graphdb-client");
 
 const EnapsoGraphDBAdmin = {
 
+    BASE_URL: process.env.GRAPHDB_BASE_URL || 'http://localhost:7200',
     QUERY_URL: process.env.GRAPHDB_QUERY_URL || 'http://localhost:7200/repositories/{repositoryID}',
     UPDATE_URL: process.env.GRAPHDB_UPDATE_URL || 'http://localhost:7200/repositories/{repositoryID}/statements',
     USERNAME: process.env.GRAPHDB_USERNAME || "Test",
     PASSWORD: process.env.GRAPHDB_PASSWORD || "Test",
     REPOSITORY: process.env.GRAPHDB_REPOSITORY || "Test",
-    BASEURL: process.env.GRAPHDB_BASEURL || "http://localhost:7200",
     DEFAULT_PREFIXES: [
         EnapsoGraphDBClient.PREFIX_OWL,
         EnapsoGraphDBClient.PREFIX_RDF,
@@ -45,13 +45,23 @@ const EnapsoGraphDBAdmin = {
         return this.graphDBEndpoints[lRepo];
     },
 
+    getHeaders: function () {
+        return {
+            "Accept":
+                "application/sparql-results+json,application/json",
+            "Content-Type": 
+                "application/json",
+            "Authorization":
+                "Basic " + Buffer.from(this.USERNAME +
+                    ":" + this.PASSWORD).toString('base64')
+        }
+    },
+
     getRepositories: async function (aOptions) {
         let options = {
             method: 'GET',
-            uri: this.BASEURL + '/rest/repositories',
-            headers: {
-                'Accept': 'application/sparql-results+json,application/json',
-            },
+            uri: this.BASE_URL + '/rest/repositories',
+            headers: this.getHeaders(),
             json: true
         };
         return request(options);
@@ -64,6 +74,7 @@ const EnapsoGraphDBAdmin = {
     }) {
         let options = {
             method: 'GET',
+            headers: this.getHeaders(),
             uri: this.BASEURL + '/repositories/' + aOptions.repository + '/statements'
                 + '?infer=false&Accept=' + encodeURIComponent(aOptions.format)
                 + (aOptions.context ? '&context=' + encodeURIComponent('<' + aOptions.context) + '>' : '')
@@ -95,9 +106,7 @@ const EnapsoGraphDBAdmin = {
         let options = {
             method: 'GET',
             uri: this.BASEURL + '/rest/locations',
-            headers: {
-                'Accept': 'application/sparql-results+json,application/json',
-            },
+            headers: this.getHeaders(),
             json: true
         };
         return request(options);
@@ -107,9 +116,7 @@ const EnapsoGraphDBAdmin = {
         let options = {
             method: 'GET',
             uri: this.BASEURL + '/rest/security/user',
-            headers: {
-                'Accept': 'application/sparql-results+json,application/json',
-            },
+            headers: this.getHeaders(),
             json: true
         };
         return request(options);
@@ -119,9 +126,7 @@ const EnapsoGraphDBAdmin = {
         let options = {
             method: 'GET',
             uri: this.BASEURL + "/repositories/" + aOptions.repository + "/contexts",
-            headers: {
-                'Accept': 'application/sparql-results+json,application/json',
-            },
+            headers: this.getHeaders(),
             json: true
         };
         var lRes = await request(options);
@@ -181,22 +186,12 @@ const EnapsoGraphDBAdmin = {
             "type": "free"
         };
 
-        let lHeaders = {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-        };
-
-        if (this.USERNAME && this.PASSWORD) {
-            lHeaders.Authorization =
-                'Basic ' + Buffer.from(this.USERNAME + ':' + this.PASSWORD).toString('base64');
-        }
-
         let options = {
             method: 'POST',
             // uri: this.BASEURL + '/rest/data/import/upload/' + this.REPOSITORY, // + '/url',
             uri: this.BASEURL + '/rest/data/import/upload/' + this.REPOSITORY + '/text',
             body: lConfig,
-            headers: lHeaders,
+            headers: this.getHeaders(),
             json: true
         };
 
