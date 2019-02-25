@@ -16,8 +16,8 @@ const EnapsoGraphDBAdmin = {
         return {
             "Accept":
                 "application/sparql-results+json,application/json",
-            "Content-Type":
-                "application/json",
+            // "Content-Type":
+            //    "application/json",
             "Authorization":
                 this.getAuthorization()
         }
@@ -160,7 +160,7 @@ const EnapsoGraphDBAdmin = {
         let options = {
             method: 'POST',
             // uri: this.BASEURL + '/rest/data/import/upload/' + this.REPOSITORY, // + '/url',
-            uri: this.getBaseURL() + '/rest/data/import/upload/' + 'Test' /* this.REPOSITORY */ + '/text',
+            uri: this.getBaseURL() + '/rest/data/import/upload/' + this.getRepository() + '/text',
             body: lConfig,
             headers: this.getHeaders(),
             json: true
