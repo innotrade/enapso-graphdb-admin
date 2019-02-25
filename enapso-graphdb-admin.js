@@ -15,9 +15,11 @@ const EnapsoGraphDBAdmin = {
     getHeaders: function () {
         return {
             "Accept":
-                "application/sparql-results+json,application/json",
-            // "Content-Type":
-            //    "application/json",
+                "application/json, text/plain, */*", //application/sparql-results+json,
+            "Content-Type":
+                "application/json;charset=UTF-8",
+            "X-GraphDB-Repository": 
+                this.getRepository(),
             "Authorization":
                 this.getAuthorization()
         }
@@ -26,10 +28,10 @@ const EnapsoGraphDBAdmin = {
     // returns all repositories
     getRepositories: async function () {
         let lOptions = {
-            method: 'GET',
-            uri: this.getBaseURL() + '/rest/repositories',
-            headers: this.getHeaders(),
-            json: true
+            "method": "GET",
+            "uri": this.getBaseURL() + "/rest/repositories",
+            "headers": this.getHeaders(),
+            "json": true
         };
         return request(lOptions);
     },
@@ -46,7 +48,7 @@ const EnapsoGraphDBAdmin = {
         let options = {
             method: 'GET',
             headers: this.getHeaders(),
-            uri: this.BASEURL + '/repositories/' + aOptions.repository + '/statements'
+            uri: this.getBaseURL() + '/repositories/' + aOptions.repository + '/statements'
                 + '?infer=false&Accept=' + encodeURIComponent(aOptions.format)
                 + (aOptions.context ? '&context=' + encodeURIComponent('<' + aOptions.context) + '>' : '')
         };
@@ -86,7 +88,7 @@ const EnapsoGraphDBAdmin = {
     getUsers: async function (aOptions) {
         let options = {
             method: 'GET',
-            uri: this.BASEURL + '/rest/security/user',
+            uri: this.getBaseURL() + '/rest/security/user',
             headers: this.getHeaders(),
             json: true
         };
@@ -96,7 +98,7 @@ const EnapsoGraphDBAdmin = {
     getContexts: async function (aOptions) {
         let options = {
             method: 'GET',
-            uri: this.BASEURL + "/repositories/" + aOptions.repository + "/contexts",
+            uri: this.getBaseURL() + "/repositories/" + aOptions.repository + "/contexts",
             headers: this.getHeaders(),
             json: true
         };
@@ -119,25 +121,14 @@ const EnapsoGraphDBAdmin = {
 
     upload: async function (aOptions) {
         aOptions = aOptions || {};
-        /*
-        let lFromURL = aOptions.url;
-        let lRepository = aOptions.repository || this.REPOSITORY;
-        let lUsername = aOptions.username || this.USERNAME;
-        let lPassword = aOptions.password || this.PASSWORD;
-        let lBaseURL = aOptions.baseURL || this.BASEURL;
-        let lBaseURI = aOptions.baseURI;
-        let lFormat = aOptions.format;
-        let lName = aOptions.name;
-        */
-
         let lConfig = {
             "baseURI": aOptions.baseURI,
             "context": aOptions.context,
-            "data": aOptions.data,  // lFromURL
-            "forceSerial": true,
-            "format": aOptions.format, // lFormat,
+            "data": aOptions.data,
+            "forceSerial": false,
+            "format": aOptions.format,
             "message": 'message',
-            "name": "", // lName,
+            "name": "",
             "parserSettings": {
                 "failOnUnknownDataTypes": false,
                 "failOnUnknownLanguageTags": false,
@@ -152,14 +143,13 @@ const EnapsoGraphDBAdmin = {
             },
             "replaceGraphs": [
             ],
-            "status": "PENDING",
+            "status": "NONE",
             "timestamp": 0,
-            "type": "free"
+            "type": "text"
         };
 
         let options = {
             method: 'POST',
-            // uri: this.BASEURL + '/rest/data/import/upload/' + this.REPOSITORY, // + '/url',
             uri: this.getBaseURL() + '/rest/data/import/upload/' + this.getRepository() + '/text',
             body: lConfig,
             headers: this.getHeaders(),
@@ -201,6 +191,7 @@ const EnapsoGraphDBAdmin = {
     }
 }
 
+// extend the Enapso GraphDB client by the additional Admin features
 for(let lKey in EnapsoGraphDBAdmin) {
     EnapsoGraphDBClient.Endpoint.prototype[lKey] = EnapsoGraphDBAdmin[lKey];
 }
