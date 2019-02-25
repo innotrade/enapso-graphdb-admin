@@ -24,15 +24,42 @@ console.log("Enapso GraphDB Admin Demo");
         EnapsoGraphDBAdminDemo.GRAPHDB_PASSWORD
     );
     // check authentication
-    console.log("Login:\n" + JSON.stringify(lLogin, null, 2));
+    // console.log("\nLogin:\n" + JSON.stringify(lLogin, null, 2));
     if( !lLogin.success) {
         return;
     }
 
     // lists all repositories
-    lRes = await lEndpoint.getRepositories();
-    console.log("Repositories:\n" + JSON.stringify(lRes, null, 2));
+    // lRes = await lEndpoint.getRepositories();
+    // console.log("\nRepositories:\n" + JSON.stringify(lRes, null, 2));
 
+    // lists all locations (requires admin role)
+    // lRes = await lEndpoint.getLocations();
+    // console.log("\nLocations:\n" + JSON.stringify(lRes, null, 2));
+
+    // lists all contexts (named graph) in the repository
+    // lRes = await lEndpoint.getContexts();
+    // console.log("\nContexts:\n" + JSON.stringify(lRes, null, 2));
+
+    // lists all users (requires admin role)
+    // lRes = await lEndpoint.getUsers();
+    // console.log("\nUsers:\n" + JSON.stringify(lRes, null, 2));
+
+    // download a repository or named graph to memory
+    // lRes = await lEndpoint.downloadToText({
+    //     format: EnapsoGraphDBClient.FORMAT_TURTLE.type
+    // });
+    // console.log("\nDownload (memory):\n" + JSON.stringify(lRes, null, 2));
+
+    // download a repository or named graph to file
+    let lFormat = EnapsoGraphDBClient.FORMAT_TURTLE;
+    lRes = await lEndpoint.downloadToFile({
+        format: lFormat.type,
+        filename: "ontologies/" + lEndpoint.getRepository() + lFormat.extension
+    });
+    console.log("\nDownload (file):\n" + JSON.stringify(lRes, null, 2));
+
+    /*
     // upload a file
     lRes = await lEndpoint.uploadFromFile({
         filename: "ontologies/test.owl",
@@ -41,40 +68,15 @@ console.log("Enapso GraphDB Admin Demo");
         context: "http://ont.enapso.com/test"
     });
     console.log("uploadFromFile:\n" + JSON.stringify(lRes, null, 2));
-    return;
+    */
+   return;
 
     /*
-
-    // lists all repositories operated in your GraphDB instance
-    lRes = await EnapsoGraphDBAdmin.getEndpoint({
-        baseURL: EnapsoGraphDBAdminDemo.GRAPHDB_BASE_URL,
-        repository: EnapsoGraphDBAdminDemo.GRAPHDB_REPOSITORY
-    }).
-        // downloads a repository operated in your GraphDB instance
-        lRes = await EnapsoGraphDBAdminDemo.uploadFileDemo();
-        console.log("Upload File:\n" + JSON.stringify(lRes, null, 2));
-        return;    
-
-    // clears the entire "Test" repository
+     // clears the entire "Test" repository
     // CAUTION! This operation cannot be undone!
     // lRes = await EnapsoGraphDBAdminDemo.clearRepositoryDemo();
     // console.log("Clear Repository:\n" + JSON.stringify(lRes, null, 2));
 
-    // lists all repositories operated in your GraphDB instance
-    lRes = await EnapsoGraphDBAdminDemo.getRepositoriesDemo();
-    console.log("Repositories:\n" + JSON.stringify(lRes, null, 2));
-
-    // lists all locations configured in your GraphDB instance
-    lRes = await EnapsoGraphDBAdminDemo.getLocationsDemo();
-    console.log("Locations:\n" + JSON.stringify(lRes, null, 2));
-
-    // lists all users configured in your GraphDB instance
-    lRes = await EnapsoGraphDBAdminDemo.getUsersDemo();
-    console.log("Users:\n" + JSON.stringify(lRes, null, 2));
-
-    // lists all contexts (named graphs) configured in the "Test" Repository your GraphDB instance
-    lRes = await EnapsoGraphDBAdminDemo.getContextsDemo();
-    console.log("Contexts:\n" + JSON.stringify(lRes, null, 2));
 
     // clear the test context in the test repository
     lRes = await EnapsoGraphDBAdminDemo.clearContextDemo();
@@ -99,7 +101,6 @@ console.log("Enapso GraphDB Admin Demo");
         console.log("Download:\n" + lRes);
 
     }, 2000);
-
     */
 
 })();

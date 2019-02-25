@@ -25,6 +25,30 @@ const EnapsoGraphDBAdmin = {
         }
     },
 
+    execRequest: async function(aOptions) {
+        var lRes;
+        try {
+            aOptions.resolveWithFullResponse = true;
+            lRes = await request(aOptions);
+            lRes = {
+                "success": 200 === lRes.statusCode,
+                "statusCode":  lRes.statusCode,
+                "statusMessage":  
+                    lRes.statusMessage ? 
+                    lRes.statusMessage : 
+                    (200 === lRes.statusCode ? "OK" : "ERROR " + lRes.statusCode),
+                "data": lRes.body
+            };
+        } catch(lErr) {
+            lRes = {
+                "success": false,
+                "statusCode": lErr.statusCode ? lErr.statusCode : -1,
+                "statusMessage": lErr.message
+            }
+        }
+        return lRes;
+    },
+
     // returns all repositories
     getRepositories: async function () {
         let lOptions = {
@@ -33,37 +57,38 @@ const EnapsoGraphDBAdmin = {
             "headers": this.getHeaders(),
             "json": true
         };
-        return request(lOptions);
+        var lRes = this.execRequest(lOptions);
+        return lRes;
     },
 
     createRepository: async function(aOptions) {
 
     },
 
-    downloadRepositoryToText: async function (aOptions = {
-        repository: "Test",
-        format: EnapsoGraphDBClient.FORMAT_TURTLE.type,
-        context: null
-    }) {
-        let options = {
-            method: 'GET',
-            headers: this.getHeaders(),
-            uri: this.getBaseURL() + '/repositories/' + aOptions.repository + '/statements'
-                + '?infer=false&Accept=' + encodeURIComponent(aOptions.format)
-                + (aOptions.context ? '&context=' + encodeURIComponent('<' + aOptions.context) + '>' : '')
+    downloadToText: async function (aOptions) {
+        aOptions = aOptions || {};
+        aOptions.repository = aOptions.repository || this.getRepository();
+        aOptions.format = aOptions.format || EnapsoGraphDBClient.FORMAT_TURTLE.type;
+        let lOptions = {
+            "method": "GET",
+            "headers": this.getHeaders(),
+            "uri": this.getBaseURL() + "/repositories/" + aOptions.repository + "/statements"
+                + "?infer=" + (aOptions.inference ? "true" : "false")
+                + "&Accept=" + encodeURIComponent(aOptions.format)
+                + (aOptions.context ? "&context=" + encodeURIComponent("<" + aOptions.context) + ">" : "")
         };
-        return request(options);
+        var lRes = this.execRequest(lOptions);
+        return lRes;
     },
 
-    downloadRepositoryToFile: async function (aOptions = {
-        repository: "Test",
-        format: EnapsoGraphDBClient.FORMAT_TURTLE.type,
-        context: null,
-        filename: "statements" + EnapsooGraphDBClient.FORMAT_TURTLE.extension
-    }) {
-        var lRes = await this.downloadRepositoryToText(aOptions);
-        // todo: Implement error handling
-        fs.writeFileSync(aOptions.filename, lRes);
+    downloadToFile: async function (aOptions) {
+        aOptions = aOptions || {};
+        aOptions.filename = aOptions.filename || "statements" + EnapsooGraphDBClient.FORMAT_TURTLE.extension;
+        var lRes = await this.downloadToText(aOptions);
+        if(lRes.success) {
+            // todo: error handling and make it asynchronous
+            fs.writeFileSync(aOptions.filename, lRes.data);
+        }
         return lRes;
     },
 
@@ -75,39 +100,45 @@ const EnapsoGraphDBAdmin = {
         return lRes;
     },
 
-    getLocations: async function (aOptions) {
-        let options = {
-            method: 'GET',
-            uri: this.BASEURL + '/rest/locations',
-            headers: this.getHeaders(),
-            json: true
+    // get locations (requires repositoty manager role)
+    getLocations: async function () {
+        let lOptions = {
+            "method": "GET",
+            "uri": this.getBaseURL() + "/rest/locations",
+            "headers": this.getHeaders(),
+            "json": true
         };
-        return request(options);
+        var lRes = this.execRequest(lOptions);
+        return lRes;
     },
 
-    getUsers: async function (aOptions) {
-        let options = {
-            method: 'GET',
-            uri: this.getBaseURL() + '/rest/security/user',
-            headers: this.getHeaders(),
-            json: true
+    // get users and their roles  (requires admin role)
+    getUsers: async function () {
+        let lOptions = {
+            "method": "GET",
+            "uri": this.getBaseURL() + "/rest/security/user",
+            "headers": this.getHeaders(),
+            "json": true
         };
-        return request(options);
+        var lRes = this.execRequest(lOptions);
+        return lRes;
     },
 
-    getContexts: async function (aOptions) {
-        let options = {
-            method: 'GET',
-            uri: this.getBaseURL() + "/repositories/" + aOptions.repository + "/contexts",
-            headers: this.getHeaders(),
-            json: true
+    // get the contexts (named graphs of the repository)
+    getContexts: async function () {
+        let lOptions = {
+            "method": "GET",
+            "uri": this.getBaseURL() + "/repositories/" + this.getRepository() + "/contexts",
+            "headers": this.getHeaders(),
+            "json": true
         };
-        var lRes = await request(options);
+        var lRes = await request(lOptions);
         // transform the bindings into a more convenient result format (optional)
         lRes = EnapsoGraphDBClient.transformBindingsToResultSet(lRes, {
             // drop the prefixes for easier resultset readability (optional)
             dropPrefixes: false
         });
+        var lRes = this.execRequest(lOptions);
         return lRes;
     },
 

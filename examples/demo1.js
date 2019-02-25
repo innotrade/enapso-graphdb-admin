@@ -72,33 +72,8 @@ const EnapsoGraphDBAdminDemo = {
         return lRes;
     },
 
-    getRepositoriesDemo: async function () {
-        var lRes = await EnapsoGraphDBAdmin.getRepositories({
-        });
-        return lRes;
-    },
-
     clearRepositoryDemo: async function () {
         let lRes = await EnapsoGraphDBAdmin.clearRepository({
-            repository: GRAPHDB_REPOSITORY
-        });
-        return lRes;
-    },
-
-    getLocationsDemo: async function () {
-        var lRes = await EnapsoGraphDBAdmin.getLocations({
-        });
-        return lRes;
-    },
-
-    getUsersDemo: async function () {
-        var lRes = await EnapsoGraphDBAdmin.getUsers({
-        });
-        return lRes;
-    },
-
-    getContextsDemo: async function () {
-        let lRes = await EnapsoGraphDBAdmin.getContexts({
             repository: GRAPHDB_REPOSITORY
         });
         return lRes;
