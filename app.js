@@ -3,6 +3,8 @@
 
 // require the Enapso GraphDB Admin Demo module
 const EnapsoGraphDBClient = require("enapso-graphdb-client");
+const EnapsoGraphDBAdmin = require("./enapso-graphdb-admin");
+
 const EnapsoGraphDBAdminDemo = require("./examples/demo1");
 
 console.log("Enapso GraphDB Admin Demo");
@@ -10,15 +12,44 @@ console.log("Enapso GraphDB Admin Demo");
 (async () => {
     var lRes;
 
-    // lists all repositories operated in your GraphDB instance
-    lRes = await EnapsoGraphDBAdminDemo.getEndpoint({
-        repository: EnapsoGraphDBAdminDemo.GRAPHDB_REPOSITORY
-    }).login(
+    // instantiate a GraphDB endpoint
+    let lEndpoint = new EnapsoGraphDBClient.Endpoint({
+        baseURL: EnapsoGraphDBAdminDemo.GRAPHDB_BASE_URL,
+        repository: EnapsoGraphDBAdminDemo.GRAPHDB_REPOSITORY,
+        prefixes: EnapsoGraphDBAdminDemo.GRAPHDB_DEFAULT_PREFIXES
+    });
+    // login into GraphDB using JWT
+    let lLogin = await lEndpoint.login(
         EnapsoGraphDBAdminDemo.GRAPHDB_USERNAME, 
         EnapsoGraphDBAdminDemo.GRAPHDB_PASSWORD
     );
-    console.log("Login:\n" + JSON.stringify(lRes, null, 2));
+    // check authentication
+    console.log("Login:\n" + JSON.stringify(lLogin, null, 2));
+    if( !lLogin.success) {
+        return;
+    }
 
+    // lists all repositories
+    lRes = await lEndpoint.getRepositories();
+    console.log("Repositories:\n" + JSON.stringify(lRes, null, 2));
+
+    // upload a file
+    lRes = await lEndpoint.uploadFromFile({
+        filename: "ontologies/test.owl",
+        format: "application/rdf+xml",
+        baseURI: "http://ont.enapso.com/test#",
+        context: "http://ont.enapso.com/test"
+    });
+    console.log("uploadFromFile:\n" + JSON.stringify(lRes, null, 2));
+    return;
+
+    /*
+
+    // lists all repositories operated in your GraphDB instance
+    lRes = await EnapsoGraphDBAdmin.getEndpoint({
+        baseURL: EnapsoGraphDBAdminDemo.GRAPHDB_BASE_URL,
+        repository: EnapsoGraphDBAdminDemo.GRAPHDB_REPOSITORY
+    }).
         // downloads a repository operated in your GraphDB instance
         lRes = await EnapsoGraphDBAdminDemo.uploadFileDemo();
         console.log("Upload File:\n" + JSON.stringify(lRes, null, 2));
@@ -69,5 +100,6 @@ console.log("Enapso GraphDB Admin Demo");
 
     }, 2000);
 
+    */
 
 })();

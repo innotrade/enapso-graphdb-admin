@@ -4,63 +4,34 @@
 // For further detalils please also refer to the GraphDB admin documentation at: http://localhost:7200/webapi
 // http://graphdb.ontotext.com/documentation/free/devhub/workbench-rest-api/location-and-repository-tutorial.html
 
-const https = require('https');
-const http = require('http');
-const fs = require("fs");
+const fs = require('fs');
 const request = require('request-promise');
 
 // require the Enapso GraphDB Client package
-const EnapsoGraphDBClient = require("enapso-graphdb-client");
+const EnapsoGraphDBClient = require('enapso-graphdb-client');
 
 const EnapsoGraphDBAdmin = {
 
-    BASE_URL: process.env.GRAPHDB_BASE_URL || 'http://localhost:7200',
-    USERNAME: process.env.GRAPHDB_USERNAME || "Test",
-    PASSWORD: process.env.GRAPHDB_PASSWORD || "Test",
-    REPOSITORY: process.env.GRAPHDB_REPOSITORY || "Test",
-
-    DEFAULT_PREFIXES: [
-        EnapsoGraphDBClient.PREFIX_OWL,
-        EnapsoGraphDBClient.PREFIX_RDF,
-        EnapsoGraphDBClient.PREFIX_RDFS
-    ],
-
-    // the GraphDB endpoint for queries and updates
-    mEndpoints: {},
-
-    // instantiate the GraphDB endpoint 
-    getEndpoint: function (aRepository) {
-        if (!this.mEndpoints[aRepository]) {
-            this.mEndpoints[aRepository] =
-                new EnapsoGraphDBClient.Endpoint({
-                    baseURL: this.BASE_URL,
-                    repository: aRepository,
-                    prefixes: this.DEFAULT_PREFIXES
-                });
-        }
-        return this.mEndpoints[aRepository];
-    },
-
-    getHeaders: function (aOptions = { repository: 'Test' }) {
-        let lEndpoint = this.getEndpoint(aOptions.repository);
+    getHeaders: function () {
         return {
             "Accept":
                 "application/sparql-results+json,application/json",
             "Content-Type":
                 "application/json",
             "Authorization":
-                lEndpoint.getAuthenticationHeader()
+                this.getAuthorization()
         }
     },
 
-    getRepositories: async function (aOptions) {
-        let options = {
+    // returns all repositories
+    getRepositories: async function () {
+        let lOptions = {
             method: 'GET',
-            uri: this.BASE_URL + '/rest/repositories',
+            uri: this.getBaseURL() + '/rest/repositories',
             headers: this.getHeaders(),
             json: true
         };
-        return request(options);
+        return request(lOptions);
     },
 
     createRepository: async function(aOptions) {
@@ -189,7 +160,7 @@ const EnapsoGraphDBAdmin = {
         let options = {
             method: 'POST',
             // uri: this.BASEURL + '/rest/data/import/upload/' + this.REPOSITORY, // + '/url',
-            uri: this.getEndpoint(this.REPOSITORY).getBaseURL() + '/rest/data/import/upload/' + this.REPOSITORY + '/text',
+            uri: this.getBaseURL() + '/rest/data/import/upload/' + 'Test' /* this.REPOSITORY */ + '/text',
             body: lConfig,
             headers: this.getHeaders(),
             json: true
@@ -228,6 +199,10 @@ const EnapsoGraphDBAdmin = {
         });
         return lRes;
     }
+}
+
+for(let lKey in EnapsoGraphDBAdmin) {
+    EnapsoGraphDBClient.Endpoint.prototype[lKey] = EnapsoGraphDBAdmin[lKey];
 }
 
 module.exports = EnapsoGraphDBAdmin;

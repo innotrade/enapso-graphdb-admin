@@ -1,6 +1,6 @@
 {
     "name": "enapso-graphdb-admin",
-    "version": "0.1.10",
+    "version": "0.1.11",
     "description": "Enapso Ontotext GraphDB 8.x Admin for JavaScript",
     "main": "enapso-graphdb-admin.js",
     "scripts": {

@@ -1,4 +1,4 @@
-// Innotrade Enapso GraphDB Admin Automated Test Suite
+// Innotrade Enapso GraphDB Admin Demo
 // (C) Copyright 2019 Innotrade GmbH, Herzogenrath, NRW, Germany
 
 const EnapsoGraphDBClient = require("enapso-graphdb-client");
@@ -14,7 +14,7 @@ const
     ;
 
 // the default prefixes for all SPARQL queries
-const DEFAULT_PREFIXES = [
+const GRAPHDB_DEFAULT_PREFIXES = [
     EnapsoGraphDBClient.PREFIX_OWL,
     EnapsoGraphDBClient.PREFIX_RDF,
     EnapsoGraphDBClient.PREFIX_RDFS
@@ -27,12 +27,13 @@ const EnapsoGraphDBAdminDemo = {
     GRAPHDB_USERNAME: GRAPHDB_USERNAME,
     GRAPHDB_PASSWORD: GRAPHDB_PASSWORD,
     GRAPHDB_TEST_CONTEXT: GRAPHDB_TEST_CONTEXT,
+    GRAPHDB_DEFAULT_PREFIXES: GRAPHDB_DEFAULT_PREFIXES,
 
     // instantiate the GraphDB endpoint
     graphDBEndpoint: new EnapsoGraphDBClient.Endpoint({
         baseURL: GRAPHDB_BASE_URL,
         repository: GRAPHDB_REPOSITORY,
-        prefixes: DEFAULT_PREFIXES
+        prefixes: GRAPHDB_DEFAULT_PREFIXES
     }),
 
     getEndpoint: function() {
