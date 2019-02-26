@@ -92,9 +92,10 @@ const EnapsoGraphDBAdmin = {
         return lRes;
     },
 
-    clearRepository: async function (aOptions = { repository: "Test" }) {
-        let lEndpoint = this.getEndpoint({ repository: aOptions.repository });
-        let lRes = lEndpoint.update(
+    // empty the entire repository including all its named graphs
+    // caution! this operation cannot be undone!
+    clearRepository: async function () {
+        let lRes = await this.update(
             `CLEAR ALL`
         );
         return lRes;
@@ -142,11 +143,18 @@ const EnapsoGraphDBAdmin = {
         return lRes;
     },
 
-    clearContext: async function (aOptions = { repository: "Test", context: "Test" }) {
-        let lEndpoint = this.getEndpoint({ repository: aOptions.repository });
-        let lRes = lEndpoint.update(
-            `CLEAR GRAPH <${aOptions.context}>`
-        );
+    // remove the entire context (named graph) of the repository
+    // caution! this operation cannot be undone!
+    clearContext: async function (aOptions) {
+        aOptions = aOptions || {};
+        if(typeof aOptions === "string") {
+            aOptions = {
+                "context": aOptions
+            };
+        }
+        aOptions.context = aOptions.context || this.getDefaultContext();
+        let lSPARQL = `CLEAR GRAPH <${aOptions.context}>`;
+        let lRes = await this.update(lSPARQL);
         return lRes;
     },
 

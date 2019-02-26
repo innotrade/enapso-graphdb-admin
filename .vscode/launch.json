@@ -8,7 +8,7 @@
             "type": "node",
             "request": "launch",
             "name": "Launch Demo",
-            "program": "${workspaceFolder}/app.js"
+            "program": "${workspaceFolder}/examples/demo1.js"
         }
     ]
 }
