@@ -18,53 +18,84 @@ To discuss questions and suggestions with the Enapso and GraphDB community, we'l
 ## Instantiate an Enapso GraphDB and Admin Client
 
 ```javascript
+// require the Enapso GraphDB Client and Admin packages
 const EnapsoGraphDBClient = require("enapso-graphdb-client");
-const EnapsoGraphDBAdmin = require("enapso-graphdb-admin");
+const EnapsoGraphDBAdmin = require("../enapso-graphdb-admin");
 
 // connection data to the running GraphDB instance
 const
-    GRAPHDB_QUERY_URL = 
-        'http://localhost:7200/repositories/Test',
-    GRAPHDB_UPDATE_URL = 
-        'http://localhost:7200/repositories/Test/statements',
+    GRAPHDB_BASE_URL = 'http://localhost:7200',
     GRAPHDB_REPOSITORY = 'Test',
     GRAPHDB_USERNAME = 'Test',
-    GRAPHDB_PASSWORD = 'Test';
+    GRAPHDB_PASSWORD = 'Test',
+    GRAPHDB_CONTEXT_TEST = 'http://ont.enapso.com/test'
 
 // the default prefixes for all SPARQL queries
-const DEFAULT_PREFIXES = [
+const GRAPHDB_DEFAULT_PREFIXES = [
     EnapsoGraphDBClient.PREFIX_OWL,
     EnapsoGraphDBClient.PREFIX_RDF,
     EnapsoGraphDBClient.PREFIX_RDFS
 ];
 
+console.log("Enapso GraphDB Admin Demo");
+
 const EnapsoGraphDBAdminDemo = {
 
-    // instantiate the GraphDB endpoint
-    graphDBEndpoint: new EnapsoGraphDBClient.Endpoint({
-        queryURL: GRAPHDB_QUERY_URL,
-        updateURL: GRAPHDB_UPDATE_URL,
-        username: GRAPHDB_USERNAME,
-        password: GRAPHDB_PASSWORD,
-        prefixes: DEFAULT_PREFIXES
-    }),
+    graphDBEndpoint: null,
+    authentication: null,
 
-    :
-    :
+    createEndpoint: async function () {
+        // instantiate a new GraphDB endpoint
+        return new EnapsoGraphDBClient.Endpoint({
+            baseURL: GRAPHDB_BASE_URL,
+            repository: GRAPHDB_REPOSITORY,
+            prefixes: GRAPHDB_DEFAULT_PREFIXES
+        });
+    },
+
+    login: async function () {
+        // login into GraphDB using JWT
+        let lRes = await this.graphDBEndpoint.login(
+            GRAPHDB_USERNAME,
+            GRAPHDB_PASSWORD
+        );
+        return lRes;
+    },
+
+    // here numerous demo methods are located
+
+    demo: async function () {
+        this.graphDBEndpoint = await this.createEndpoint();
+        this.authentication = await this.login();
+        // verify authentication
+        if (!this.authentication.success) {
+            console.log("\nLogin failed:\n" + JSON.stringify(this.authentication, null, 2));
+            return;
+        }
+        console.log("\nLogin successful" /* + ":\nJSON.stringify(this.authentication, null, 2) */);
+
+        // continue to work with this.graphDBEndpoint
+        // :
+    }
 }
+
+// execute the demo(s)
+EnapsoGraphDBAdminDemo.demo();
 ```
 
 ## Upload a file to GraphDB
 
 ```javascript
-uploadFileDemo: async function () {
-    var lRes = await EnapsoGraphDBAdmin.uploadFromFile({
-        filename: 'ontologies/test.owl',
+demoUploadFromFile: async function () {
+    // upload a file
+    let resp = await this.graphDBEndpoint.uploadFromFile({
+        filename: "ontologies/test.owl",
         format: "application/rdf+xml",
         baseURI: "http://ont.enapso.com/test#",
         context: "http://ont.enapso.com/test"
     });
-    return lRes;
+    console.log("\nUploadFromFile:\n" + JSON.stringify(resp, null, 2));
+    return resp;
 }
 ```
 
@@ -74,13 +105,13 @@ For the available export formats, please refer to the EnapsoGraphDBClient.FORMAT
 The context is optional. If you do not pass a context, the entire repository is exported.
 
 ```javascript
-downloadToTextDemo: async function () {
-    var lRes = await EnapsoGraphDBAdmin.downloadRepositoryToText({
-        repository: GRAPHDB_REPOSITORY,
-        format: EnapsoGraphDBClient.FORMAT_TURTLE.type,
-        context: "http://ont.enapso.com/test"
+demoDownloadToText: async function () {
+    // download a repository or named graph to memory
+    resp = await this.graphDBEndpoint.downloadToText({
+        format: EnapsoGraphDBClient.FORMAT_TURTLE.type
     });
-    return lRes;
+    console.log("\nDownload (text):\n" + JSON.stringify(resp, null, 2));
+    return resp;
 }
 ```
 
@@ -90,25 +121,26 @@ For the available export formats, please refer to the EnapsoGraphDBClient.FORMAT
 The context is optional. If you do not pass a context, the entire repository is exported.
 
 ```javascript
-downloadToFileDemo: async function () {
+demoDownloadToFile: async function () {
+    // download a repository or named graph to file
     let lFormat = EnapsoGraphDBClient.FORMAT_TURTLE;
-    var lRes = await EnapsoGraphDBAdmin.downloadRepositoryToFile({
-        repository: GRAPHDB_REPOSITORY,
+    let resp = await this.graphDBEndpoint.downloadToFile({
         format: lFormat.type,
-        context: "http://ont.enapso.com/test",
-        filename: "ontologies/test" + lFormat.extension
+        filename: "ontologies/" + this.graphDBEndpoint.getRepository() + lFormat.extension
     });
-    return lRes;
+    console.log("\nDownload (file):\n" + JSON.stringify(resp, null, 2));
+    return resp;
 }
 ```
 
 ## List all repositories configured in your GraphDB instance
 
 ```javascript
-getRepositoriesDemo: async function () {
-    var lRes = await EnapsoGraphDBAdmin.getRepositories({
-    });
-    return lRes;
+demoGetRepositories: async function () {
+    // lists all repositories
+    resp = await this.graphDBEndpoint.getRepositories();
+    console.log("\nRepositories:\n" + JSON.stringify(resp, null, 2));
+    return resp;
 }
 ```
 
@@ -153,11 +185,12 @@ getRepositoriesDemo: async function () {
 The entire repository will be emptied, i.e. all data of this repository will be removed. The repository remains active.
 
 ```javascript
-clearRepositoryDemo: async function () {
-    let lRes = await EnapsoGraphDBAdmin.clearRepository({
-        repository: "Test"
-    });
-    return lRes;
+demoClearRepository: async function () {
+    // clear entire repository
+    // CAUTION! This operation empties the entire repository and cannot be undone!
+    let resp = await this.graphDBEndpoint.clearRepository();
+    console.log("\ClearRepository :\n" + JSON.stringify(resp, null, 2));
+    return resp;
 }
 ```
 
@@ -172,10 +205,11 @@ clearRepositoryDemo: async function () {
 ## List all users configured in your GraphDB instance
 
 ```javascript
-getUsersDemo: async function () {
-    var lRes = await EnapsoGraphDBAdmin.getUsers({
-    });
-    return lRes;
+demoGetUsers: async function () {
+    // lists all users (requires admin role)
+    let resp = await this.graphDBEndpoint.getUsers();
+    console.log("\nUsers:\n" + JSON.stringify(resp, null, 2));
+    return resp;
 }
 ```
 
@@ -217,11 +251,11 @@ getUsersDemo: async function () {
 ## List all contexts used in a given repository
 
 ```javascript
-getContextsDemo: async function () {
-    let lRes = await EnapsoGraphDBAdmin.getContexts({
-        repository: GRAPHDB_REPOSITORY
-    });
-    return lRes;
+demoGetContexts: async function () {
+    // lists all contexts (named graph) in the repository
+    let resp = await this.graphDBEndpoint.getContexts();
+    console.log("\nContexts:\n" + JSON.stringify(resp, null, 2));
+    return resp;
 }
 ```
 
@@ -245,12 +279,12 @@ getContextsDemo: async function () {
 The entire context will be emptied, i.e. all data from this context will be removed. The repository and other contexts remain active.
 
 ```javascript
-clearContextDemo: async function () {
-    let lRes = await EnapsoGraphDBAdmin.clearContext({
-        repository: "Test",
-        context: "http://ont.enapso.com/test"
-    });
-    return lRes;
+demoClearContext: async function () {
+    // clear context (named graph)
+    // CAUTION! This operation empties the named graph of the repository and cannot be undone!
+    let resp = await this.graphDBEndpoint.clearContext(GRAPHDB_CONTEXT_TEST);
+    console.log("\ClearContext :\n" + JSON.stringify(resp, null, 2));
+    return;
 }
 ```
 
@@ -265,10 +299,11 @@ clearContextDemo: async function () {
 ## Listing all locations configured in your GraphDB instance
 
 ```javascript
-getLocationsDemo: async function () {
-    var lRes = await EnapsoGraphDBAdmin.getLocations({
-    });
-    return lRes;
+demoGetLocations: async function () {
+    // lists all locations, requires repository manager role!
+    let resp = await this.graphDBEndpoint.getLocations();
+    console.log("\nLocations:\n" + JSON.stringify(resp, null, 2));
+    return resp;
 }
 ```
 
