@@ -54,7 +54,8 @@ const EnapsoGraphDBAdminDemo = {
 
     demoClearRepository: async function () {
         // clear entire repository
-        // CAUTION! This operation empties the entire repository and cannot be undone!
+        // CAUTION! This operation empties the entire repository 
+        // and cannot be undone!
         let resp = await this.graphDBEndpoint.clearRepository();
         console.log("\ClearRepository :\n" + JSON.stringify(resp, null, 2));
         return resp;
@@ -83,9 +84,12 @@ const EnapsoGraphDBAdminDemo = {
 
     demoClearContext: async function () {
         // clear context (named graph)
-        // CAUTION! This operation empties the named graph of the repository and cannot be undone!
-        let resp = await this.graphDBEndpoint.clearContext(GRAPHDB_CONTEXT_TEST);
-        console.log("\ClearContext :\n" + JSON.stringify(resp, null, 2));
+        // CAUTION! This operation empties the named graph 
+        // of the repository and cannot be undone!
+        let resp = await this.graphDBEndpoint.clearContext(
+            GRAPHDB_CONTEXT_TEST);
+        console.log("\ClearContext :\n" +
+            JSON.stringify(resp, null, 2));
         return;
     },
 
@@ -120,7 +124,7 @@ const EnapsoGraphDBAdminDemo = {
         resp = await this.graphDBEndpoint.downloadToText({
             format: EnapsoGraphDBClient.FORMAT_TURTLE.type
         });
-        console.log("\nDownload (text):\n" + 
+        console.log("\nDownload (text):\n" +
             JSON.stringify(resp, null, 2));
         return resp;
     },
