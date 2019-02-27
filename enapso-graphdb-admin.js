@@ -161,7 +161,7 @@ const EnapsoGraphDBAdmin = {
     upload: async function (aOptions) {
         aOptions = aOptions || {};
         let lConfig = {
-            "baseURI": aOptions.baseURI,
+            "baseURI": aOptions.baseIRI,
             "context": aOptions.context,
             "data": aOptions.data,
             "forceSerial": false,
@@ -203,7 +203,7 @@ const EnapsoGraphDBAdmin = {
         var lRes = await this.upload({
             data: lBuffer.toString(),
             format: aOptions.format,
-            baseURI: aOptions.baseURI,
+            baseIRI: aOptions.baseIRI,
             context: aOptions.context
         });
         return lRes;

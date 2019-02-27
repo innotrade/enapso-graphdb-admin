@@ -94,7 +94,7 @@ const EnapsoGraphDBAdminDemo = {
         let resp = await this.graphDBEndpoint.uploadFromFile({
             filename: "ontologies/test.owl",
             format: "application/rdf+xml",
-            baseURI: "http://ont.enapso.com/test#",
+            baseIRI: "http://ont.enapso.com/test#",
             context: "http://ont.enapso.com/test"
         });
         console.log("\nUploadFromFile:\n" + JSON.stringify(resp, null, 2));
@@ -106,9 +106,12 @@ const EnapsoGraphDBAdminDemo = {
         let lFormat = EnapsoGraphDBClient.FORMAT_TURTLE;
         let resp = await this.graphDBEndpoint.downloadToFile({
             format: lFormat.type,
-            filename: "ontologies/" + this.graphDBEndpoint.getRepository() + lFormat.extension
+            filename: "ontologies/" +
+                this.graphDBEndpoint.getRepository() +
+                lFormat.extension
         });
-        console.log("\nDownload (file):\n" + JSON.stringify(resp, null, 2));
+        console.log("\nDownload (file):\n" +
+            JSON.stringify(resp, null, 2));
         return resp;
     },
 
@@ -117,7 +120,8 @@ const EnapsoGraphDBAdminDemo = {
         resp = await this.graphDBEndpoint.downloadToText({
             format: EnapsoGraphDBClient.FORMAT_TURTLE.type
         });
-        console.log("\nDownload (text):\n" + JSON.stringify(resp, null, 2));
+        console.log("\nDownload (text):\n" + 
+            JSON.stringify(resp, null, 2));
         return resp;
     },
 
@@ -148,10 +152,11 @@ const EnapsoGraphDBAdminDemo = {
         this.authentication = await this.login();
         // verify authentication
         if (!this.authentication.success) {
-            console.log("\nLogin failed:\n" + JSON.stringify(this.authentication, null, 2));
+            console.log("\nLogin failed:\n" +
+                JSON.stringify(this.authentication, null, 2));
             return;
         }
-        console.log("\nLogin successful" /* + ":\nJSON.stringify(this.authentication, null, 2) */);
+        console.log("\nLogin successful");
 
         // clear entire repository
         // CAUTION! This operation empties the entire repository and cannot be undone!
@@ -171,13 +176,13 @@ const EnapsoGraphDBAdminDemo = {
 
         // this.demoGetContexts();
 
-        // this.demoUploadFromFile();
+        this.demoUploadFromFile();
 
         // this.demoDownloadToFile();
 
         // this.demoDownloadToText();
 
-        this.demoQuery();
+        // this.demoQuery();
     }
 }
 

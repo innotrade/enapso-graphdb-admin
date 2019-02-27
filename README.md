@@ -69,10 +69,11 @@ const EnapsoGraphDBAdminDemo = {
         this.authentication = await this.login();
         // verify authentication
         if (!this.authentication.success) {
-            console.log("\nLogin failed:\n" + JSON.stringify(this.authentication, null, 2));
+            console.log("\nLogin failed:\n" +
+                JSON.stringify(this.authentication, null, 2));
             return;
         }
-        console.log("\nLogin successful" /* + ":\nJSON.stringify(this.authentication, null, 2) */);
+        console.log("\nLogin successful");
 
         // continue to work with this.graphDBEndpoint
         // :
@@ -91,7 +92,7 @@ demoUploadFromFile: async function () {
     let resp = await this.graphDBEndpoint.uploadFromFile({
         filename: "ontologies/test.owl",
         format: "application/rdf+xml",
-        baseURI: "http://ont.enapso.com/test#",
+        baseIRI: "http://ont.enapso.com/test#",
         context: "http://ont.enapso.com/test"
     });
     console.log("\nUploadFromFile:\n" + JSON.stringify(resp, null, 2));
@@ -110,7 +111,8 @@ demoDownloadToText: async function () {
     resp = await this.graphDBEndpoint.downloadToText({
         format: EnapsoGraphDBClient.FORMAT_TURTLE.type
     });
-    console.log("\nDownload (text):\n" + JSON.stringify(resp, null, 2));
+    console.log("\nDownload (text):\n" + 
+        JSON.stringify(resp, null, 2));
     return resp;
 }
 ```
@@ -126,9 +128,12 @@ demoDownloadToFile: async function () {
     let lFormat = EnapsoGraphDBClient.FORMAT_TURTLE;
     let resp = await this.graphDBEndpoint.downloadToFile({
         format: lFormat.type,
-        filename: "ontologies/" + this.graphDBEndpoint.getRepository() + lFormat.extension
+        filename: "ontologies/" +
+            this.graphDBEndpoint.getRepository() +
+            lFormat.extension
     });
-    console.log("\nDownload (file):\n" + JSON.stringify(resp, null, 2));
+    console.log("\nDownload (file):\n" +
+        JSON.stringify(resp, null, 2));
     return resp;
 }
 ```
@@ -187,7 +192,8 @@ The entire repository will be emptied, i.e. all data of this repository will be 
 ```javascript
 demoClearRepository: async function () {
     // clear entire repository
-    // CAUTION! This operation empties the entire repository and cannot be undone!
+    // CAUTION! This operation empties the entire repository 
+    // and cannot be undone!
     let resp = await this.graphDBEndpoint.clearRepository();
     console.log("\ClearRepository :\n" + JSON.stringify(resp, null, 2));
     return resp;
@@ -281,9 +287,12 @@ The entire context will be emptied, i.e. all data from this context will be remo
 ```javascript
 demoClearContext: async function () {
     // clear context (named graph)
-    // CAUTION! This operation empties the named graph of the repository and cannot be undone!
-    let resp = await this.graphDBEndpoint.clearContext(GRAPHDB_CONTEXT_TEST);
-    console.log("\ClearContext :\n" + JSON.stringify(resp, null, 2));
+    // CAUTION! This operation empties the named graph 
+    // of the repository and cannot be undone!
+    let resp = await this.graphDBEndpoint.clearContext(
+        GRAPHDB_CONTEXT_TEST);
+    console.log("\ClearContext :\n" +
+        JSON.stringify(resp, null, 2));
     return;
 }
 ```
