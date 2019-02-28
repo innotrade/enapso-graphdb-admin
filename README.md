@@ -15,6 +15,12 @@ To discuss questions and suggestions with the Enapso and GraphDB community, we'l
 
 # Example
 
+## Installation 
+
+```
+npm i enapso-graphdb-admin --save
+```
+
 ## Instantiate an Enapso GraphDB and Admin Client
 
 ```javascript
@@ -184,7 +190,7 @@ demoGetRepositories: async function () {
 ]  
 ```
 
-## Clear an entire repository of your GraphDB instance
+## Clear entire repository of your GraphDB instance
 
 **Caution! This removes ALL triples of the given repository! This operation cannot be undone!**
 The entire repository will be emptied, i.e. all data of this repository will be removed. The repository remains active.
@@ -208,7 +214,7 @@ demoClearRepository: async function () {
 }
 ```
 
-## List all users configured in your GraphDB instance
+## List all users of your GraphDB instance
 
 ```javascript
 demoGetUsers: async function () {
@@ -279,7 +285,7 @@ demoGetContexts: async function () {
 }
 ```
 
-## Clear an entire context in a given repository of your GraphDB instance
+## Clear entire context in a given repository
 
 **Caution! This removes ALL triples of the given context! This operation cannot be undone!**
 The entire context will be emptied, i.e. all data from this context will be removed. The repository and other contexts remain active.
@@ -305,7 +311,7 @@ demoClearContext: async function () {
 }
 ```
 
-## Listing all locations configured in your GraphDB instance
+## List all locations configured in your GraphDB instance
 
 ```javascript
 demoGetLocations: async function () {
@@ -332,4 +338,38 @@ demoGetLocations: async function () {
     "defaultRepository": null
   }
 ]
+```
+
+## List all save queries in your GraphDB instance
+
+```javascript
+demoGetSavedQueries: async function () {
+    // clear context (named graph)
+    // CAUTION! This operation empties the named graph 
+    // of the repository and cannot be undone!
+    let resp = await this.graphDBEndpoint.getSavedQueries();
+    console.log("\nGetSavedQueries :\n" +
+        JSON.stringify(resp, null, 2));
+    return;
+}
+```
+
+### Result
+
+```json
+{
+  "success": true,
+  "statusCode": 200,
+  "statusMessage": "OK",
+  "data": [
+    {
+      "name": "[Name of your query 1]",
+      "body": "[SPARQL query saved with this name]"
+    },
+    {
+      "name": "[Name of your query 2]",
+      "body": "[SPARQL query saved with this name]"
+    }
+  ]
+}
 ```

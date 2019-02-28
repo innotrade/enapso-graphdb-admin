@@ -158,6 +158,18 @@ const EnapsoGraphDBAdmin = {
         return lRes;
     },
 
+    // get locations (requires repositoty manager role)
+    getSavedQueries: async function () {
+        let lOptions = {
+            "method": "GET",
+            "uri": this.getBaseURL() + "/rest/sparql/saved-queries",
+            "headers": this.getHeaders(),
+            "json": true
+        };
+        var lRes = this.execRequest(lOptions);
+        return lRes;
+    },
+
     upload: async function (aOptions) {
         aOptions = aOptions || {};
         let lConfig = {

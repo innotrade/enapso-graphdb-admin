@@ -57,7 +57,7 @@ const EnapsoGraphDBAdminDemo = {
         // CAUTION! This operation empties the entire repository 
         // and cannot be undone!
         let resp = await this.graphDBEndpoint.clearRepository();
-        console.log("\ClearRepository :\n" + JSON.stringify(resp, null, 2));
+        console.log("\nClearRepository :\n" + JSON.stringify(resp, null, 2));
         return resp;
     },
 
@@ -88,7 +88,17 @@ const EnapsoGraphDBAdminDemo = {
         // of the repository and cannot be undone!
         let resp = await this.graphDBEndpoint.clearContext(
             GRAPHDB_CONTEXT_TEST);
-        console.log("\ClearContext :\n" +
+        console.log("\nClearContext :\n" +
+            JSON.stringify(resp, null, 2));
+        return;
+    },
+
+    demoGetSavedQueries: async function () {
+        // clear context (named graph)
+        // CAUTION! This operation empties the named graph 
+        // of the repository and cannot be undone!
+        let resp = await this.graphDBEndpoint.getSavedQueries();
+        console.log("\nGetSavedQueries :\n" +
             JSON.stringify(resp, null, 2));
         return;
     },
@@ -179,8 +189,9 @@ const EnapsoGraphDBAdminDemo = {
         // this.demoGetUsers();
 
         // this.demoGetContexts();
+        this.demoGetSavedQueries();
 
-        this.demoUploadFromFile();
+        // this.demoUploadFromFile();
 
         // this.demoDownloadToFile();
 
