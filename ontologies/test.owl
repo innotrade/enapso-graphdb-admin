@@ -1,12 +1,13 @@
 <?xml version="1.0"?>
-<rdf:RDF xmlns="http://ont.enapso.com/solver#"
-     xml:base="http://ont.enapso.com/solver"
+<rdf:RDF xmlns="http://ont.enapso.com/test#"
+     xml:base="http://ont.enapso.com/test"
      xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
      xmlns:owl="http://www.w3.org/2002/07/owl#"
      xmlns:xml="http://www.w3.org/XML/1998/namespace"
      xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
-     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
-    <owl:Ontology rdf:about="http://ont.enapso.com/solver">
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:et="http://ont.enapso.com/test#">
+    <owl:Ontology rdf:about="http://ont.enapso.com/test">
         <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">(C) Copyright 2019 Innotrade GmbH, Herzogenrath, Germany</rdfs:comment>
     </owl:Ontology>
     
@@ -23,9 +24,9 @@
     
 
 
-    <!-- http://ont.enapso.com/solver#Instance -->
+    <!-- http://ont.enapso.com/test#Instance -->
 
-    <owl:Class rdf:about="http://ont.enapso.com/solver#Instance"/>
+    <owl:Class rdf:about="http://ont.enapso.com/test#Instance"/>
 </rdf:RDF>
 
 

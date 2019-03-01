@@ -106,7 +106,7 @@ const EnapsoGraphDBAdminDemo = {
     demoUploadFromFile: async function () {
         // upload a file
         let resp = await this.graphDBEndpoint.uploadFromFile({
-            filename: "ontologies/test.owl",
+            filename: "ontologies/Test.owl",
             format: "application/rdf+xml",
             baseIRI: "http://ont.enapso.com/test#",
             context: "http://ont.enapso.com/test"
@@ -161,6 +161,69 @@ const EnapsoGraphDBAdminDemo = {
         }
     },
 
+    demoInsert: async function () {
+        // perform an update (insert operation)
+        let update = `
+            prefix et: <http://ont.enapso.com/test#>
+            insert data {
+                graph <${GRAPHDB_CONTEXT_TEST}> {
+                    et:TestClass rdf:type owl:Class
+                }
+            }
+        `;
+        let resp = await this.graphDBEndpoint.update(update);
+        // if a result was successfully returned
+        if (resp.success) {
+            console.log("Update succeeded:\n" + JSON.stringify(resp, null, 2));
+        } else {
+            console.log("Update failed:\n" + JSON.stringify(resp, null, 2));
+        }
+    },
+
+    demoUpdate: async function () {
+        // perform an update (update operation)
+        let update = `
+            prefix et: <http://ont.enapso.com/test#>
+            with <${GRAPHDB_CONTEXT_TEST}>
+            delete {
+                    et:TestClass rdf:type owl:Class
+            }
+            insert {
+                    et:TestClassUpdated rdf:type owl:Class
+            }
+            where {
+                et:TestClass rdf:type owl:Class
+            }
+        `;
+        let resp = await this.graphDBEndpoint.update(update);
+        // if a result was successfully returned
+        if (resp.success) {
+            console.log("Update succeeded:\n" + JSON.stringify(resp, null, 2));
+        } else {
+            console.log("Update failed:\n" + JSON.stringify(resp, null, 2));
+        }
+    },
+
+    demoDelete: async function () {
+        // perform an update (delete operation)
+        let update = `
+            prefix et: <http://ont.enapso.com/test#>
+            with <http://ont.enapso.com/test>
+            delete {
+                et:TestClassUpdated rdf:type owl:Class
+            }
+            where {
+                et:TestClassUpdated rdf:type owl:Class
+            }
+        `;
+        let resp = await this.graphDBEndpoint.update(update);
+        // if a result was successfully returned
+        if (resp.success) {
+            console.log("Update succeeded:\n" + JSON.stringify(resp, null, 2));
+        } else {
+            console.log("Update failed:\n" + JSON.stringify(resp, null, 2));
+        }
+    },
     demo: async function () {
         this.graphDBEndpoint = await this.createEndpoint();
         this.authentication = await this.login();
@@ -189,15 +252,25 @@ const EnapsoGraphDBAdminDemo = {
         // this.demoGetUsers();
 
         // this.demoGetContexts();
-        this.demoGetSavedQueries();
+        // this.demoGetSavedQueries();
 
         // this.demoUploadFromFile();
-
         // this.demoDownloadToFile();
-
         // this.demoDownloadToText();
-
-        // this.demoQuery();
+        
+        console.log("--- Inserting new triple --- ")
+        await this.demoInsert();
+        console.log("--- Graph should contain TestClass now --- ")
+        await this.demoQuery();
+        // await this.demoDownloadToFile();
+        console.log("--- Updating existing triple --- ")
+        await this.demoUpdate();
+        console.log("--- Graph should contain TestClassUpdated now --- ")
+        await this.demoQuery();
+        console.log("--- Deleting existing triple --- ")
+        await this.demoDelete();
+        console.log("--- Graph should not contain TestClassUpdated anymore --- ")
+        await this.demoQuery();
     }
 }
 

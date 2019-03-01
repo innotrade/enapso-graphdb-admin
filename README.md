@@ -13,16 +13,12 @@ Get GraphDB for free at https://www.ontotext.com/free-graphdb-download-copy/.
 
 To discuss questions and suggestions with the Enapso and GraphDB community, we'll be happy to meet you in our forum at https://www.innotrade.com/forum/.
 
-# Example
-
-## Installation 
-
+# Installation 
 ```
 npm i enapso-graphdb-admin --save
 ```
-
+# Example
 ## Instantiate an Enapso GraphDB and Admin Client
-
 ```javascript
 // require the Enapso GraphDB Client and Admin packages
 const EnapsoGraphDBClient = require("enapso-graphdb-client");
@@ -89,9 +85,7 @@ const EnapsoGraphDBAdminDemo = {
 // execute the demo(s)
 EnapsoGraphDBAdminDemo.demo();
 ```
-
 ## Upload a file to GraphDB
-
 ```javascript
 demoUploadFromFile: async function () {
     // upload a file
@@ -105,12 +99,9 @@ demoUploadFromFile: async function () {
     return resp;
 }
 ```
-
 ## Download a graph from GraphDB to a text variable
-
 For the available export formats, please refer to the EnapsoGraphDBClient.FORMAT_xxx constants.
 The context is optional. If you do not pass a context, the entire repository is exported.
-
 ```javascript
 demoDownloadToText: async function () {
     // download a repository or named graph to memory
@@ -122,12 +113,9 @@ demoDownloadToText: async function () {
     return resp;
 }
 ```
-
 ## Download a graph from GraphDB directly to a local file
-
 For the available export formats, please refer to the EnapsoGraphDBClient.FORMAT_xxx constants.
 The context is optional. If you do not pass a context, the entire repository is exported.
-
 ```javascript
 demoDownloadToFile: async function () {
     // download a repository or named graph to file
@@ -143,9 +131,7 @@ demoDownloadToFile: async function () {
     return resp;
 }
 ```
-
 ## List all repositories configured in your GraphDB instance
-
 ```javascript
 demoGetRepositories: async function () {
     // lists all repositories
@@ -154,9 +140,7 @@ demoGetRepositories: async function () {
     return resp;
 }
 ```
-
 ### Result
-
 ```json
 [
   {
@@ -189,12 +173,9 @@ demoGetRepositories: async function () {
   }
 ]  
 ```
-
 ## Clear entire repository of your GraphDB instance
-
 **Caution! This removes ALL triples of the given repository! This operation cannot be undone!**
 The entire repository will be emptied, i.e. all data of this repository will be removed. The repository remains active.
-
 ```javascript
 demoClearRepository: async function () {
     // clear entire repository
@@ -205,17 +186,13 @@ demoClearRepository: async function () {
     return resp;
 }
 ```
-
 ### Result
-
 ```json
 {
   "success": true
 }
 ```
-
 ## List all users of your GraphDB instance
-
 ```javascript
 demoGetUsers: async function () {
     // lists all users (requires admin role)
@@ -224,9 +201,7 @@ demoGetUsers: async function () {
     return resp;
 }
 ```
-
 ### Result
-
 ```json
 [
   {
@@ -259,9 +234,7 @@ demoGetUsers: async function () {
   }
 ]
 ```
-
 ## List all contexts used in a given repository
-
 ```javascript
 demoGetContexts: async function () {
     // lists all contexts (named graph) in the repository
@@ -270,9 +243,7 @@ demoGetContexts: async function () {
     return resp;
 }
 ```
-
 ### Result
-
 ```json
 {
   "total": 1,
@@ -284,12 +255,9 @@ demoGetContexts: async function () {
   ]
 }
 ```
-
 ## Clear entire context in a given repository
-
 **Caution! This removes ALL triples of the given context! This operation cannot be undone!**
 The entire context will be emptied, i.e. all data from this context will be removed. The repository and other contexts remain active.
-
 ```javascript
 demoClearContext: async function () {
     // clear context (named graph)
@@ -302,17 +270,13 @@ demoClearContext: async function () {
     return;
 }
 ```
-
 ### Result
-
 ```json
 {
   "success": true
 }
 ```
-
 ## List all locations configured in your GraphDB instance
-
 ```javascript
 demoGetLocations: async function () {
     // lists all locations, requires repository manager role!
@@ -321,9 +285,7 @@ demoGetLocations: async function () {
     return resp;
 }
 ```
-
 ### Result
-
 ```json
 [
   {
@@ -339,9 +301,7 @@ demoGetLocations: async function () {
   }
 ]
 ```
-
 ## List all save queries in your GraphDB instance
-
 ```javascript
 demoGetSavedQueries: async function () {
     // clear context (named graph)
@@ -353,9 +313,7 @@ demoGetSavedQueries: async function () {
     return;
 }
 ```
-
 ### Result
-
 ```json
 {
   "success": true,
