@@ -224,6 +224,7 @@ const EnapsoGraphDBAdminDemo = {
             console.log("Update failed:\n" + JSON.stringify(resp, null, 2));
         }
     },
+    
     demo: async function () {
         this.graphDBEndpoint = await this.createEndpoint();
         this.authentication = await this.login();

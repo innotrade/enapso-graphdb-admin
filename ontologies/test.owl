@@ -102,6 +102,16 @@
         <firstName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Alexander</firstName>
         <lastName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Schulze</lastName>
     </owl:NamedIndividual>
+    
+
+
+    <!-- http://ont.enapso.com/test#Person_OsvaldoAguilarLauzurique -->
+
+    <owl:NamedIndividual rdf:about="http://ont.enapso.com/test#Person_OsvaldoAguilarLauzurique">
+        <rdf:type rdf:resource="http://ont.enapso.com/test#Person"/>
+        <firstName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Osvaldo</firstName>
+        <lastName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Aguilar Lauzurique</lastName>
+    </owl:NamedIndividual>
 </rdf:RDF>
 
 

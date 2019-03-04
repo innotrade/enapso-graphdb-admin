@@ -1,16 +1,16 @@
 # enapso-graphdb-admin
-Enapso Ontotext GraphDB 8.x Administrator for JavaScript
+Enapso Ontotext GraphDB 8.x Administration Toolbox for Node.js
 
 Admin client for OntoText GraphDB to easily perform administrative operations against your RDF stores, your OWL ontologies or knowledge graphs in nodes.js applications. This client supports an easy import of existing RDF stores and ontologies to Ontotext GraphDB by upload via file, strings or URLs in numerous formats.
 
 Future versions of this client will support the creation and listing of new repositories, the location and cluster management of Ontotext GraphDB as well as an easy export. Any questions and suggestions are welcome.
 
-This project is currently work-in-progress and will be subject to further changes until its version 1.0.
-Examples and documentation are pending and will be published soon.
+This project is currently work-in-progress and will be subject to further changes until its version 1.0. Examples and documentation are pending and will be published soon.
 
 **The following demos require a running GraphDB 8.x instance on localhost at port 7200. The demos as well as the automated tests require a fully working Ontotext GraphDB repository "Test" and a user "Test" with the password "Test" being set up, which has read/write access to the "Test" Repository.**
-Get GraphDB for free at https://www.ontotext.com/free-graphdb-download-copy/.
+Get the latest version of GraphDB for free at https://www.ontotext.com/free-graphdb-download-copy/.
 
+**This project is actively developed and maintained.**
 To discuss questions and suggestions with the Enapso and GraphDB community, we'll be happy to meet you in our forum at https://www.innotrade.com/forum/.
 
 # Installation 
