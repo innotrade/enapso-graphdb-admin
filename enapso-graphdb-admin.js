@@ -18,28 +18,28 @@ const EnapsoGraphDBAdmin = {
                 "application/json, text/plain, */*", //application/sparql-results+json,
             "Content-Type":
                 "application/json;charset=UTF-8",
-            "X-GraphDB-Repository": 
+            "X-GraphDB-Repository":
                 this.getRepository(),
             "Authorization":
                 this.getAuthorization()
         }
     },
 
-    execRequest: async function(aOptions) {
+    execRequest: async function (aOptions) {
         var lRes;
         try {
             aOptions.resolveWithFullResponse = true;
             lRes = await request(aOptions);
             lRes = {
                 "success": 200 === lRes.statusCode,
-                "statusCode":  lRes.statusCode,
-                "statusMessage":  
-                    lRes.statusMessage ? 
-                    lRes.statusMessage : 
-                    (200 === lRes.statusCode ? "OK" : "ERROR " + lRes.statusCode),
+                "statusCode": lRes.statusCode,
+                "statusMessage":
+                    lRes.statusMessage ?
+                        lRes.statusMessage :
+                        (200 === lRes.statusCode ? "OK" : "ERROR " + lRes.statusCode),
                 "data": lRes.body
             };
-        } catch(lErr) {
+        } catch (lErr) {
             lRes = {
                 "success": false,
                 "statusCode": lErr.statusCode ? lErr.statusCode : -1,
@@ -61,7 +61,7 @@ const EnapsoGraphDBAdmin = {
         return lRes;
     },
 
-    createRepository: async function(aOptions) {
+    createRepository: async function (aOptions) {
 
     },
 
@@ -83,9 +83,9 @@ const EnapsoGraphDBAdmin = {
 
     downloadToFile: async function (aOptions) {
         aOptions = aOptions || {};
-        aOptions.filename = aOptions.filename || "statements" + EnapsooGraphDBClient.FORMAT_TURTLE.extension;
+        aOptions.filename = aOptions.filename || "statements" + EnapsoGraphDBClient.FORMAT_TURTLE.extension;
         var lRes = await this.downloadToText(aOptions);
-        if(lRes.success) {
+        if (lRes.success) {
             // todo: error handling and make it asynchronous
             fs.writeFileSync(aOptions.filename, lRes.data);
         }
@@ -147,7 +147,7 @@ const EnapsoGraphDBAdmin = {
     // caution! this operation cannot be undone!
     clearContext: async function (aOptions) {
         aOptions = aOptions || {};
-        if(typeof aOptions === "string") {
+        if (typeof aOptions === "string") {
             aOptions = {
                 "context": aOptions
             };
@@ -168,6 +168,149 @@ const EnapsoGraphDBAdmin = {
         };
         var lRes = this.execRequest(lOptions);
         return lRes;
+    },
+
+    // Result from GraphDB
+    // {
+    //     "heapMemoryUsage": {
+    //         "max": 8070889472,
+    //         "committed": 8070889472,
+    //         "init": 2147483648,
+    //         "used": 2332859576
+    //     },
+    //     "nonHeapMemoryUsage": {
+    //         "max": -1,
+    //         "committed": 222101504,
+    //         "init": 2555904,
+    //         "used": 216038536
+    //     },
+    //     "threadCount": 48,
+    //     "cpuLoad": 0.7800099401970747,
+    //     "classCount": 24553
+    // },      
+
+    getResources: async function () {
+        let lOptions = {
+            "method": "GET",
+            "uri": this.getBaseURL() + "/rest/monitor/resource",
+            "headers": this.getHeaders(),
+            "json": true
+        };
+        var lRes = this.execRequest(lOptions);
+        return lRes;
+    },
+
+    // [
+    //     {
+    //       "trackId": "4117",
+    //       "isRequestedToStop": false,
+    //       "sparqlString": "INSERT DATA { ... }",
+    //       "state": "IN_COMMIT",
+    //       "type": "UPDATE",
+    //       "numberOfOperations": 47,
+    //       "msSinceCreated": 61,
+    //       "humanLifetime": "0s"
+    //     }
+    // ]
+
+    getQuery: async function () {
+        let lOptions = {
+            "method": "GET",
+            "uri": this.getBaseURL() + "/rest/monitor/query",
+            "headers": this.getHeaders(),
+            "json": true
+        };
+        var lRes = this.execRequest(lOptions);
+        return lRes;
+    },
+
+    getQueryCount: async function () {
+        let lOptions = {
+            "method": "GET",
+            "uri": this.getBaseURL() + "/rest/monitor/query/count",
+            "headers": this.getHeaders(),
+            "json": true
+        };
+        var lRes = this.execRequest(lOptions);
+        return lRes;
+    },
+
+    getImports: async function () {
+        let lOptions = {
+            "method": "GET",
+            "uri": this.getBaseURL() + "/rest/data/import/active/" + this.getRepository(),
+            "headers": this.getHeaders(),
+            "json": true
+        };
+        var lRes = this.execRequest(lOptions);
+        return lRes;
+    },
+
+    performGarbageCollection: async function () {
+        let lOptions = {
+            "method": "POST",
+            "uri": this.getBaseURL() + "/rest/monitor/resource/gc",
+            "headers": this.getHeaders(),
+            "json": true
+        };
+        var lRes = this.execRequest(lOptions);
+        return lRes;
+    },
+
+    wait: async function (aMilliseconds) {
+        let lPromise = new Promise(function (resolve) {
+            setTimeout(function () {
+                resolve({ ok: 200 })
+            }, aMilliseconds);
+        });
+        return lPromise;
+    },
+
+    waitForGraphDB: async function (aOptions) {
+        aOptions = aOptions || {};
+        if (!aOptions.memoryWatermark) {
+            aOptions.memoryWatermark = 0.80;
+        }
+        if (!aOptions.cpuWatermark) {
+            aOptions.cpuWatermark = 0.80;
+        }
+        if (!aOptions.timeout) {
+            aOptions.timeout = 1 * 60 * 1000; // one minute in milli seconds
+        }
+        if (!aOptions.timeout) {
+            aOptions.timeout = 1 * 60 * 1000; // one minute in milli seconds
+        }
+        if (aOptions.performGarbageCollection !== true) {
+            aOptions.performGarbageCollection = false;
+        }
+        let me = this;
+        let lPromise = new Promise(async function (resolve) {
+            let lStarted = new Date().getTime();
+            let lTimeout = lStarted + aOptions.timeout;
+            let lResources, lYetAgain;
+            do {
+                lResources = await me.getResources();
+                if (aOptions.callback) {
+                    aOptions.callback(lResources);
+                }
+                lYetAgain = (new Date().getTime() < lTimeout);
+                if (lYetAgain) {
+                    await me.wait(aOptions.interval);
+                }
+            } while (lYetAgain);
+            // perform garbage collection on demand
+            if (aOptions.performGarbageCollection) {
+                let lGCRes = await me.performGarbageCollection();
+                if (aOptions.callback) {
+                    aOptions.callback(lGCRes);
+                }
+            }
+            resolve({
+                data: lResources
+            });
+        });
+
+        return lPromise;
     },
 
     upload: async function (aOptions) {
@@ -243,7 +386,7 @@ const EnapsoGraphDBAdmin = {
 }
 
 // extend the Enapso GraphDB client by the additional Admin features
-for(let lKey in EnapsoGraphDBAdmin) {
+for (let lKey in EnapsoGraphDBAdmin) {
     EnapsoGraphDBClient.Endpoint.prototype[lKey] = EnapsoGraphDBAdmin[lKey];
 }
 
