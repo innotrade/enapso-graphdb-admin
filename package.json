@@ -1,8 +1,8 @@
 {
     "name": "enapso-graphdb-admin",
-    "version": "0.1.13",
-    "description": "Enapso Ontotext GraphDB 8.x Admin for JavaScript",
-    "main": "enapso-graphdb-admin.js",
+    "version": "0.1.15",
+    "description": "Enapso Ontotext GraphDB 8.x Admin for Node.js",
+    "main": "index.js",
     "scripts": {
         "test": "NODE_ENV=test ./node_modules/.bin/mocha --reporter spec test/test.js --exit"
     },
@@ -32,7 +32,7 @@
     "homepage": "https://github.com/innotrade/enapso-graphdb-admin#readme",
     "dependencies": {
         "chai": "^4.2.0",
-        "enapso-graphdb-client": "^1.1.12",
+        "enapso-graphdb-client": "^1.2.2",
         "mocha": "^5.2.0",
         "request-promise": "^4.2.4"
     }

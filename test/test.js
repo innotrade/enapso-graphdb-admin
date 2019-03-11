@@ -1,19 +1,39 @@
 // Innotrade Enapso GraphDB Admin Automated Test Suite
 // (C) Copyright 2019 Innotrade GmbH, Herzogenrath, NRW, Germany
+// Author: Alexander Schulze
 
 const chai = require('chai');
 const should = require('chai').should;
 const expect = require('chai').expect;
-const EnapsoGraphDBAdmin = require("../enapso-graphdb-admin");
+const { EnapsoGraphDBClient } = require('enapso-graphdb-client');
+const { EnapsoGraphDBAdmin } = require('../index');
 const testConfig = require("./config");
 
 
 describe("Enapso GraphDB Admin Tests", () => {
 
+    // instantiate a new GraphDB endpoint
+    let lEndpoint = new EnapsoGraphDBClient.Endpoint({
+        baseURL: testConfig.baseURL,
+        repository: testConfig.repository,
+        prefixes: testConfig.prefixes
+    });
+
+    it('Authenticate against GraphDB instance', (done) => {
+        lEndpoint.login(
+            testConfig.username,
+            testConfig.password
+        ).then(result => {
+            // console.log(result.statusCode);
+            expect(result).to.have.property('statusCode', 200);
+            done();
+        })
+    });
+
     // before(function (done) { setTimeout(function () { done(); }, 500); });
 
     it('Get all repositories of local GraphDB instance', (done) => {
-        EnapsoGraphDBAdmin.getRepositories({
+        lEndpoint.getRepositories({
         }).then(result => {
             // console.log(result);
             expect(result).to.exist;
@@ -22,7 +42,7 @@ describe("Enapso GraphDB Admin Tests", () => {
     });
 
     it('Get all users of local GraphDB instance', (done) => {
-        EnapsoGraphDBAdmin.getUsers({
+        lEndpoint.getUsers({
         }).then(result => {
             // console.log(result);
             expect(result).to.exist;
@@ -31,7 +51,7 @@ describe("Enapso GraphDB Admin Tests", () => {
     });
 
     it('Get all contexts of the "Test" repository of local GraphDB instance', (done) => {
-        EnapsoGraphDBAdmin.getContexts({
+        lEndpoint.getContexts({
             repository: "Test"
         }).then(result => {
             // console.log(result);

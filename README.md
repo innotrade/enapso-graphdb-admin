@@ -19,8 +19,8 @@ npm i enapso-graphdb-admin --save
 ## Instantiate an Enapso GraphDB and Admin Client
 ```javascript
 // require the Enapso GraphDB Client and Admin packages
-const EnapsoGraphDBClient = require("enapso-graphdb-client");
-const EnapsoGraphDBAdmin = require("../enapso-graphdb-admin");
+const { EnapsoGraphDBClient } = require('enapso-graphdb-client');
+const { EnapsoGraphDBAdmin } = require('enapso-graphdb-admin');
 
 // connection data to the running GraphDB instance
 const

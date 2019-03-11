@@ -2,8 +2,8 @@
 // (C) Copyright 2019 Innotrade GmbH, Herzogenrath, NRW, Germany
 
 // require the Enapso GraphDB Admin Demo module
-const EnapsoGraphDBClient = require("enapso-graphdb-client");
-const EnapsoGraphDBAdmin = require("../enapso-graphdb-admin");
+const { EnapsoGraphDBClient } = require('enapso-graphdb-client');
+const { EnapsoGraphDBAdmin } = require('../lib/enapso-graphdb-admin');
 
 // connection data to the running GraphDB instance
 const
@@ -81,8 +81,6 @@ const EnapsoGraphDBAdminDemo = {
 		console.log("\nContexts:\n" + JSON.stringify(resp, null, 2));
 		return resp;
 	},
-
-
 
 	demoClearContext: async function () {
 		// clear context (named graph)
@@ -284,7 +282,7 @@ const EnapsoGraphDBAdminDemo = {
 		// CAUTION! This operation empties the entire context (named graph) and cannot be undone!
 		// this.demoClearContext();
 
-		// this.demoGetRepositories();
+		this.demoGetRepositories();
 
 		// getLocations requires repository manager role!
 		// this.demoGetLocations();
@@ -326,7 +324,7 @@ const EnapsoGraphDBAdminDemo = {
 		console.log("Finish: " + new Date().toISOString());
 		*/
 
-		await this.demoGetQuery();
+		// await this.demoGetQuery();
 	}
 }
 
