@@ -282,7 +282,7 @@ const EnapsoGraphDBAdminDemo = {
 		// CAUTION! This operation empties the entire context (named graph) and cannot be undone!
 		// this.demoClearContext();
 
-		this.demoGetRepositories();
+		// this.demoGetRepositories();
 
 		// getLocations requires repository manager role!
 		// this.demoGetLocations();
@@ -299,9 +299,11 @@ const EnapsoGraphDBAdminDemo = {
 
         /*
         console.log("--- Inserting new triple --- ")
-        await this.demoInsert();
+		await this.demoInsert();
+		*/
         console.log("--- Graph should contain TestClass now --- ")
-        await this.demoQuery();
+		await this.demoQuery();
+		/*
         // await this.demoDownloadToFile();
         console.log("--- Updating existing triple --- ")
         await this.demoUpdate();
