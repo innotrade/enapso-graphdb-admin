@@ -2,8 +2,8 @@
 // (C) Copyright 2019 Innotrade GmbH, Herzogenrath, NRW, Germany
 
 // require the Enapso GraphDB Admin Demo module
-const { EnapsoGraphDBClient } = require('enapso-graphdb-client');
-const { EnapsoGraphDBAdmin } = require('../lib/enapso-graphdb-admin');
+const { EnapsoGraphDBClient } = require('@innotrade/enapso-graphdb-client');
+const { EnapsoGraphDBAdmin } = require('../index');
 
 // connection data to the running GraphDB instance
 const
@@ -20,7 +20,7 @@ const GRAPHDB_DEFAULT_PREFIXES = [
 	EnapsoGraphDBClient.PREFIX_RDFS
 ];
 
-console.log("Enapso GraphDB Admin Demo");
+console.log("Innotrade Enapso GraphDB Admin Demo, (C) Copyright 2019-2020 Innotrade GmbH, Herzogenrath, NRW, Germany");
 
 const EnapsoGraphDBAdminDemo = {
 
@@ -301,7 +301,7 @@ const EnapsoGraphDBAdminDemo = {
         console.log("--- Inserting new triple --- ")
 		await this.demoInsert();
 		*/
-        console.log("--- Graph should contain TestClass now --- ")
+		console.log("--- Graph should contain TestClass now --- ")
 		await this.demoQuery();
 		/*
         // await this.demoDownloadToFile();

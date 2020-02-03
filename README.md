@@ -1,11 +1,11 @@
 # enapso-graphdb-admin
-Enapso Ontotext GraphDB 8.x Administration Toolbox for Node.js
+Enapso Ontotext GraphDB 8.x/9.x Administration Toolbox for Node.js
 
 Admin client for OntoText GraphDB to easily perform administrative and monitoring operations against your RDF stores, your OWL ontologies or knowledge graphs in nodes.js applications. This client supports an easy import of existing RDF stores and ontologies to GraphDB by upload via file, strings or URLs as well as an export in numerous formats and also a context management. You can monitor the cpu load and memory usage of GraphDB and run the garbage collector on demand to optimally trigger huge batch operations. Future versions of this client will support a user managememt, the creation and listing of new repositories as well as an location and cluster management of Ontotext GraphDB.
 
 This project is currently work-in-progress and will be subject to further changes until its version 1.0. Examples and documentation are pending and will be published soon.
 
-**The following demos require a running GraphDB 8.x instance on localhost at port 7200. The demos as well as the automated tests require a fully working Ontotext GraphDB repository "Test" and a user "Test" with the password "Test" being set up, which has read/write access to the "Test" Repository.**
+**The following demos require a running GraphDB 8.x/9.x instance on localhost at port 7200. The demos as well as the automated tests require a fully working Ontotext GraphDB repository "Test" and a user "Test" with the password "Test" being set up, which has read/write access to the "Test" Repository. Base URL: http://ont.enapso.com/test#, graph: http://ont.enapso.com/test#**
 Get the latest version of GraphDB for free at https://www.ontotext.com/free-graphdb-download-copy/.
 
 **This project is actively developed and maintained.**
@@ -13,14 +13,14 @@ To discuss questions and suggestions with the Enapso and GraphDB community, we'l
 
 # Installation 
 ```
-npm i enapso-graphdb-admin --save
+npm i @innotrade/enapso-graphdb-admin --save
 ```
 # Example
 ## Instantiate an Enapso GraphDB and Admin Client
 ```javascript
 // require the Enapso GraphDB Client and Admin packages
-const { EnapsoGraphDBClient } = require('enapso-graphdb-client');
-const { EnapsoGraphDBAdmin } = require('enapso-graphdb-admin');
+const { EnapsoGraphDBClient } = require('@innotrade/enapso-graphdb-client');
+const { EnapsoGraphDBAdmin } = require('@innotrade/enapso-graphdb-admin');
 
 // connection data to the running GraphDB instance
 const
@@ -37,7 +37,7 @@ const GRAPHDB_DEFAULT_PREFIXES = [
     EnapsoGraphDBClient.PREFIX_RDFS
 ];
 
-console.log("Enapso GraphDB Admin Demo");
+console.log("Innotrade Enapso GraphDB Admin Demo");
 
 const EnapsoGraphDBAdminDemo = {
 
