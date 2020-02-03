@@ -1,7 +1,7 @@
 {
-    "name": "enapso-graphdb-admin",
-    "version": "0.1.18",
-    "description": "Enapso Ontotext GraphDB 8.x Admin for Node.js",
+    "name": "@innotrade/enapso-graphdb-admin",
+    "version": "0.1.19",
+    "description": "Enapso Ontotext GraphDB 8.x/9.x Admin for Node.js",
     "main": "index.js",
     "scripts": {
         "test": "NODE_ENV=test ./node_modules/.bin/mocha --reporter spec test/test.js --exit"
