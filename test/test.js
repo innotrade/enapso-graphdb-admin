@@ -30,6 +30,22 @@ describe("Enapso GraphDB Admin Tests", () => {
         })
     });
 
+    it('Garbage Collection', (done) => {
+        lEndpoint.performGarbageCollection({
+        }).then(result => {
+            // console.log(result);
+            expect(result.statusCode).to.equal(200);
+            done();
+        })
+    });
+    it('Download the Ontology from Graphdb', (done) => {
+        lEndpoint.downloadToFile({
+        }).then(result => {
+            // console.log(result);
+            expect(result).to.have.property('success', true);
+            done();
+        })
+    });
     // before(function (done) { setTimeout(function () { done(); }, 500); });
 
     it('Get all repositories of local GraphDB instance', (done) => {
@@ -59,5 +75,20 @@ describe("Enapso GraphDB Admin Tests", () => {
             done();
         })
     });
-
+    it('Get Query  from Graphdb', (done) => {
+        lEndpoint.getQuery({
+        }).then(result => {
+            // console.log(result);
+            expect(result).to.have.property('success', true);
+            done();
+        })
+    });
+ it('Check Graphdn for Update function use for performing insertion,deletion and updation query', (done) => {
+        lEndpoint.update({
+        }).then(result => {
+            // console.log(result);
+            expect(result.statusCode).to.equal(200);
+            done();
+        })
+    });
 });
