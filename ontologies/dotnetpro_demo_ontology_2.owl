@@ -1,0 +1,1075 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="http://ont.enapso.com/dotnetpro#"
+     xml:base="http://ont.enapso.com/dotnetpro"
+     xmlns:dnp="http://ont.enapso.com/dotnetpro#"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+    <owl:Ontology rdf:about="http://ont.enapso.com/dotnetpro">
+        <owl:versionIRI rdf:resource="http://ont.enapso.com/dotnetpro/1.0.0"/>
+        <rdfs:comment xml:lang="de">Demo Ontologie für dotnetpro - Semantic Web - Protégé.</rdfs:comment>
+        <rdfs:comment xml:lang="en">Demo Ontology for dotnetpro - Semantic Web - Protégé.</rdfs:comment>
+    </owl:Ontology>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://ont.enapso.com/dotnetpro#hasAddress -->
+
+    <owl:ObjectProperty rdf:about="http://ont.enapso.com/dotnetpro#hasAddress">
+        <rdfs:range rdf:resource="http://ont.enapso.com/dotnetpro#Address"/>
+        <rdfs:label xml:lang="en">Address</rdfs:label>
+        <rdfs:label xml:lang="de">Adresse</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://ont.enapso.com/dotnetpro#hasCustomer -->
+
+    <owl:ObjectProperty rdf:about="http://ont.enapso.com/dotnetpro#hasCustomer">
+        <rdfs:label xml:lang="en">Customer</rdfs:label>
+        <rdfs:label xml:lang="de">Kunde</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://ont.enapso.com/dotnetpro#hasDeliveryAddress -->
+
+    <owl:ObjectProperty rdf:about="http://ont.enapso.com/dotnetpro#hasDeliveryAddress">
+        <rdfs:subPropertyOf rdf:resource="http://ont.enapso.com/dotnetpro#hasAddress"/>
+        <rdfs:label xml:lang="en">Delivery Address</rdfs:label>
+        <rdfs:label xml:lang="de">Lieferanschrift</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://ont.enapso.com/dotnetpro#hasDocumentItem -->
+
+    <owl:ObjectProperty rdf:about="http://ont.enapso.com/dotnetpro#hasDocumentItem">
+        <rdfs:label xml:lang="en">Item</rdfs:label>
+        <rdfs:label xml:lang="de">Position</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://ont.enapso.com/dotnetpro#hasInvoiceAddress -->
+
+    <owl:ObjectProperty rdf:about="http://ont.enapso.com/dotnetpro#hasInvoiceAddress">
+        <rdfs:subPropertyOf rdf:resource="http://ont.enapso.com/dotnetpro#hasAddress"/>
+        <rdfs:label xml:lang="en">Invoice Address</rdfs:label>
+        <rdfs:label xml:lang="de">Rechnungsanschrift</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://ont.enapso.com/dotnetpro#hasProduct -->
+
+    <owl:ObjectProperty rdf:about="http://ont.enapso.com/dotnetpro#hasProduct">
+        <rdfs:label xml:lang="en">Product</rdfs:label>
+        <rdfs:label xml:lang="de">Produkt</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://ont.enapso.com/dotnetpro#CustomerId -->
+
+    <owl:DatatypeProperty rdf:about="http://ont.enapso.com/dotnetpro#CustomerId">
+        <rdfs:subPropertyOf rdf:resource="http://ont.enapso.com/dotnetpro#Id"/>
+        <rdfs:label xml:lang="en">Customer Id</rdfs:label>
+        <rdfs:label xml:lang="de">Kunden-Nr.</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://ont.enapso.com/dotnetpro#Description -->
+
+    <owl:DatatypeProperty rdf:about="http://ont.enapso.com/dotnetpro#Description">
+        <rdfs:label xml:lang="de">Beschreibung</rdfs:label>
+        <rdfs:label xml:lang="en">Description</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://ont.enapso.com/dotnetpro#Id -->
+
+    <owl:DatatypeProperty rdf:about="http://ont.enapso.com/dotnetpro#Id">
+        <rdfs:label xml:lang="en">Identification Number</rdfs:label>
+        <rdfs:label xml:lang="de">Identifikations-Nr.</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://ont.enapso.com/dotnetpro#LongDescription -->
+
+    <owl:DatatypeProperty rdf:about="http://ont.enapso.com/dotnetpro#LongDescription">
+        <rdfs:subPropertyOf rdf:resource="http://ont.enapso.com/dotnetpro#Description"/>
+        <rdfs:label xml:lang="de">Langbeschreibung</rdfs:label>
+        <rdfs:label xml:lang="en">Long Description</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://ont.enapso.com/dotnetpro#ShortDescription -->
+
+    <owl:DatatypeProperty rdf:about="http://ont.enapso.com/dotnetpro#ShortDescription">
+        <rdfs:subPropertyOf rdf:resource="http://ont.enapso.com/dotnetpro#Description"/>
+        <rdfs:label xml:lang="de">Kurzbeschreibung</rdfs:label>
+        <rdfs:label xml:lang="en">Short Description</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://ont.enapso.com/dotnetpro#SupplierId -->
+
+    <owl:DatatypeProperty rdf:about="http://ont.enapso.com/dotnetpro#SupplierId">
+        <rdfs:subPropertyOf rdf:resource="http://ont.enapso.com/dotnetpro#Id"/>
+        <rdfs:label xml:lang="de">Lieferanten-Nr.</rdfs:label>
+        <rdfs:label xml:lang="en">Supplier Id</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://ont.enapso.com/dotnetpro#amount -->
+
+    <owl:DatatypeProperty rdf:about="http://ont.enapso.com/dotnetpro#amount">
+        <rdfs:label xml:lang="en">Amount</rdfs:label>
+        <rdfs:label xml:lang="de">Anzahl</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://ont.enapso.com/dotnetpro#artno -->
+
+    <owl:DatatypeProperty rdf:about="http://ont.enapso.com/dotnetpro#artno">
+        <rdfs:label xml:lang="de">Artikel-Nr.</rdfs:label>
+        <rdfs:label xml:lang="en">Product-Code</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://ont.enapso.com/dotnetpro#city -->
+
+    <owl:DatatypeProperty rdf:about="http://ont.enapso.com/dotnetpro#city">
+        <rdfs:label xml:lang="en">City</rdfs:label>
+        <rdfs:label xml:lang="de">Stadt</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://ont.enapso.com/dotnetpro#companyName -->
+
+    <owl:DatatypeProperty rdf:about="http://ont.enapso.com/dotnetpro#companyName">
+        <rdfs:subPropertyOf rdf:resource="http://ont.enapso.com/dotnetpro#name"/>
+        <rdfs:label xml:lang="en">Company Name</rdfs:label>
+        <rdfs:label xml:lang="de">Firmenname</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://ont.enapso.com/dotnetpro#email -->
+
+    <owl:DatatypeProperty rdf:about="http://ont.enapso.com/dotnetpro#email">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
+        <rdfs:label xml:lang="de">E-Mail</rdfs:label>
+        <rdfs:label xml:lang="en">Email</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://ont.enapso.com/dotnetpro#faxNumber -->
+
+    <owl:DatatypeProperty rdf:about="http://ont.enapso.com/dotnetpro#faxNumber">
+        <rdfs:subPropertyOf rdf:resource="http://ont.enapso.com/dotnetpro#phoneNumber"/>
+        <rdfs:label xml:lang="en">Fax Number</rdfs:label>
+        <rdfs:label xml:lang="de">Fax-Nummer</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://ont.enapso.com/dotnetpro#givenname -->
+
+    <owl:DatatypeProperty rdf:about="http://ont.enapso.com/dotnetpro#givenname">
+        <rdfs:subPropertyOf rdf:resource="http://ont.enapso.com/dotnetpro#name"/>
+        <rdfs:label xml:lang="en">Givenname</rdfs:label>
+        <rdfs:label xml:lang="de">Vorname</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://ont.enapso.com/dotnetpro#mobilePhoneNumber -->
+
+    <owl:DatatypeProperty rdf:about="http://ont.enapso.com/dotnetpro#mobilePhoneNumber">
+        <rdfs:subPropertyOf rdf:resource="http://ont.enapso.com/dotnetpro#phoneNumber"/>
+        <rdfs:label xml:lang="en">Cell Phone</rdfs:label>
+        <rdfs:label xml:lang="de">Mobil-Telefon</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://ont.enapso.com/dotnetpro#name -->
+
+    <owl:DatatypeProperty rdf:about="http://ont.enapso.com/dotnetpro#name">
+        <rdfs:label xml:lang="de">Name</rdfs:label>
+        <rdfs:label xml:lang="en">Name</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://ont.enapso.com/dotnetpro#phoneNumber -->
+
+    <owl:DatatypeProperty rdf:about="http://ont.enapso.com/dotnetpro#phoneNumber">
+        <rdfs:label xml:lang="en">Phone No.</rdfs:label>
+        <rdfs:label xml:lang="de">Telefon-Nr.</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://ont.enapso.com/dotnetpro#price -->
+
+    <owl:DatatypeProperty rdf:about="http://ont.enapso.com/dotnetpro#price">
+        <rdfs:label xml:lang="de">Preis</rdfs:label>
+        <rdfs:label xml:lang="en">Price</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://ont.enapso.com/dotnetpro#privateEmail -->
+
+    <owl:DatatypeProperty rdf:about="http://ont.enapso.com/dotnetpro#privateEmail">
+        <rdfs:subPropertyOf rdf:resource="http://ont.enapso.com/dotnetpro#email"/>
+        <rdfs:label xml:lang="de">Private E-Mail</rdfs:label>
+        <rdfs:label xml:lang="en">Private Email</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://ont.enapso.com/dotnetpro#privatePhoneNumber -->
+
+    <owl:DatatypeProperty rdf:about="http://ont.enapso.com/dotnetpro#privatePhoneNumber">
+        <rdfs:subPropertyOf rdf:resource="http://ont.enapso.com/dotnetpro#phoneNumber"/>
+        <rdfs:label xml:lang="en">Private Phone No.</rdfs:label>
+        <rdfs:label xml:lang="de">Private Telefon-Nr.</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://ont.enapso.com/dotnetpro#productUrl -->
+
+    <owl:DatatypeProperty rdf:about="http://ont.enapso.com/dotnetpro#productUrl">
+        <rdfs:subPropertyOf rdf:resource="http://ont.enapso.com/dotnetpro#url"/>
+        <rdfs:domain rdf:resource="http://ont.enapso.com/dotnetpro#ImmaterialProduct"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://ont.enapso.com/dotnetpro#purchasePrice -->
+
+    <owl:DatatypeProperty rdf:about="http://ont.enapso.com/dotnetpro#purchasePrice">
+        <rdfs:subPropertyOf rdf:resource="http://ont.enapso.com/dotnetpro#price"/>
+        <rdfs:comment xml:lang="de">Der netto Einkaufspreis eines Produktes, ohne Berücksichtigung von Steuern und Frachtkosten.</rdfs:comment>
+        <rdfs:comment xml:lang="en">The net purchase price of a product, excluding taxes and freight costs.</rdfs:comment>
+        <rdfs:label xml:lang="de">Einkaufspreis</rdfs:label>
+        <rdfs:label xml:lang="en">Purchase Price</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://ont.enapso.com/dotnetpro#salesPrice -->
+
+    <owl:DatatypeProperty rdf:about="http://ont.enapso.com/dotnetpro#salesPrice">
+        <rdfs:subPropertyOf rdf:resource="http://ont.enapso.com/dotnetpro#price"/>
+        <rdfs:label xml:lang="en">Sales Price</rdfs:label>
+        <rdfs:label xml:lang="de">Verkaufspreis</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://ont.enapso.com/dotnetpro#street -->
+
+    <owl:DatatypeProperty rdf:about="http://ont.enapso.com/dotnetpro#street">
+        <rdfs:label xml:lang="de">Anschrift</rdfs:label>
+        <rdfs:label xml:lang="en">Street</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://ont.enapso.com/dotnetpro#surname -->
+
+    <owl:DatatypeProperty rdf:about="http://ont.enapso.com/dotnetpro#surname">
+        <rdfs:subPropertyOf rdf:resource="http://ont.enapso.com/dotnetpro#name"/>
+        <rdfs:label xml:lang="de">Nachname</rdfs:label>
+        <rdfs:label xml:lang="en">Surname</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://ont.enapso.com/dotnetpro#testDataProp -->
+
+    <owl:DatatypeProperty rdf:about="http://ont.enapso.com/dotnetpro#testDataProp"/>
+    
+
+
+    <!-- http://ont.enapso.com/dotnetpro#url -->
+
+    <owl:DatatypeProperty rdf:about="http://ont.enapso.com/dotnetpro#url">
+        <rdfs:label xml:lang="de">Uniform Resource Locator</rdfs:label>
+        <rdfs:label xml:lang="en">Uniform Resource Locator</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://ont.enapso.com/dotnetpro#vatRate -->
+
+    <owl:DatatypeProperty rdf:about="http://ont.enapso.com/dotnetpro#vatRate">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
+        <rdfs:range>
+            <rdfs:Datatype>
+                <owl:oneOf>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
+                        <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#float">0.0</rdf:first>
+                        <rdf:rest>
+                            <rdf:Description>
+                                <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
+                                <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#float">19.0</rdf:first>
+                                <rdf:rest>
+                                    <rdf:Description>
+                                        <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
+                                        <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#float">7.0</rdf:first>
+                                        <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                                    </rdf:Description>
+                                </rdf:rest>
+                            </rdf:Description>
+                        </rdf:rest>
+                    </rdf:Description>
+                </owl:oneOf>
+            </rdfs:Datatype>
+        </rdfs:range>
+        <rdfs:label xml:lang="de">Mehrwertsteuersatz</rdfs:label>
+        <rdfs:label xml:lang="en">VAT Rate</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://ont.enapso.com/dotnetpro#weight -->
+
+    <owl:DatatypeProperty rdf:about="http://ont.enapso.com/dotnetpro#weight">
+        <rdfs:domain rdf:resource="http://ont.enapso.com/dotnetpro#MaterialProduct"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+        <rdfs:label xml:lang="de">Gewicht in kg</rdfs:label>
+        <rdfs:label xml:lang="en">Weight in kg</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://ont.enapso.com/dotnetpro#workEmail -->
+
+    <owl:DatatypeProperty rdf:about="http://ont.enapso.com/dotnetpro#workEmail">
+        <rdfs:subPropertyOf rdf:resource="http://ont.enapso.com/dotnetpro#email"/>
+        <rdfs:label xml:lang="en">Business Email</rdfs:label>
+        <rdfs:label xml:lang="de">Geschäftliche E-Mail</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://ont.enapso.com/dotnetpro#workPhoneNumber -->
+
+    <owl:DatatypeProperty rdf:about="http://ont.enapso.com/dotnetpro#workPhoneNumber">
+        <rdfs:subPropertyOf rdf:resource="http://ont.enapso.com/dotnetpro#phoneNumber"/>
+        <rdfs:label xml:lang="en">Business Phone No.</rdfs:label>
+        <rdfs:label xml:lang="de">Geschäftliche Telefon-Nr.</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://ont.enapso.com/dotnetpro#zipcode -->
+
+    <owl:DatatypeProperty rdf:about="http://ont.enapso.com/dotnetpro#zipcode">
+        <rdfs:label xml:lang="de">Postleitzahl</rdfs:label>
+        <rdfs:label xml:lang="en">Zipcode</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://ont.enapso.com/dotnetpro#Address -->
+
+    <owl:Class rdf:about="http://ont.enapso.com/dotnetpro#Address">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://ont.enapso.com/dotnetpro#city"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://ont.enapso.com/dotnetpro#street"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://ont.enapso.com/dotnetpro#zipcode"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:label xml:lang="en">Address</rdfs:label>
+        <rdfs:label xml:lang="de">Anschrift</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://ont.enapso.com/dotnetpro#Architect -->
+
+    <owl:Class rdf:about="http://ont.enapso.com/dotnetpro#Architect">
+        <rdfs:subClassOf rdf:resource="http://ont.enapso.com/dotnetpro#Role"/>
+        <rdfs:label xml:lang="en">Architect</rdfs:label>
+        <rdfs:label xml:lang="de">Architekt</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://ont.enapso.com/dotnetpro#BusinessRelation -->
+
+    <owl:Class rdf:about="http://ont.enapso.com/dotnetpro#BusinessRelation">
+        <rdfs:label xml:lang="en">Business Relation</rdfs:label>
+        <rdfs:label xml:lang="de">Geschäfliche Beziehung</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://ont.enapso.com/dotnetpro#Company -->
+
+    <owl:Class rdf:about="http://ont.enapso.com/dotnetpro#Company">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://ont.enapso.com/dotnetpro#hasAddress"/>
+                <owl:someValuesFrom rdf:resource="http://ont.enapso.com/dotnetpro#Address"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://ont.enapso.com/dotnetpro#companyName"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:label xml:lang="en">Company</rdfs:label>
+        <rdfs:label xml:lang="de">Firma</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://ont.enapso.com/dotnetpro#ContactData -->
+
+    <owl:Class rdf:about="http://ont.enapso.com/dotnetpro#ContactData">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://ont.enapso.com/dotnetpro#faxNumber"/>
+                <owl:allValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://ont.enapso.com/dotnetpro#mobilePhoneNumber"/>
+                <owl:allValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://ont.enapso.com/dotnetpro#privateEmail"/>
+                <owl:allValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://ont.enapso.com/dotnetpro#privatePhoneNumber"/>
+                <owl:allValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://ont.enapso.com/dotnetpro#workEmail"/>
+                <owl:allValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://ont.enapso.com/dotnetpro#workPhoneNumber"/>
+                <owl:allValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:label xml:lang="en">Contact Data</rdfs:label>
+        <rdfs:label xml:lang="de">Kontaktdaten</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://ont.enapso.com/dotnetpro#Customer -->
+
+    <owl:Class rdf:about="http://ont.enapso.com/dotnetpro#Customer">
+        <rdfs:subClassOf rdf:resource="http://ont.enapso.com/dotnetpro#BusinessRelation"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://ont.enapso.com/dotnetpro#hasDeliveryAddress"/>
+                <owl:allValuesFrom rdf:resource="http://ont.enapso.com/dotnetpro#Address"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://ont.enapso.com/dotnetpro#hasInvoiceAddress"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onClass rdf:resource="http://ont.enapso.com/dotnetpro#Address"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:label xml:lang="en">Customer</rdfs:label>
+        <rdfs:label xml:lang="de">Kunde</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://ont.enapso.com/dotnetpro#Developer -->
+
+    <owl:Class rdf:about="http://ont.enapso.com/dotnetpro#Developer">
+        <rdfs:subClassOf rdf:resource="http://ont.enapso.com/dotnetpro#Role"/>
+        <rdfs:label xml:lang="en">Developer</rdfs:label>
+        <rdfs:label xml:lang="de">Entwickler</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://ont.enapso.com/dotnetpro#Document -->
+
+    <owl:Class rdf:about="http://ont.enapso.com/dotnetpro#Document">
+        <rdfs:label xml:lang="en">Document</rdfs:label>
+        <rdfs:label xml:lang="de">Dokument</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://ont.enapso.com/dotnetpro#DocumentItem -->
+
+    <owl:Class rdf:about="http://ont.enapso.com/dotnetpro#DocumentItem">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://ont.enapso.com/dotnetpro#hasProduct"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onClass rdf:resource="http://ont.enapso.com/dotnetpro#Product"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://ont.enapso.com/dotnetpro#Description"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://ont.enapso.com/dotnetpro#amount"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://ont.enapso.com/dotnetpro#price"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:label xml:lang="en">Document Item</rdfs:label>
+        <rdfs:label xml:lang="de">Position</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://ont.enapso.com/dotnetpro#Employee -->
+
+    <owl:Class rdf:about="http://ont.enapso.com/dotnetpro#Employee">
+        <rdfs:subClassOf rdf:resource="http://ont.enapso.com/dotnetpro#Staff"/>
+        <rdfs:label xml:lang="de">Angestellter</rdfs:label>
+        <rdfs:label xml:lang="en">Employee</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://ont.enapso.com/dotnetpro#Freelancer -->
+
+    <owl:Class rdf:about="http://ont.enapso.com/dotnetpro#Freelancer">
+        <rdfs:subClassOf rdf:resource="http://ont.enapso.com/dotnetpro#Staff"/>
+        <rdfs:label xml:lang="en">Freelancer</rdfs:label>
+        <rdfs:label xml:lang="de">Freiberufler</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://ont.enapso.com/dotnetpro#ImmaterialProduct -->
+
+    <owl:Class rdf:about="http://ont.enapso.com/dotnetpro#ImmaterialProduct">
+        <rdfs:subClassOf rdf:resource="http://ont.enapso.com/dotnetpro#Product"/>
+        <rdfs:label xml:lang="en">Download Product</rdfs:label>
+        <rdfs:label xml:lang="de">Download-Artikel</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://ont.enapso.com/dotnetpro#Invoice -->
+
+    <owl:Class rdf:about="http://ont.enapso.com/dotnetpro#Invoice">
+        <rdfs:subClassOf rdf:resource="http://ont.enapso.com/dotnetpro#Document"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://ont.enapso.com/dotnetpro#hasDocumentItem"/>
+                <owl:someValuesFrom rdf:resource="http://ont.enapso.com/dotnetpro#DocumentItem"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:label xml:lang="en">Invoice</rdfs:label>
+        <rdfs:label xml:lang="de">Rechnung</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://ont.enapso.com/dotnetpro#Manager -->
+
+    <owl:Class rdf:about="http://ont.enapso.com/dotnetpro#Manager">
+        <rdfs:subClassOf rdf:resource="http://ont.enapso.com/dotnetpro#Role"/>
+    </owl:Class>
+    
+
+
+    <!-- http://ont.enapso.com/dotnetpro#MaterialProduct -->
+
+    <owl:Class rdf:about="http://ont.enapso.com/dotnetpro#MaterialProduct">
+        <rdfs:subClassOf rdf:resource="http://ont.enapso.com/dotnetpro#Product"/>
+        <rdfs:label xml:lang="en">Shipped Product</rdfs:label>
+        <rdfs:label xml:lang="de">Versand-Artikel</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://ont.enapso.com/dotnetpro#MediaPartner -->
+
+    <owl:Class rdf:about="http://ont.enapso.com/dotnetpro#MediaPartner">
+        <rdfs:subClassOf rdf:resource="http://ont.enapso.com/dotnetpro#BusinessRelation"/>
+        <rdfs:label xml:lang="en">Media Partner</rdfs:label>
+        <rdfs:label xml:lang="de">Media-Partner</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://ont.enapso.com/dotnetpro#Person -->
+
+    <owl:Class rdf:about="http://ont.enapso.com/dotnetpro#Person">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://ont.enapso.com/dotnetpro#givenname"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://ont.enapso.com/dotnetpro#surname"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:label xml:lang="de">Person</rdfs:label>
+        <rdfs:label xml:lang="en">Person</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://ont.enapso.com/dotnetpro#Product -->
+
+    <owl:Class rdf:about="http://ont.enapso.com/dotnetpro#Product">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://ont.enapso.com/dotnetpro#LongDescription"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://ont.enapso.com/dotnetpro#ShortDescription"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://ont.enapso.com/dotnetpro#artno"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://ont.enapso.com/dotnetpro#name"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://ont.enapso.com/dotnetpro#purchasePrice"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://ont.enapso.com/dotnetpro#salesPrice"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://ont.enapso.com/dotnetpro#vatRate"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:label xml:lang="de">Artikel</rdfs:label>
+        <rdfs:label xml:lang="en">Product</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://ont.enapso.com/dotnetpro#Role -->
+
+    <owl:Class rdf:about="http://ont.enapso.com/dotnetpro#Role">
+        <rdfs:comment xml:lang="de">Die Verantwortlichkeit(en) oder Tätigkeit(en) einer Person im Unternehmen.</rdfs:comment>
+        <rdfs:comment xml:lang="en">The responsibilities or activities of a person in a company.</rdfs:comment>
+        <rdfs:label xml:lang="en">Role</rdfs:label>
+        <rdfs:label xml:lang="de">Rolle</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://ont.enapso.com/dotnetpro#Sales -->
+
+    <owl:Class rdf:about="http://ont.enapso.com/dotnetpro#Sales">
+        <rdfs:subClassOf rdf:resource="http://ont.enapso.com/dotnetpro#Role"/>
+        <rdfs:label xml:lang="en">Sales</rdfs:label>
+        <rdfs:label xml:lang="de">Vertrieb</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://ont.enapso.com/dotnetpro#ShoppingBasket -->
+
+    <owl:Class rdf:about="http://ont.enapso.com/dotnetpro#ShoppingBasket">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://ont.enapso.com/dotnetpro#hasProduct"/>
+                <owl:allValuesFrom rdf:resource="http://ont.enapso.com/dotnetpro#Product"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:label xml:lang="de">Einkaufskorb</rdfs:label>
+        <rdfs:label xml:lang="en">Shopping Basket</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://ont.enapso.com/dotnetpro#Staff -->
+
+    <owl:Class rdf:about="http://ont.enapso.com/dotnetpro#Staff">
+        <rdfs:label xml:lang="de">Belegschaft</rdfs:label>
+        <rdfs:label xml:lang="en">Staff</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://ont.enapso.com/dotnetpro#Supplier -->
+
+    <owl:Class rdf:about="http://ont.enapso.com/dotnetpro#Supplier">
+        <rdfs:subClassOf rdf:resource="http://ont.enapso.com/dotnetpro#BusinessRelation"/>
+        <rdfs:label xml:lang="de">Lieferant</rdfs:label>
+        <rdfs:label xml:lang="en">Supplier</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://ont.enapso.com/dotnetpro#TestClass -->
+
+    <owl:Class rdf:about="http://ont.enapso.com/dotnetpro#TestClass">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://ont.enapso.com/dotnetpro#testDataProp"/>
+                <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://ont.enapso.com/dotnetpro#testDataProp"/>
+                <owl:allValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://ont.enapso.com/dotnetpro#testDataProp"/>
+                <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:minQualifiedCardinality>
+                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://ont.enapso.com/dotnetpro#testDataProp"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">3</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://ont.enapso.com/dotnetpro#testDataProp"/>
+                <owl:maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2</owl:maxQualifiedCardinality>
+                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:label xml:lang="en">Test Class</rdfs:label>
+        <rdfs:label xml:lang="de">Test-Klasse</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://ont.enapso.com/dotnetpro#Tester -->
+
+    <owl:Class rdf:about="http://ont.enapso.com/dotnetpro#Tester">
+        <rdfs:subClassOf rdf:resource="http://ont.enapso.com/dotnetpro#Role"/>
+        <rdfs:label xml:lang="de">Tester</rdfs:label>
+        <rdfs:label xml:lang="en">Tester</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Individuals
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://ont.enapso.com/dotnetpro#Address_1d09d629_2577_4cbd_8186_c57391e63429 -->
+
+    <owl:NamedIndividual rdf:about="http://ont.enapso.com/dotnetpro#Address_1d09d629_2577_4cbd_8186_c57391e63429">
+        <rdf:type rdf:resource="http://ont.enapso.com/dotnetpro#Address"/>
+        <city rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Herzogenrath</city>
+        <street rdf:datatype="http://www.w3.org/2001/XMLSchema#string">An Vieslapp 29</street>
+        <zipcode rdf:datatype="http://www.w3.org/2001/XMLSchema#string">52134</zipcode>
+        <rdfs:label>Innotrade GmbH Hauptsitz</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ont.enapso.com/dotnetpro#Address_cee4a7b4_3a4c_4361_9d80_d6b72adbf2d0 -->
+
+    <owl:NamedIndividual rdf:about="http://ont.enapso.com/dotnetpro#Address_cee4a7b4_3a4c_4361_9d80_d6b72adbf2d0">
+        <rdf:type rdf:resource="http://ont.enapso.com/dotnetpro#Address"/>
+        <city rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Ulm</city>
+        <street rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Karlstraße 3</street>
+        <zipcode rdf:datatype="http://www.w3.org/2001/XMLSchema#string">89073</zipcode>
+        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Ebner Mediagroup GmbH &amp; Co. KG</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ont.enapso.com/dotnetpro#Address_eabaf8ce_0935_4286_9d61_2d9b3f5e8154 -->
+
+    <owl:NamedIndividual rdf:about="http://ont.enapso.com/dotnetpro#Address_eabaf8ce_0935_4286_9d61_2d9b3f5e8154">
+        <rdf:type rdf:resource="http://ont.enapso.com/dotnetpro#Address"/>
+        <city rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Herzogenrath</city>
+        <street>Kaiserstraße 100</street>
+        <zipcode rdf:datatype="http://www.w3.org/2001/XMLSchema#string">52134</zipcode>
+        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Innotrade GmbH TPH</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ont.enapso.com/dotnetpro#Company_6a7379f7_61ca_49c1_b37a_dabd64edd39d -->
+
+    <owl:NamedIndividual rdf:about="http://ont.enapso.com/dotnetpro#Company_6a7379f7_61ca_49c1_b37a_dabd64edd39d">
+        <rdf:type rdf:resource="http://ont.enapso.com/dotnetpro#Company"/>
+        <hasAddress rdf:resource="http://ont.enapso.com/dotnetpro#Address_1d09d629_2577_4cbd_8186_c57391e63429"/>
+        <hasAddress rdf:resource="http://ont.enapso.com/dotnetpro#Address_eabaf8ce_0935_4286_9d61_2d9b3f5e8154"/>
+        <companyName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Innotrade GmbH</companyName>
+        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Innotrade</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ont.enapso.com/dotnetpro#Company_de49dbf5_102d_4bb0_b022_f5bd0023713c -->
+
+    <owl:NamedIndividual rdf:about="http://ont.enapso.com/dotnetpro#Company_de49dbf5_102d_4bb0_b022_f5bd0023713c">
+        <rdf:type rdf:resource="http://ont.enapso.com/dotnetpro#Company"/>
+        <rdf:type rdf:resource="http://ont.enapso.com/dotnetpro#MediaPartner"/>
+        <hasAddress rdf:resource="http://ont.enapso.com/dotnetpro#Address_cee4a7b4_3a4c_4361_9d80_d6b72adbf2d0"/>
+        <companyName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Ebner Media Group GmbH &amp; Co. KG</companyName>
+        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Ebner</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ont.enapso.com/dotnetpro#Person_8e7980b9_bec9_4e39_af50_a8f3e6c0d349 -->
+
+    <owl:NamedIndividual rdf:about="http://ont.enapso.com/dotnetpro#Person_8e7980b9_bec9_4e39_af50_a8f3e6c0d349">
+        <rdf:type rdf:resource="http://ont.enapso.com/dotnetpro#Person"/>
+        <givenname rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Max</givenname>
+        <surname rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Mustermann</surname>
+        <rdfs:label>Max Mustermann</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ont.enapso.com/dotnetpro#Person_da0b7612_c956_45f9_a974_314d01849659 -->
+
+    <owl:NamedIndividual rdf:about="http://ont.enapso.com/dotnetpro#Person_da0b7612_c956_45f9_a974_314d01849659">
+        <rdf:type rdf:resource="http://ont.enapso.com/dotnetpro#Architect"/>
+        <rdf:type rdf:resource="http://ont.enapso.com/dotnetpro#Freelancer"/>
+        <rdf:type rdf:resource="http://ont.enapso.com/dotnetpro#Manager"/>
+        <rdf:type rdf:resource="http://ont.enapso.com/dotnetpro#Person"/>
+        <givenname rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Susanne</givenname>
+        <surname rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Musterfrau</surname>
+        <rdfs:label>Susanne Musterfrau</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ont.enapso.com/dotnetpro#Product_c2318c23_2db8_4c8b_9dbf_cd20970d7723 -->
+
+    <owl:NamedIndividual rdf:about="http://ont.enapso.com/dotnetpro#Product_c2318c23_2db8_4c8b_9dbf_cd20970d7723">
+        <rdf:type rdf:resource="http://ont.enapso.com/dotnetpro#Product"/>
+        <artno rdf:datatype="http://www.w3.org/2001/XMLSchema#string">0001</artno>
+        <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Blueray Player</name>
+        <purchasePrice rdf:datatype="http://www.w3.org/2001/XMLSchema#float">145.0</purchasePrice>
+        <salesPrice rdf:datatype="http://www.w3.org/2001/XMLSchema#float">199.5</salesPrice>
+        <vatRate rdf:datatype="http://www.w3.org/2001/XMLSchema#float">19.0</vatRate>
+        <weight rdf:datatype="http://www.w3.org/2001/XMLSchema#float">1.3</weight>
+        <rdfs:comment xml:lang="de">Blueray Player, HD, inklusive Kabel</rdfs:comment>
+        <rdfs:label xml:lang="en">Blueray Player, HD, including cables</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ont.enapso.com/dotnetpro#Product_c2aafc2e_b820_4eec_a792_ecf56fb4695e -->
+
+    <owl:NamedIndividual rdf:about="http://ont.enapso.com/dotnetpro#Product_c2aafc2e_b820_4eec_a792_ecf56fb4695e">
+        <rdf:type rdf:resource="http://ont.enapso.com/dotnetpro#Product"/>
+        <artno rdf:datatype="http://www.w3.org/2001/XMLSchema#string">0003</artno>
+        <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Antivirus Suite</name>
+        <purchasePrice rdf:datatype="http://www.w3.org/2001/XMLSchema#float">49.9</purchasePrice>
+        <salesPrice rdf:datatype="http://www.w3.org/2001/XMLSchema#float">129.5</salesPrice>
+        <url rdf:datatype="http://www.w3.org/2001/XMLSchema#string">http://www.innotrade.com/downloads#avsuite</url>
+        <vatRate rdf:datatype="http://www.w3.org/2001/XMLSchema#float">19.0</vatRate>
+        <rdfs:label>Product Antivirus Suite</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ont.enapso.com/dotnetpro#Product_d256c837_ceb4_4182_bf48_8c27e92a33dc -->
+
+    <owl:NamedIndividual rdf:about="http://ont.enapso.com/dotnetpro#Product_d256c837_ceb4_4182_bf48_8c27e92a33dc">
+        <rdf:type rdf:resource="http://ont.enapso.com/dotnetpro#Product"/>
+        <artno rdf:datatype="http://www.w3.org/2001/XMLSchema#string">0004</artno>
+        <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Dictation Suite</name>
+        <purchasePrice rdf:datatype="http://www.w3.org/2001/XMLSchema#float">175.0</purchasePrice>
+        <salesPrice rdf:datatype="http://www.w3.org/2001/XMLSchema#float">249.99</salesPrice>
+        <url rdf:datatype="http://www.w3.org/2001/XMLSchema#string">http://www.innotrade.com/downloads#opsystem</url>
+        <vatRate rdf:datatype="http://www.w3.org/2001/XMLSchema#float">19.0</vatRate>
+        <rdfs:label>Product Dictation Suite</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ont.enapso.com/dotnetpro#Product_d8373cac_94b7_4bff_92cd_48ce93dcfbf1 -->
+
+    <owl:NamedIndividual rdf:about="http://ont.enapso.com/dotnetpro#Product_d8373cac_94b7_4bff_92cd_48ce93dcfbf1">
+        <rdf:type rdf:resource="http://ont.enapso.com/dotnetpro#Product"/>
+        <artno rdf:datatype="http://www.w3.org/2001/XMLSchema#string">0002</artno>
+        <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Smart TV</name>
+        <purchasePrice rdf:datatype="http://www.w3.org/2001/XMLSchema#float">350.0</purchasePrice>
+        <salesPrice rdf:datatype="http://www.w3.org/2001/XMLSchema#float">499.0</salesPrice>
+        <vatRate rdf:datatype="http://www.w3.org/2001/XMLSchema#float">19.0</vatRate>
+        <weight rdf:datatype="http://www.w3.org/2001/XMLSchema#float">2.5</weight>
+        <rdfs:label>Product Smart TV</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // General axioms
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    <owl:Class>
+        <owl:intersectionOf rdf:parseType="Collection">
+            <rdf:Description rdf:about="http://ont.enapso.com/dotnetpro#Product"/>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://ont.enapso.com/dotnetpro#url"/>
+                <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </owl:intersectionOf>
+        <rdfs:subClassOf rdf:resource="http://ont.enapso.com/dotnetpro#ImmaterialProduct"/>
+    </owl:Class>
+    <owl:Class>
+        <owl:intersectionOf rdf:parseType="Collection">
+            <rdf:Description rdf:about="http://ont.enapso.com/dotnetpro#Product"/>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://ont.enapso.com/dotnetpro#weight"/>
+                <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+            </owl:Restriction>
+        </owl:intersectionOf>
+        <rdfs:subClassOf rdf:resource="http://ont.enapso.com/dotnetpro#MaterialProduct"/>
+    </owl:Class>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi -->
+

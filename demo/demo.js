@@ -26,6 +26,16 @@ const EnapsoGraphDBAdminDemo = {
 
 	graphDBEndpoint: null,
 	authentication: null,
+	createRepository: async function () {
+		let resp = await EnapsoGraphDBAdmin.createRepository({
+			id: "New One"});
+		console.log("Create Repo:" + JSON.stringify(resp, null, 2));
+	},
+	deleteRepository: async function () {
+		let resp = await EnapsoGraphDBAdmin.Deleterepo({
+			repo: "New One"});
+		console.log("Delete Repo:" + JSON.stringify(resp, null, 2));
+	},
 
 	createEndpoint: async function () {
 		// instantiate a new GraphDB endpoint
@@ -35,7 +45,6 @@ const EnapsoGraphDBAdminDemo = {
 			prefixes: GRAPHDB_DEFAULT_PREFIXES
 		});
 	},
-
 	login: async function () {
 		// login into GraphDB using JWT
 		let lRes = await this.graphDBEndpoint.login(
@@ -60,6 +69,7 @@ const EnapsoGraphDBAdminDemo = {
 		console.log("\nClearRepository :\n" + JSON.stringify(resp, null, 2));
 		return resp;
 	},
+	
 
 	demoGetUsers: async function () {
 		// lists all users (requires admin role)
@@ -114,6 +124,7 @@ const EnapsoGraphDBAdminDemo = {
 		console.log("\nUploadFromFile:\n" + JSON.stringify(resp, null, 2));
 		return resp;
 	},
+
 
 	demoDownloadToFile: async function () {
 		// download a repository or named graph to file
@@ -264,7 +275,7 @@ const EnapsoGraphDBAdminDemo = {
 	},
 
 	demo: async function () {
-		this.graphDBEndpoint = await this.createEndpoint();
+	/*	this.graphDBEndpoint = await this.createEndpoint();
 		this.authentication = await this.login();
 		// verify authentication
 		if (!this.authentication.success) {
@@ -273,6 +284,7 @@ const EnapsoGraphDBAdminDemo = {
 			return;
 		}
 		console.log("\nLogin successful");
+*/
 
 		// clear entire repository
 		// CAUTION! This operation empties the entire repository and cannot be undone!
@@ -301,8 +313,8 @@ const EnapsoGraphDBAdminDemo = {
         console.log("--- Inserting new triple --- ")
 		await this.demoInsert();
 		*/
-		console.log("--- Graph should contain TestClass now --- ")
-		await this.demoQuery();
+		//console.log("--- Graph should contain TestClass now --- ")
+		//await this.demoQuery();
 		/*
         // await this.demoDownloadToFile();
         console.log("--- Updating existing triple --- ")
@@ -320,7 +332,10 @@ const EnapsoGraphDBAdminDemo = {
 	   await this.demoPerformGarbageCollection();
 	   await this.demoGetResources();
 	   */
-		/*
+	 await this.createRepository();
+		
+	 //await this.deleteRepository(); 
+	  /*
 		console.log("Start: " + new Date().toISOString());
 		await this.demoWaitForGraphDB();
 		console.log("Finish: " + new Date().toISOString());
