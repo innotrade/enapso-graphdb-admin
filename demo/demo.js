@@ -26,14 +26,16 @@ const EnapsoGraphDBAdminDemo = {
 
 	graphDBEndpoint: null,
 	authentication: null,
-	createRepository: async function () {
+	createRepository: async function (reponame,uri) {
 		let resp = await EnapsoGraphDBAdmin.createRepository({
-			id: "New One"});
+			id: reponame,
+			uri:uri});
 		console.log("Create Repo:" + JSON.stringify(resp, null, 2));
 	},
-	deleteRepository: async function () {
-		let resp = await EnapsoGraphDBAdmin.Deleterepo({
-			repo: "New One"});
+	deleteRepository: async function (reponame,uri) {
+		let resp = await EnapsoGraphDBAdmin.deleterepo({
+			repo: reponame,
+		uri:uri});
 		console.log("Delete Repo:" + JSON.stringify(resp, null, 2));
 	},
 
@@ -332,9 +334,9 @@ const EnapsoGraphDBAdminDemo = {
 	   await this.demoPerformGarbageCollection();
 	   await this.demoGetResources();
 	   */
-	 await this.createRepository();
+	// await this.createRepository("Test1",'http://localhost:7200');
 		
-	 //await this.deleteRepository(); 
+	 await this.deleteRepository("Test1",'http://localhost:7200'); 
 	  /*
 		console.log("Start: " + new Date().toISOString());
 		await this.demoWaitForGraphDB();
