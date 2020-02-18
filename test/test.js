@@ -38,6 +38,14 @@ describe("Enapso GraphDB Admin Tests", () => {
             done();
         })
     });
+    it('Clear Repository', (done) => {
+        lEndpoint.clearRepository({
+        }).then(result => {
+            // console.log(result);
+            expect(result.statusCode).to.equal(200);
+            done();
+        })
+    });
     it('Download the Ontology from Graphdb', (done) => {
         lEndpoint.downloadToFile({
         }).then(result => {

@@ -277,7 +277,7 @@ const EnapsoGraphDBAdminDemo = {
 	},
 
 	demo: async function () {
-	/*	this.graphDBEndpoint = await this.createEndpoint();
+		this.graphDBEndpoint = await this.createEndpoint();
 		this.authentication = await this.login();
 		// verify authentication
 		if (!this.authentication.success) {
@@ -286,7 +286,7 @@ const EnapsoGraphDBAdminDemo = {
 			return;
 		}
 		console.log("\nLogin successful");
-*/
+
 
 		// clear entire repository
 		// CAUTION! This operation empties the entire repository and cannot be undone!
@@ -336,7 +336,8 @@ const EnapsoGraphDBAdminDemo = {
 	   */
 	// await this.createRepository("Test1",'http://localhost:7200');
 		
-	 await this.deleteRepository("Test1",'http://localhost:7200'); 
+	// await this.deleteRepository("Test1",'http://localhost:7200'); 
+	await this.demoClearRepository();
 	  /*
 		console.log("Start: " + new Date().toISOString());
 		await this.demoWaitForGraphDB();
