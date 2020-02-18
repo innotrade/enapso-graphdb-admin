@@ -83,6 +83,22 @@ describe("Enapso GraphDB Admin Tests", () => {
             done();
         })
     });
+    it('Create new repository in Graphdb', (done) => {
+        lEndpoint.createRepository({
+        }).then(result => {
+            // console.log(result);
+            expect(result).to.have.property('success', true);
+            done();
+        })
+    });
+    it('Delete repository in Graphdb', (done) => {
+        lEndpoint.deleterepo({
+        }).then(result => {
+            // console.log(result);
+            expect(result.statusCode).to.equal(200);
+            done();
+        })
+    });
  it('Check Graphdn for Update function use for performing insertion,deletion and updation query', (done) => {
         lEndpoint.update({
         }).then(result => {
