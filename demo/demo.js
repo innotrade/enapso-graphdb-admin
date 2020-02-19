@@ -45,6 +45,22 @@ const EnapsoGraphDBAdminDemo = {
 		return lRes;
 	},
 
+	demoCreateRepository: async function () {
+		let resp = await this.graphDBEndpoint.createRepository({
+			"id": "AutomatedTest",
+			"title": "Enapso Automated Test Repository",
+			"location": ""
+		});
+		console.log("Create Repository:" + JSON.stringify(resp, null, 2));
+	},
+
+	demoDeleteRepository: async function () {
+		let resp = await this.graphDBEndpoint.deleteRepository({
+			"id": "AutomatedTest"
+		});
+		console.log("Delete Repository:" + JSON.stringify(resp, null, 2));
+	},
+
 	demoGetRepositories: async function () {
 		// lists all repositories
 		resp = await this.graphDBEndpoint.getRepositories();
@@ -266,6 +282,7 @@ const EnapsoGraphDBAdminDemo = {
 	demo: async function () {
 		this.graphDBEndpoint = await this.createEndpoint();
 		this.authentication = await this.login();
+
 		// verify authentication
 		if (!this.authentication.success) {
 			console.log("\nLogin failed:\n" +
@@ -301,8 +318,8 @@ const EnapsoGraphDBAdminDemo = {
         console.log("--- Inserting new triple --- ")
 		await this.demoInsert();
 		*/
-		console.log("--- Graph should contain TestClass now --- ")
-		await this.demoQuery();
+		//console.log("--- Graph should contain TestClass now --- ")
+		//await this.demoQuery();
 		/*
         // await this.demoDownloadToFile();
         console.log("--- Updating existing triple --- ")
@@ -320,11 +337,17 @@ const EnapsoGraphDBAdminDemo = {
 	   await this.demoPerformGarbageCollection();
 	   await this.demoGetResources();
 	   */
+
+		// await this.demoCreateRepository();
+		// await this.demoDeleteRepository();
+
+		// await this.demoClearRepository();
+
 		/*
-		console.log("Start: " + new Date().toISOString());
-		await this.demoWaitForGraphDB();
-		console.log("Finish: " + new Date().toISOString());
-		*/
+		  console.log("Start: " + new Date().toISOString());
+		  await this.demoWaitForGraphDB();
+		  console.log("Finish: " + new Date().toISOString());
+		  */
 
 		// await this.demoGetQuery();
 	}
