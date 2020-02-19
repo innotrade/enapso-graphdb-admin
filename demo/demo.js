@@ -26,18 +26,6 @@ const EnapsoGraphDBAdminDemo = {
 
 	graphDBEndpoint: null,
 	authentication: null,
-	createRepository: async function (reponame,uri) {
-		let resp = await EnapsoGraphDBAdmin.createRepository({
-			id: reponame,
-			uri:uri});
-		console.log("Create Repo:" + JSON.stringify(resp, null, 2));
-	},
-	deleteRepository: async function (reponame,uri) {
-		let resp = await EnapsoGraphDBAdmin.deleterepo({
-			repo: reponame,
-		uri:uri});
-		console.log("Delete Repo:" + JSON.stringify(resp, null, 2));
-	},
 
 	createEndpoint: async function () {
 		// instantiate a new GraphDB endpoint
@@ -47,6 +35,7 @@ const EnapsoGraphDBAdminDemo = {
 			prefixes: GRAPHDB_DEFAULT_PREFIXES
 		});
 	},
+
 	login: async function () {
 		// login into GraphDB using JWT
 		let lRes = await this.graphDBEndpoint.login(
@@ -54,6 +43,22 @@ const EnapsoGraphDBAdminDemo = {
 			GRAPHDB_PASSWORD
 		);
 		return lRes;
+	},
+
+	demoCreateRepository: async function () {
+		let resp = await this.graphDBEndpoint.createRepository({
+			"id": "AutomatedTest",
+			"title": "Enapso Automated Test Repository",
+			"location": ""
+		});
+		console.log("Create Repository:" + JSON.stringify(resp, null, 2));
+	},
+
+	demoDeleteRepository: async function () {
+		let resp = await this.graphDBEndpoint.deleteRepository({
+			"id": "AutomatedTest"
+		});
+		console.log("Delete Repository:" + JSON.stringify(resp, null, 2));
 	},
 
 	demoGetRepositories: async function () {
@@ -71,7 +76,6 @@ const EnapsoGraphDBAdminDemo = {
 		console.log("\nClearRepository :\n" + JSON.stringify(resp, null, 2));
 		return resp;
 	},
-	
 
 	demoGetUsers: async function () {
 		// lists all users (requires admin role)
@@ -126,7 +130,6 @@ const EnapsoGraphDBAdminDemo = {
 		console.log("\nUploadFromFile:\n" + JSON.stringify(resp, null, 2));
 		return resp;
 	},
-
 
 	demoDownloadToFile: async function () {
 		// download a repository or named graph to file
@@ -279,6 +282,7 @@ const EnapsoGraphDBAdminDemo = {
 	demo: async function () {
 		this.graphDBEndpoint = await this.createEndpoint();
 		this.authentication = await this.login();
+
 		// verify authentication
 		if (!this.authentication.success) {
 			console.log("\nLogin failed:\n" +
@@ -286,7 +290,6 @@ const EnapsoGraphDBAdminDemo = {
 			return;
 		}
 		console.log("\nLogin successful");
-
 
 		// clear entire repository
 		// CAUTION! This operation empties the entire repository and cannot be undone!
@@ -334,15 +337,17 @@ const EnapsoGraphDBAdminDemo = {
 	   await this.demoPerformGarbageCollection();
 	   await this.demoGetResources();
 	   */
-	// await this.createRepository("Test1",'http://localhost:7200');
-		
-	// await this.deleteRepository("Test1",'http://localhost:7200'); 
-	await this.demoClearRepository();
-	  /*
-		console.log("Start: " + new Date().toISOString());
-		await this.demoWaitForGraphDB();
-		console.log("Finish: " + new Date().toISOString());
-		*/
+
+		// await this.demoCreateRepository();
+		// await this.demoDeleteRepository();
+
+		// await this.demoClearRepository();
+
+		/*
+		  console.log("Start: " + new Date().toISOString());
+		  await this.demoWaitForGraphDB();
+		  console.log("Finish: " + new Date().toISOString());
+		  */
 
 		// await this.demoGetQuery();
 	}
