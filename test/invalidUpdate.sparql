@@ -1,0 +1,13 @@
+prefix entest: <http://ont.enapso.com/test#>
+prefix xsd: <http://www.w3.org/2001/XMLSchema#>
+
+with <http://ont.enapso.com/test>
+delete {
+    entest:Person_AlexanderSchulze entest:firstName ?o
+}
+insert {
+    entest:Person_AlexanderSchulze entest:firstName "123456"^^xsd:int
+}
+where {
+    entest:Person_AlexanderSchulze entest:firstName ?o 
+}

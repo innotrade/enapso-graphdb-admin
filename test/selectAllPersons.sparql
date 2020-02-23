@@ -1,0 +1,8 @@
+prefix entest: <http://ont.enapso.com/test#>
+
+select ?firstName ?lastName
+where { 
+    ?person
+		entest:firstName ?firstName ;
+        entest:lastName ?lastName .
+}

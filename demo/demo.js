@@ -1,9 +1,17 @@
 // Innotrade Enapso GraphDB Admin Example
-// (C) Copyright 2019 Innotrade GmbH, Herzogenrath, NRW, Germany
+// (C) Copyright 2019-2020 Innotrade GmbH, Herzogenrath, NRW, Germany
 
 // require the Enapso GraphDB Admin Demo module
-const { EnapsoGraphDBClient } = require('@innotrade/enapso-graphdb-client');
-const { EnapsoGraphDBAdmin } = require('../index');
+const
+	fsPromises = require('fs').promises,
+	{ EnapsoGraphDBClient } = require('@innotrade/enapso-graphdb-client'),
+	{ EnapsoGraphDBAdmin } = require('../index'),
+	{ EnapsoLogger, EnapsoLoggerFactory } = require('@innotrade/enapso-logger')
+	;
+
+EnapsoLoggerFactory.createGlobalLogger('enLogger');
+enLogger.setLevel(EnapsoLogger.ALL);
+
 
 // connection data to the running GraphDB instance
 const
@@ -11,7 +19,8 @@ const
 	GRAPHDB_REPOSITORY = 'Test',
 	GRAPHDB_USERNAME = 'Test',
 	GRAPHDB_PASSWORD = 'Test',
-	GRAPHDB_CONTEXT_TEST = 'http://ont.enapso.com/test'
+	GRAPHDB_CONTEXT_TEST = 'http://ont.enapso.com/test',
+	GRAPHDB_CONTEXT_SHACL = 'http://rdf4j.org/schema/rdf4j#SHACLShapeGraph'
 
 // the default prefixes for all SPARQL queries
 const GRAPHDB_DEFAULT_PREFIXES = [
@@ -20,7 +29,7 @@ const GRAPHDB_DEFAULT_PREFIXES = [
 	EnapsoGraphDBClient.PREFIX_RDFS
 ];
 
-console.log("Innotrade Enapso GraphDB Admin Demo, (C) Copyright 2019-2020 Innotrade GmbH, Herzogenrath, NRW, Germany");
+enLogger.info("Innotrade Enapso GraphDB Admin Demo\n(C) Copyright 2019-2020 Innotrade GmbH, Herzogenrath, NRW, Germany");
 
 const EnapsoGraphDBAdminDemo = {
 
@@ -51,20 +60,20 @@ const EnapsoGraphDBAdminDemo = {
 			"title": "Enapso Automated Test Repository",
 			"location": ""
 		});
-		console.log("Create Repository:" + JSON.stringify(resp, null, 2));
+		enLogger.info("Create Repository:" + JSON.stringify(resp, null, 2));
 	},
 
 	demoDeleteRepository: async function () {
 		let resp = await this.graphDBEndpoint.deleteRepository({
 			"id": "AutomatedTest"
 		});
-		console.log("Delete Repository:" + JSON.stringify(resp, null, 2));
+		enLogger.info("Delete Repository:" + JSON.stringify(resp, null, 2));
 	},
 
 	demoGetRepositories: async function () {
 		// lists all repositories
 		resp = await this.graphDBEndpoint.getRepositories();
-		console.log("\nRepositories:\n" + JSON.stringify(resp, null, 2));
+		enLogger.info("\nRepositories:\n" + JSON.stringify(resp, null, 2));
 		return resp;
 	},
 
@@ -73,28 +82,37 @@ const EnapsoGraphDBAdminDemo = {
 		// CAUTION! This operation empties the entire repository 
 		// and cannot be undone!
 		let resp = await this.graphDBEndpoint.clearRepository();
-		console.log("\nClearRepository :\n" + JSON.stringify(resp, null, 2));
+		enLogger.info("\nClearRepository :\n" + JSON.stringify(resp, null, 2));
+		return resp;
+	},
+
+	demoDropShaclGraph: async function () {
+		// clear entire repository
+		// CAUTION! This operation empties the entire repository 
+		// and cannot be undone!
+		let resp = await this.graphDBEndpoint.dropShaclGraph();
+		enLogger.info("\nDropShaclGraph :\n" + JSON.stringify(resp, null, 2));
 		return resp;
 	},
 
 	demoGetUsers: async function () {
 		// lists all users (requires admin role)
 		let resp = await this.graphDBEndpoint.getUsers();
-		console.log("\nUsers:\n" + JSON.stringify(resp, null, 2));
+		enLogger.info("\nUsers:\n" + JSON.stringify(resp, null, 2));
 		return resp;
 	},
 
 	demoGetLocations: async function () {
 		// lists all locations, requires repository manager role!
 		let resp = await this.graphDBEndpoint.getLocations();
-		console.log("\nLocations:\n" + JSON.stringify(resp, null, 2));
+		enLogger.info("\nLocations:\n" + JSON.stringify(resp, null, 2));
 		return resp;
 	},
 
 	demoGetContexts: async function () {
 		// lists all contexts (named graph) in the repository
 		let resp = await this.graphDBEndpoint.getContexts();
-		console.log("\nContexts:\n" + JSON.stringify(resp, null, 2));
+		enLogger.info("\nContexts:\n" + JSON.stringify(resp, null, 2));
 		return resp;
 	},
 
@@ -104,7 +122,7 @@ const EnapsoGraphDBAdminDemo = {
 		// of the repository and cannot be undone!
 		let resp = await this.graphDBEndpoint.clearContext(
 			GRAPHDB_CONTEXT_TEST);
-		console.log("\nClearContext :\n" +
+		enLogger.info("\nClearContext :\n" +
 			JSON.stringify(resp, null, 2));
 		return;
 	},
@@ -114,7 +132,7 @@ const EnapsoGraphDBAdminDemo = {
 		// CAUTION! This operation empties the named graph 
 		// of the repository and cannot be undone!
 		let resp = await this.graphDBEndpoint.getSavedQueries();
-		console.log("\nGetSavedQueries :\n" +
+		enLogger.info("\nGetSavedQueries :\n" +
 			JSON.stringify(resp, null, 2));
 		return;
 	},
@@ -127,7 +145,19 @@ const EnapsoGraphDBAdminDemo = {
 			baseIRI: "http://ont.enapso.com/test#",
 			context: "http://ont.enapso.com/test"
 		});
-		console.log("\nUploadFromFile:\n" + JSON.stringify(resp, null, 2));
+		enLogger.info("\nUploadFromFile:\n" + JSON.stringify(resp, null, 2));
+		return resp;
+	},
+
+	demoUploadFromData: async function () {
+		// upload a file
+		let resp = await this.graphDBEndpoint.uploadFromData({
+			filename: "ontologies/Test.owl",
+			format: "application/rdf+xml",
+			baseIRI: "http://ont.enapso.com/test#",
+			context: "http://ont.enapso.com/test"
+		});
+		enLogger.info("\nUploadFromData:\n" + JSON.stringify(resp, null, 2));
 		return resp;
 	},
 
@@ -140,7 +170,7 @@ const EnapsoGraphDBAdminDemo = {
 				this.graphDBEndpoint.getRepository() +
 				lFormat.extension
 		});
-		console.log("\nDownload (file):\n" +
+		enLogger.info("\nDownload (file):\n" +
 			JSON.stringify(resp, null, 2));
 		return resp;
 	},
@@ -150,7 +180,7 @@ const EnapsoGraphDBAdminDemo = {
 		resp = await this.graphDBEndpoint.downloadToText({
 			format: EnapsoGraphDBClient.FORMAT_TURTLE.type
 		});
-		console.log("\nDownload (text):\n" +
+		enLogger.info("\nDownload (text):\n" +
 			JSON.stringify(resp, null, 2));
 		return resp;
 	},
@@ -171,9 +201,9 @@ const EnapsoGraphDBAdminDemo = {
 				// drop the prefixes for easier resultset readability (optional)
 				dropPrefixes: false
 			});
-			console.log("Query succeeded:\n" + JSON.stringify(resp, null, 2));
+			enLogger.info("Query succeeded:\n" + JSON.stringify(resp, null, 2));
 		} else {
-			console.log("Query failed:\n" + JSON.stringify(binding, null, 2));
+			enLogger.info("Query failed:\n" + JSON.stringify(binding, null, 2));
 		}
 	},
 
@@ -190,9 +220,9 @@ const EnapsoGraphDBAdminDemo = {
 		let resp = await this.graphDBEndpoint.update(update);
 		// if a result was successfully returned
 		if (resp.success) {
-			console.log("Update succeeded:\n" + JSON.stringify(resp, null, 2));
+			enLogger.info("Update succeeded:\n" + JSON.stringify(resp, null, 2));
 		} else {
-			console.log("Update failed:\n" + JSON.stringify(resp, null, 2));
+			enLogger.info("Update failed:\n" + JSON.stringify(resp, null, 2));
 		}
 	},
 
@@ -214,9 +244,9 @@ const EnapsoGraphDBAdminDemo = {
 		let resp = await this.graphDBEndpoint.update(update);
 		// if a result was successfully returned
 		if (resp.success) {
-			console.log("Update succeeded:\n" + JSON.stringify(resp, null, 2));
+			enLogger.info("Update succeeded:\n" + JSON.stringify(resp, null, 2));
 		} else {
-			console.log("Update failed:\n" + JSON.stringify(resp, null, 2));
+			enLogger.info("Update failed:\n" + JSON.stringify(resp, null, 2));
 		}
 	},
 
@@ -235,29 +265,29 @@ const EnapsoGraphDBAdminDemo = {
 		let resp = await this.graphDBEndpoint.update(update);
 		// if a result was successfully returned
 		if (resp.success) {
-			console.log("Update succeeded:\n" + JSON.stringify(resp, null, 2));
+			enLogger.info("Update succeeded:\n" + JSON.stringify(resp, null, 2));
 		} else {
-			console.log("Update failed:\n" + JSON.stringify(resp, null, 2));
+			enLogger.info("Update failed:\n" + JSON.stringify(resp, null, 2));
 		}
 	},
 
 	demoPerformGarbageCollection: async function () {
 		// lists all contexts (named graph) in the repository
 		let resp = await this.graphDBEndpoint.performGarbageCollection();
-		console.log("\nGarbage Collection:\n" + JSON.stringify(resp, null, 2));
+		enLogger.info("\nGarbage Collection:\n" + JSON.stringify(resp, null, 2));
 		return resp;
 	},
 
 	demoGetResources: async function () {
 		// lists all contexts (named graph) in the repository
 		let resp = await this.graphDBEndpoint.getResources();
-		console.log("\nResources:\n" + JSON.stringify(resp, null, 2));
+		enLogger.info("\nResources:\n" + JSON.stringify(resp, null, 2));
 		return resp;
 	},
 
 	demoWaitForGraphDB: async function () {
 		// lists all contexts (named graph) in the repository
-		console.log("\nWaiting for GraphDB...");
+		enLogger.info("\nWaiting for GraphDB...");
 		let resp = await this.graphDBEndpoint.waitForGraphDB({
 			timeout: 10000,			// wait at most 10 seconds
 			interval: 2000,			// check resources all 2 seconds
@@ -265,18 +295,93 @@ const EnapsoGraphDBAdminDemo = {
 			memoryWatermark: 0.7,
 			performGarbageCollection: true,
 			callback: function (aEvent) {
-				console.log(JSON.stringify(aEvent));
+				enLogger.info(JSON.stringify(aEvent));
 			}
 		});
-		console.log("Wait for GraphDB:\n" + JSON.stringify(resp, null, 2));
+		enLogger.info("Wait for GraphDB:\n" + JSON.stringify(resp, null, 2));
 		return resp;
 	},
 
 	demoGetQuery: async function () {
 		// lists all contexts (named graph) in the repository
 		let resp = await this.graphDBEndpoint.getQuery();
-		console.log("\nGet Query:\n" + JSON.stringify(resp, null, 2));
+		enLogger.info("\nGet Query:\n" + JSON.stringify(resp, null, 2));
 		return resp;
+	},
+
+	demoShacl: async function () {
+		let resp;
+
+		// read sparqls
+		let validSparql = await fsPromises.readFile('./test/validUpdate.sparql', 'utf-8');
+		let invalidSparql = await fsPromises.readFile('./test/invalidUpdate.sparql', 'utf-8');
+		let getPersonsSparql = await fsPromises.readFile('./test/selectAllPersons.sparql', 'utf-8');
+		let shacl = await fsPromises.readFile('./ontologies/EnapsoTestShacl.ttl', 'utf-8');
+
+		// first drop the shacl graph if exists, if not this will not be a problem
+		resp = await this.graphDBEndpoint.dropShaclGraph();
+		enLogger.info("\nDrop Shacl Graph:\n" + JSON.stringify(resp, null, 2));
+
+		// now clear the current repository to ensure that there is no old data inside that could disturb the tests
+		resp = await this.graphDBEndpoint.clearRepository();
+		enLogger.info("\nClearing repository:\n" + JSON.stringify(resp, null, 2));
+
+		// now upload ontology directly from test ontology file into test graph into the test repository
+		resp = await this.graphDBEndpoint.uploadFromFile({
+			filename: "./ontologies/EnapsoTest.owl",
+			context: GRAPHDB_CONTEXT_TEST,
+			format: EnapsoGraphDBClient.FORMAT_RDF_XML.type
+		});
+		enLogger.info("\nLoading repo from file:\n" + JSON.stringify(resp, null, 2));
+
+		enLogger.info("\nDigesting ontology upload...");
+		// give graph db some seconds to digest the file, it's not immediately available but asynchronously loaded!
+		await new Promise(function (resolve) {
+			setTimeout(function () {
+				resolve();
+			}, 2000);
+		});
+
+		resp = await this.graphDBEndpoint.query(getPersonsSparql);
+		enLogger.info("\nGet Persons after upload (supposed to work):\n" + JSON.stringify(resp, null, 2));
+			
+		// first try all actions w/o a shacl being applied
+		resp = await this.graphDBEndpoint.update(validSparql);
+		enLogger.info("\nValid SPARQL w/o SHACL (supposed to work):\n" + JSON.stringify(resp, null, 2));
+
+		resp = await this.graphDBEndpoint.update(invalidSparql);
+		enLogger.info("\Invalid SPARQL w/o SHACL (supposed to work):\n" + JSON.stringify(resp, null, 2));
+
+		resp = await this.graphDBEndpoint.query(getPersonsSparql);
+		enLogger.info("\nGet Persons w/o SHACL (supposed to work):\n" + JSON.stringify(resp, null, 2));
+
+		// now upload the shacl file, using correct context (graph name) and format!
+		resp = await this.graphDBEndpoint.uploadFromData({
+			data: shacl,
+			context: GRAPHDB_CONTEXT_SHACL,
+			format: EnapsoGraphDBClient.FORMAT_TURTLE.type
+		});
+		enLogger.info("\nUploading Shacl from Data:\n" + JSON.stringify(resp, null, 2));
+
+		enLogger.info("\nDigesting shacl upload..."); // !! THIS ONE NEEDS TO BE AUTOMATED !!
+		// give graph db some seconds to digest the file, it's not immediately available but asynchronously loaded!
+		await new Promise(function (resolve) {
+			setTimeout(function () {
+				resolve();
+			}, 30000);
+		});
+
+		// next try all actions w/o a shacl being applied
+		resp = await this.graphDBEndpoint.update(validSparql);
+		enLogger.info("\nValid SPARQL with SHACL (supposed to work):\n" + JSON.stringify(resp, null, 2));
+
+		resp = await this.graphDBEndpoint.update(invalidSparql);
+		enLogger.info("\nInvalid SPARQL with SHACL (NOT supposed to work):\n" + JSON.stringify(resp, null, 2));
+
+		resp = await this.graphDBEndpoint.query(getPersonsSparql);
+		enLogger.info("\nGet Persons with SHACL (supposed to work):\n" + JSON.stringify(resp, null, 2));
+
+		enLogger.info("\nDone");
 	},
 
 	demo: async function () {
@@ -285,11 +390,11 @@ const EnapsoGraphDBAdminDemo = {
 
 		// verify authentication
 		if (!this.authentication.success) {
-			console.log("\nLogin failed:\n" +
+			enLogger.info("\nLogin failed:\n" +
 				JSON.stringify(this.authentication, null, 2));
 			return;
 		}
-		console.log("\nLogin successful");
+		enLogger.info("\nLogin successful");
 
 		// clear entire repository
 		// CAUTION! This operation empties the entire repository and cannot be undone!
@@ -314,21 +419,23 @@ const EnapsoGraphDBAdminDemo = {
 		// this.demoDownloadToFile();
 		// this.demoDownloadToText();
 
+		this.demoShacl();
+
         /*
-        console.log("--- Inserting new triple --- ")
+        enLogger.info("--- Inserting new triple --- ")
 		await this.demoInsert();
 		*/
-		//console.log("--- Graph should contain TestClass now --- ")
+		//enLogger.info("--- Graph should contain TestClass now --- ")
 		//await this.demoQuery();
 		/*
         // await this.demoDownloadToFile();
-        console.log("--- Updating existing triple --- ")
+        enLogger.info("--- Updating existing triple --- ")
         await this.demoUpdate();
-        console.log("--- Graph should contain TestClassUpdated now --- ")
+        enLogger.info("--- Graph should contain TestClassUpdated now --- ")
         await this.demoQuery();
-        console.log("--- Deleting existing triple --- ")
+        enLogger.info("--- Deleting existing triple --- ")
         await this.demoDelete();
-        console.log("--- Graph should not contain TestClassUpdated anymore --- ")
+        enLogger.info("--- Graph should not contain TestClassUpdated anymore --- ")
         await this.demoQuery();
         */
 
@@ -344,9 +451,9 @@ const EnapsoGraphDBAdminDemo = {
 		// await this.demoClearRepository();
 
 		/*
-		  console.log("Start: " + new Date().toISOString());
+		  enLogger.info("Start: " + new Date().toISOString());
 		  await this.demoWaitForGraphDB();
-		  console.log("Finish: " + new Date().toISOString());
+		  enLogger.info("Finish: " + new Date().toISOString());
 		  */
 
 		// await this.demoGetQuery();

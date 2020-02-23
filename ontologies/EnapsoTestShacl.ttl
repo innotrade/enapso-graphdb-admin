@@ -1,0 +1,15 @@
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://ont.enapso.com/test#PersonShape>
+  a <http://www.w3.org/ns/shacl#NodeShape> ;
+  sh:targetClass <http://ont.enapso.com/test#Person> ;
+  sh:property [
+    sh:path <http://ont.enapso.com/test#firstName> ;
+    sh:datatype xsd:string
+  ], [
+    sh:path <http://ont.enapso.com/test#lastName> ;
+    sh:datatype xsd:string ;
+    sh:minLength 1 ;
+    sh:maxLength 20
+  ] .
