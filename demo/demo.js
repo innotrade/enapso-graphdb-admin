@@ -318,33 +318,28 @@ const EnapsoGraphDBAdminDemo = {
 		let getPersonsSparql = await fsPromises.readFile('./test/selectAllPersons.sparql', 'utf-8');
 		let shacl = await fsPromises.readFile('./ontologies/EnapsoTestShacl.ttl', 'utf-8');
 
-		// first drop the shacl graph if exists, if not this will not be a problem
+		// first drop the shacl graph if exists, if it does not exist, this will not be a problem
+		enLogger.info("\nDropping SHACL Graph...");
 		resp = await this.graphDBEndpoint.dropShaclGraph();
-		enLogger.info("\nDrop Shacl Graph:\n" + JSON.stringify(resp, null, 2));
+		enLogger.info("\nDrop SHACL Graph:\n" + JSON.stringify(resp, null, 2));
 
 		// now clear the current repository to ensure that there is no old data inside that could disturb the tests
+		enLogger.info("\nClearing repository...");
 		resp = await this.graphDBEndpoint.clearRepository();
-		enLogger.info("\nClearing repository:\n" + JSON.stringify(resp, null, 2));
+		enLogger.info("\nCleared repository:\n" + JSON.stringify(resp, null, 2));
 
 		// now upload ontology directly from test ontology file into test graph into the test repository
+		enLogger.info("\nUploading ontology from file...");
 		resp = await this.graphDBEndpoint.uploadFromFile({
 			filename: "./ontologies/EnapsoTest.owl",
 			context: GRAPHDB_CONTEXT_TEST,
 			format: EnapsoGraphDBClient.FORMAT_RDF_XML.type
 		});
-		enLogger.info("\nLoading repo from file:\n" + JSON.stringify(resp, null, 2));
-
-		enLogger.info("\nDigesting ontology upload...");
-		// give graph db some seconds to digest the file, it's not immediately available but asynchronously loaded!
-		await new Promise(function (resolve) {
-			setTimeout(function () {
-				resolve();
-			}, 2000);
-		});
+		enLogger.info("\nUploaded ontology from file:\n" + JSON.stringify(resp, null, 2));
 
 		resp = await this.graphDBEndpoint.query(getPersonsSparql);
 		enLogger.info("\nGet Persons after upload (supposed to work):\n" + JSON.stringify(resp, null, 2));
-			
+
 		// first try all actions w/o a shacl being applied
 		resp = await this.graphDBEndpoint.update(validSparql);
 		enLogger.info("\nValid SPARQL w/o SHACL (supposed to work):\n" + JSON.stringify(resp, null, 2));
@@ -355,31 +350,39 @@ const EnapsoGraphDBAdminDemo = {
 		resp = await this.graphDBEndpoint.query(getPersonsSparql);
 		enLogger.info("\nGet Persons w/o SHACL (supposed to work):\n" + JSON.stringify(resp, null, 2));
 
+		// now clear the repository again, it contains invalid data from the tests w/o shacl support
+		enLogger.info("\nClearing repository...");
+		resp = await this.graphDBEndpoint.clearRepository();
+		enLogger.info("\nCleared repository:\n" + JSON.stringify(resp, null, 2));
+
+		// and upload ontology again to have the same initital status for shacl tests as w/o the shacl tests
+		enLogger.info("\nUploading ontology from file...");
+		resp = await this.graphDBEndpoint.uploadFromFile({
+			filename: "./ontologies/EnapsoTest.owl",
+			context: GRAPHDB_CONTEXT_TEST,
+			format: EnapsoGraphDBClient.FORMAT_RDF_XML.type
+		});
+		enLogger.info("\nUploaded ontology from file:\n" + JSON.stringify(resp, null, 2));
+
+		// now load the shacl on top of the correct ontology
+		enLogger.info("\nUploading SHACL from Data...");
 		// now upload the shacl file, using correct context (graph name) and format!
 		resp = await this.graphDBEndpoint.uploadFromData({
 			data: shacl,
 			context: GRAPHDB_CONTEXT_SHACL,
 			format: EnapsoGraphDBClient.FORMAT_TURTLE.type
 		});
-		enLogger.info("\nUploading Shacl from Data:\n" + JSON.stringify(resp, null, 2));
-
-		enLogger.info("\nDigesting shacl upload..."); // !! THIS ONE NEEDS TO BE AUTOMATED !!
-		// give graph db some seconds to digest the file, it's not immediately available but asynchronously loaded!
-		await new Promise(function (resolve) {
-			setTimeout(function () {
-				resolve();
-			}, 30000);
-		});
+		enLogger.info("\nUploaded SHACL from Data:\n" + JSON.stringify(resp, null, 2));
 
 		// next try all actions w/o a shacl being applied
 		resp = await this.graphDBEndpoint.update(validSparql);
-		enLogger.info("\nValid SPARQL with SHACL (supposed to work):\n" + JSON.stringify(resp, null, 2));
+		enLogger.info("\nValid SPARQL with SHACL support (supposed to work):\n" + JSON.stringify(resp, null, 2));
 
 		resp = await this.graphDBEndpoint.update(invalidSparql);
-		enLogger.info("\nInvalid SPARQL with SHACL (NOT supposed to work):\n" + JSON.stringify(resp, null, 2));
+		enLogger.info("\nInvalid SPARQL with SHACL support (NOT supposed to work):\n" + JSON.stringify(resp, null, 2));
 
 		resp = await this.graphDBEndpoint.query(getPersonsSparql);
-		enLogger.info("\nGet Persons with SHACL (supposed to work):\n" + JSON.stringify(resp, null, 2));
+		enLogger.info("\nGet Persons with SHACL support (supposed to work):\n" + JSON.stringify(resp, null, 2));
 
 		enLogger.info("\nDone");
 	},
