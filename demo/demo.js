@@ -316,7 +316,10 @@ const EnapsoGraphDBAdminDemo = {
 		let validSparql = await fsPromises.readFile('./test/validUpdate.sparql', 'utf-8');
 		let invalidSparql = await fsPromises.readFile('./test/invalidUpdate.sparql', 'utf-8');
 		let getPersonsSparql = await fsPromises.readFile('./test/selectAllPersons.sparql', 'utf-8');
-		let shacl = await fsPromises.readFile('./ontologies/EnapsoTestShacl.ttl', 'utf-8');
+		// read the shacl turtle
+		let shaclTtl = await fsPromises.readFile('./ontologies/EnapsoTestShacl.ttl', 'utf-8');
+		// read the shacl json-ld
+		let shaclJsonLd = await fsPromises.readFile('./ontologies/EnapsoTestShacl.jsonld', 'utf-8');
 
 		// first drop the shacl graph if exists, if it does not exist, this will not be a problem
 		enLogger.info("\nDropping SHACL Graph...");
@@ -368,9 +371,11 @@ const EnapsoGraphDBAdminDemo = {
 		enLogger.info("\nUploading SHACL from Data...");
 		// now upload the shacl file, using correct context (graph name) and format!
 		resp = await this.graphDBEndpoint.uploadFromData({
-			data: shacl,
+			// data: shaclTtl,
+			data: shaclJsonLd,
 			context: GRAPHDB_CONTEXT_SHACL,
-			format: EnapsoGraphDBClient.FORMAT_TURTLE.type
+			// format: EnapsoGraphDBClient.FORMAT_TURTLE.type
+			format: EnapsoGraphDBClient.FORMAT_JSON_LD.type
 		});
 		enLogger.info("\nUploaded SHACL from Data:\n" + JSON.stringify(resp, null, 2));
 
