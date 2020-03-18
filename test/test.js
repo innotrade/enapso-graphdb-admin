@@ -12,83 +12,87 @@ const testConfig = require("./config");
 
 describe("Enapso GraphDB Admin Tests", () => {
 
-    // instantiate a new GraphDB endpoint
-    let lEndpoint = new EnapsoGraphDBClient.Endpoint({
-        baseURL: testConfig.baseURL,
-        repository: testConfig.repository,
-        prefixes: testConfig.prefixes
-    });
+	// instantiate a new GraphDB endpoint
+	let lEndpoint = new EnapsoGraphDBClient.Endpoint({
+		baseURL: testConfig.baseURL,
+		repository: testConfig.repository,
+		prefixes: testConfig.prefixes
+	});
 
-    it('Authenticate against GraphDB instance', (done) => {
-        lEndpoint.login(
-            testConfig.username,
-            testConfig.password
-        ).then(result => {
-            // console.log(result.statusCode);
-            expect(result).to.have.property('statusCode', 200);
-            done();
-        })
-    });
+	it('Authenticate against GraphDB instance', (done) => {
+		lEndpoint.login(
+			testConfig.username,
+			testConfig.password
+		).then(result => {
+			// console.log(result.statusCode);
+			expect(result).to.have.property('statusCode', 200);
+			done();
+		})
+	});
 
-    it('Garbage Collection', (done) => {
-        lEndpoint.performGarbageCollection({
-        }).then(result => {
-            // console.log(result);
-            expect(result.statusCode).to.equal(200);
-            done();
-        })
-    });
-    it('Download the Ontology from Graphdb', (done) => {
-        lEndpoint.downloadToFile({
-        }).then(result => {
-            // console.log(result);
-            expect(result).to.have.property('success', true);
-            done();
-        })
-    });
-    // before(function (done) { setTimeout(function () { done(); }, 500); });
+	it('Garbage Collection', (done) => {
+		lEndpoint.performGarbageCollection({
+		}).then(result => {
+			// console.log(result);
+			expect(result.statusCode).to.equal(200);
+			done();
+		})
+	});
 
-    it('Get all repositories of local GraphDB instance', (done) => {
-        lEndpoint.getRepositories({
-        }).then(result => {
-            // console.log(result);
-            expect(result).to.exist;
-            done();
-        })
-    });
+	it('Download the Ontology from Graphdb', (done) => {
+		lEndpoint.downloadToFile({
+		}).then(result => {
+			// console.log(result);
+			expect(result).to.have.property('success', true);
+			done();
+		})
+	});
+	// before(function (done) { setTimeout(function () { done(); }, 500); });
 
-    it('Get all users of local GraphDB instance', (done) => {
-        lEndpoint.getUsers({
-        }).then(result => {
-            // console.log(result);
-            expect(result).to.exist;
-            done();
-        })
-    });
+	it('Get all repositories of local GraphDB instance', (done) => {
+		lEndpoint.getRepositories({
+		}).then(result => {
+			// console.log(result);
+			expect(result).to.exist;
+			done();
+		})
+	});
 
-    it('Get all contexts of the "Test" repository of local GraphDB instance', (done) => {
-        lEndpoint.getContexts({
-            repository: "Test"
-        }).then(result => {
-            // console.log(result);
-            expect(result).to.exist;
-            done();
-        })
-    });
-    it('Get Query  from Graphdb', (done) => {
-        lEndpoint.getQuery({
-        }).then(result => {
-            // console.log(result);
-            expect(result).to.have.property('success', true);
-            done();
-        })
-    });
- it('Check Graphdn for Update function use for performing insertion,deletion and updation query', (done) => {
-        lEndpoint.update({
-        }).then(result => {
-            // console.log(result);
-            expect(result.statusCode).to.equal(200);
-            done();
-        })
-    });
+	it('Get all users of local GraphDB instance', (done) => {
+		lEndpoint.getUsers({
+		}).then(result => {
+			// console.log(result);
+			expect(result).to.exist;
+			done();
+		})
+	});
+
+	it('Get all contexts of the "Test" repository of local GraphDB instance', (done) => {
+		lEndpoint.getContexts({
+			repository: "Test"
+		}).then(result => {
+			// console.log(result);
+			expect(result).to.exist;
+			done();
+		})
+	});
+
+	it('Get Query  from Graphdb', (done) => {
+		lEndpoint.getQuery({
+		}).then(result => {
+			// console.log(result);
+			expect(result).to.have.property('success', true);
+			done();
+		})
+	});
+
+	it('Check Graphdn for Update function use for performing insertion,deletion and updation query', (done) => {
+		lEndpoint.update({
+		}).then(result => {
+			// console.log(result);
+			expect(result.statusCode).to.equal(200);
+			done();
+		})
+	});
+
 });

@@ -3,10 +3,12 @@
 // Author: Alexander Schulze
 
 module.exports = (Object.freeze({
+
 	baseURL: 'http://localhost:7200',
 	repository: 'Test',
     username: 'Test',
     password: 'Test',
+
     prefixes: {
         PREFIX_OWL: {
             "prefix": 'owl',
@@ -33,4 +35,5 @@ module.exports = (Object.freeze({
             "iri": 'http://www.w3.org/ns/sparql#'
         }
     }
+    
 }));
