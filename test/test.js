@@ -98,19 +98,19 @@ describe("Enapso GraphDB Admin Tests", () => {
 
 	it('Create new repository in Graphdb', (done) => {
 		lEndpoint.createRepository({
-			"id": "AutomatedTest",
-			"title": "Enapso Automated Test Repository",
+			"id": "ef",
+			"title": "Enapso Automated Helo",
 			"location": ""
 		}).then(result => {
 			// console.log(result);
-			expect(result).to.have.property('success', true);
+			expect(result.statusCode).to.equal(201);
 			done();
 		})
 	});
 
 	it('Delete repository in Graphdb', (done) => {
 		lEndpoint.deleteRepository({
-			"id": "AutomatedTest"
+			"id": "Enapso Automated Helo"
 		}).then(result => {
 			// console.log(result);
 			expect(result.statusCode).to.equal(200);
