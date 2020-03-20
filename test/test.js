@@ -13,44 +13,76 @@ const testConfig = require("./config");
 describe("Enapso GraphDB Admin Tests", () => {
 
 	// instantiate a new GraphDB endpoint
-	let lEndpoint = new EnapsoGraphDBClient.Endpoint({
+	let endpoint = new EnapsoGraphDBClient.Endpoint({
 		baseURL: testConfig.baseURL,
 		repository: testConfig.repository,
 		prefixes: testConfig.prefixes
 	});
 
 	it('Authenticate against GraphDB instance', (done) => {
-		lEndpoint.login(
+		endpoint.login(
 			testConfig.username,
 			testConfig.password
 		).then(result => {
-			// console.log(result.statusCode);
 			expect(result).to.have.property('statusCode', 200);
 			done();
 		})
 	});
 
 	it('Garbage Collection', (done) => {
-		lEndpoint.performGarbageCollection({
+		endpoint.performGarbageCollection({
 		}).then(result => {
-			// console.log(result);
 			expect(result.statusCode).to.equal(200);
 			done();
 		})
 	});
 
+	it('Create New Repository in GraphDB', (done) => {
+		endpoint.createRepository({
+			"id": "EnapsoAutomatedTest",
+			"title": "Enapso Automatically created Repository",
+			"location": ""
+		}).then(result => {
+			expect(result.statusCode).to.equal(201);
+			done();
+		})
+	});
+
+	it('Get Repositories of GraphDB Instance', (done) => {
+		endpoint.getRepositories({
+		}).then(result => {
+			// console.log(result);
+			// todo: Here we need to check if the new repo really has been created!
+			expect(result.statusCode).to.equal(200);
+			done();
+		})
+	});
+
+	it('Get Users of GraphDB Instance', (done) => {
+		endpoint.getUsers({
+		}).then(result => {
+			// console.log(result);
+			// todo: Here we need to check if the user "Test" really exists!
+			expect(result.statusCode).to.equal(200);
+			done();
+		})
+	});
+
+	it('Get Contexts (Graphs) of the "Test" Repository of the GraphDB Instance', (done) => {
+		endpoint.getContexts({
+			repository: "Test"
+		}).then(result => {
+			console.log(JSON.stringify(result, null, 2));
+			// todo: To make this test reasonable, we need to create two graphs in the test repo before!
+			expect(result.statusCode).to.equal(200);
+			done();
+		})
+	});
+
+
 	/*
-		it('Clear Repository', (done) => {
-			lEndpoint.clearRepository({
-			}).then(result => {
-				// console.log(result);
-				expect(result.statusCode).to.equal(200);
-				done();
-			})
-		});
-	
 		it('Download the Ontology from Graphdb', (done) => {
-			lEndpoint.downloadToFile({
+			endpoint.downloadToFile({
 			}).then(result => {
 				// console.log(result);
 				expect(result).to.have.property('success', true);
@@ -59,36 +91,11 @@ describe("Enapso GraphDB Admin Tests", () => {
 		});
 		// before(function (done) { setTimeout(function () { done(); }, 500); });
 	
-		it('Get all repositories of local GraphDB instance', (done) => {
-			lEndpoint.getRepositories({
-			}).then(result => {
-				// console.log(result);
-				expect(result).to.exist;
-				done();
-			})
-		});
-	
-		it('Get all users of local GraphDB instance', (done) => {
-			lEndpoint.getUsers({
-			}).then(result => {
-				// console.log(result);
-				expect(result).to.exist;
-				done();
-			})
-		});
-	
-		it('Get all contexts of the "Test" repository of local GraphDB instance', (done) => {
-			lEndpoint.getContexts({
-				repository: "Test"
-			}).then(result => {
-				// console.log(result);
-				expect(result).to.exist;
-				done();
-			})
-		});
+
+
 	
 		it('Get Query from Graphdb', (done) => {
-			lEndpoint.getQuery({
+			endpoint.getQuery({
 			}).then(result => {
 				// console.log(result);
 				expect(result).to.have.property('success', true);
@@ -98,75 +105,31 @@ describe("Enapso GraphDB Admin Tests", () => {
 	*/
 
 	/*
-	it('Create new repository in Graphdb', (done) => {
-		lEndpoint.createRepository({
-			"id": "AutomatedTest",
-			"title": "Enapso Automated Test Repository",
-			"location": ""
-	*/
 
 	it('Download the Ontology from Graphdb', (done) => {
-		lEndpoint.downloadToFile({
+		endpoint.downloadToFile({
 		}).then(result => {
 			// console.log(result);
-			expect(result).to.have.property('success', true);
+			expect(result.statusCode).to.equal(201);
 			done();
 		})
 	});
-
-	/*
-	it('Delete repository in Graphdb', (done) => {
-		lEndpoint.deleteRepository({
-			"id": "AutomatedTest"
-	// before(function (done) { setTimeout(function () { done(); }, 500); });
-			*/
-
-	it('Get all repositories of local GraphDB instance', (done) => {
-		lEndpoint.getRepositories({
+*/
+	it('Clear Test Repository', (done) => {
+		endpoint.clearRepository({
 		}).then(result => {
-			// console.log(result);
-			expect(result).to.exist;
-			done();
-		})
-	});
-
-	it('Get all users of local GraphDB instance', (done) => {
-		lEndpoint.getUsers({
-		}).then(result => {
-			// console.log(result);
-			expect(result).to.exist;
-			done();
-		})
-	});
-
-	it('Get all contexts of the "Test" repository of local GraphDB instance', (done) => {
-		lEndpoint.getContexts({
-			repository: "Test"
-		}).then(result => {
-			// console.log(result);
-			expect(result).to.exist;
-			done();
-		})
-	});
-
-	it('Get Query from GraphDB', (done) => {
-		lEndpoint.getQuery({
-		}).then(result => {
-			// console.log(result);
-			expect(result).to.have.property('success', true);
-			done();
-		})
-	});
-
-	/*
-	it('Check GraphDB for Update function use for performing insertion,deletion and updation query', (done) => {
-		lEndpoint.update({
-		}).then(result => {
-			// console.log(result);
 			expect(result.statusCode).to.equal(200);
 			done();
 		})
 	});
-	*/
+
+	it('Delete Test Repository in GraphDB Instance', (done) => {
+		endpoint.deleteRepository({
+			"id": "EnapsoAutomatedTest"
+		}).then(result => {
+			expect(result.statusCode).to.equal(200);
+			done();
+		})
+	});
 
 });
