@@ -38,6 +38,7 @@ describe("Enapso GraphDB Admin Tests", () => {
 			done();
 		})
 	});
+
 	/*
 		it('Clear Repository', (done) => {
 			lEndpoint.clearRepository({
@@ -96,11 +97,16 @@ describe("Enapso GraphDB Admin Tests", () => {
 		});
 	*/
 
+	/*
 	it('Create new repository in Graphdb', (done) => {
 		lEndpoint.createRepository({
 			"id": "AutomatedTest",
 			"title": "Enapso Automated Test Repository",
 			"location": ""
+	*/
+
+	it('Download the Ontology from Graphdb', (done) => {
+		lEndpoint.downloadToFile({
 		}).then(result => {
 			// console.log(result);
 			expect(result).to.have.property('success', true);
@@ -108,24 +114,59 @@ describe("Enapso GraphDB Admin Tests", () => {
 		})
 	});
 
+	/*
 	it('Delete repository in Graphdb', (done) => {
 		lEndpoint.deleteRepository({
 			"id": "AutomatedTest"
+	// before(function (done) { setTimeout(function () { done(); }, 500); });
+			*/
+
+	it('Get all repositories of local GraphDB instance', (done) => {
+		lEndpoint.getRepositories({
+		}).then(result => {
+			// console.log(result);
+			expect(result).to.exist;
+			done();
+		})
+	});
+
+	it('Get all users of local GraphDB instance', (done) => {
+		lEndpoint.getUsers({
+		}).then(result => {
+			// console.log(result);
+			expect(result).to.exist;
+			done();
+		})
+	});
+
+	it('Get all contexts of the "Test" repository of local GraphDB instance', (done) => {
+		lEndpoint.getContexts({
+			repository: "Test"
+		}).then(result => {
+			// console.log(result);
+			expect(result).to.exist;
+			done();
+		})
+	});
+
+	it('Get Query from GraphDB', (done) => {
+		lEndpoint.getQuery({
+		}).then(result => {
+			// console.log(result);
+			expect(result).to.have.property('success', true);
+			done();
+		})
+	});
+
+	/*
+	it('Check GraphDB for Update function use for performing insertion,deletion and updation query', (done) => {
+		lEndpoint.update({
 		}).then(result => {
 			// console.log(result);
 			expect(result.statusCode).to.equal(200);
 			done();
 		})
 	});
-	/*	
-			it('Check Graphdn for Update function use for performing insertion,deletion and updation query', (done) => {
-				lEndpoint.update({
-				}).then(result => {
-					// console.log(result);
-					expect(result.statusCode).to.equal(200);
-					done();
-				})
-			});
-		*/
+	*/
 
 });
