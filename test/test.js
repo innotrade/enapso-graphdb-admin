@@ -91,9 +91,6 @@ describe("Enapso GraphDB Admin Tests", () => {
 		});
 		// before(function (done) { setTimeout(function () { done(); }, 500); });
 	
-
-
-	
 		it('Get Query from Graphdb', (done) => {
 			endpoint.getQuery({
 			}).then(result => {
