@@ -151,6 +151,7 @@ const EnapsoGraphDBAdminDemo = {
 
 	demoUploadFromData: async function () {
 		// upload a file
+		// todo: we upload from data here but pass a file name???
 		let resp = await this.graphDBEndpoint.uploadFromData({
 			filename: "ontologies/Test.owl",
 			format: "application/rdf+xml",

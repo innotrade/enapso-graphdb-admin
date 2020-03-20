@@ -68,17 +68,29 @@ describe("Enapso GraphDB Admin Tests", () => {
 		})
 	});
 
+	it('Upload Ontology to GraphDB Repository', (done) => {
+		endpoint.uploadFromFile({
+			filename: "ontologies/EnapsoTest.owl",
+			format: "application/rdf+xml",
+			baseIRI: "http://ont.enapso.com/test#",
+			context: "http://ont.enapso.com/test"
+		}).then(result => {
+			// console.log(result);
+			expect(result.statusCode).to.equal(202);
+			done();
+		})
+	});	
+
 	it('Get Contexts (Graphs) of the "Test" Repository of the GraphDB Instance', (done) => {
 		endpoint.getContexts({
 			repository: "Test"
 		}).then(result => {
 			console.log(JSON.stringify(result, null, 2));
-			// todo: To make this test reasonable, we need to create two graphs in the test repo before!
+			// todo: To make this test reasonable, we need to chech the graph created by the upload in the test repo before!
 			expect(result.statusCode).to.equal(200);
 			done();
 		})
 	});
-
 
 	/*
 		it('Download the Ontology from Graphdb', (done) => {
@@ -89,7 +101,6 @@ describe("Enapso GraphDB Admin Tests", () => {
 				done();
 			})
 		});
-		// before(function (done) { setTimeout(function () { done(); }, 500); });
 	
 		it('Get Query from Graphdb', (done) => {
 			endpoint.getQuery({
@@ -112,6 +123,7 @@ describe("Enapso GraphDB Admin Tests", () => {
 		})
 	});
 */
+
 	it('Clear Test Repository', (done) => {
 		endpoint.clearRepository({
 		}).then(result => {
