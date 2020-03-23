@@ -98,7 +98,7 @@ describe("Enapso GraphDB Admin Tests", () => {
 
 	it('Create new repository in Graphdb', (done) => {
 		lEndpoint.createRepository({
-			"id": "ef",
+			"id": "New",
 			"title": "Enapso Automated Helo",
 			"location": ""
 		}).then(result => {
@@ -110,7 +110,7 @@ describe("Enapso GraphDB Admin Tests", () => {
 
 	it('Delete repository in Graphdb', (done) => {
 		lEndpoint.deleteRepository({
-			"id": "Enapso Automated Helo"
+			"id": "New"
 		}).then(result => {
 			// console.log(result);
 			expect(result.statusCode).to.equal(200);
