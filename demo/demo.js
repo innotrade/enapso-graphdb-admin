@@ -62,7 +62,6 @@ const EnapsoGraphDBAdminDemo = {
 		});
 		enLogger.info("Create Repository:" + JSON.stringify(resp, null, 2));
 	},
-	
 	demoCreateUser: async function () {
 		let lRes = await this.graphDBEndpoint.login(
 			"admin",
@@ -77,7 +76,6 @@ const EnapsoGraphDBAdminDemo = {
 		});
 		enLogger.info("Create New User:" + JSON.stringify(resp, null, 2));
 	},
-
 	demoDropUser: async function () {
 		let lRes = await this.graphDBEndpoint.login(
 			"admin",
@@ -482,7 +480,7 @@ const EnapsoGraphDBAdminDemo = {
 		// await this.demoCreateRepository();
 		// await this.demoDeleteRepository();
  await this.demoCreateUser();
-// await this.demoDropUser();
+ //await this.demoDropUser();
 		// await this.demoClearRepository();
 
 		/*
