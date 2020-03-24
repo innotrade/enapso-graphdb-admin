@@ -1,6 +1,6 @@
 // Innotrade Enapso GraphDB Admin Example
 // (C) Copyright 2019-2020 Innotrade GmbH, Herzogenrath, NRW, Germany
-
+// Author(s): Alexander Schulze and Muhammad Yasir
 // require the Enapso GraphDB Admin Demo module
 const
 	fsPromises = require('fs').promises,
@@ -61,6 +61,30 @@ const EnapsoGraphDBAdminDemo = {
 			"location": ""
 		});
 		enLogger.info("Create Repository:" + JSON.stringify(resp, null, 2));
+	},
+	demoCreateUser: async function () {
+		let lRes = await this.graphDBEndpoint.login(
+			"admin",
+			"root"
+		);
+		let resp = await this.graphDBEndpoint.createUser({
+			"write": "WRITE_REPO_Test",// Writing excess wrote WRITE_ and in last name of Repository which excess provided like REPO_Test
+			"read": "READ_REPO_Test",// Reading excess wrote READ_ and in last name of Repository which excess provided like REPO_Test
+			"role": "ROLE_USER",     // Role of the user
+			"username": "yasir13", // Username 
+			"password":"yasirs"    // Password for the user
+		});
+		enLogger.info("Create New User:" + JSON.stringify(resp, null, 2));
+	},
+	demoDropUser: async function () {
+		let lRes = await this.graphDBEndpoint.login(
+			"admin",
+			"root"
+		);
+		let resp = await this.graphDBEndpoint.dropUser({
+			"user": "yasir13"   // username which you want to delete
+		});
+		enLogger.info("Delete Exisiting User:" + JSON.stringify(resp, null, 2));
 	},
 
 	demoDeleteRepository: async function () {
@@ -427,7 +451,7 @@ const EnapsoGraphDBAdminDemo = {
 		// this.demoDownloadToFile();
 		// this.demoDownloadToText();
 
-		this.demoShacl();
+		//this.demoShacl();
 
         /*
         enLogger.info("--- Inserting new triple --- ")
@@ -455,7 +479,8 @@ const EnapsoGraphDBAdminDemo = {
 
 		// await this.demoCreateRepository();
 		// await this.demoDeleteRepository();
-
+ await this.demoCreateUser();
+ await this.demoDropUser();
 		// await this.demoClearRepository();
 
 		/*

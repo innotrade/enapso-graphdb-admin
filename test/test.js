@@ -1,6 +1,6 @@
 // Innotrade Enapso GraphDB Admin - Automated Test Suite
 // (C) Copyright 2019-2020 Innotrade GmbH, Herzogenrath, NRW, Germany
-// Author: Alexander Schulze
+// Author: Alexander Schulze and Muhammad Yasir
 
 const chai = require('chai');
 const should = require('chai').should;
