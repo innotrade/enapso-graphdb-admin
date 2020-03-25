@@ -508,7 +508,7 @@ const EnapsoGraphDBAdminDemo = {
 		// await this.demoDeleteRepository();
 		await this.demoCreateUser();
 	    await this.demoUpdateUser();
-		//await this.demoDropUser();
+		await this.demoDeleteUser();
 		// await this.demoClearRepository();
 
 		/*
