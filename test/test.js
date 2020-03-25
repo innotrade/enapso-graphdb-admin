@@ -30,6 +30,63 @@ describe("Enapso GraphDB Admin Tests", () => {
 		})
 	});
 
+	it('Insert new user in GraphDB To give access', (done) => {
+		lEndpoint.login(
+			"admin",
+			"root"
+		);
+		lEndpoint.createUser({
+			authorities: [
+				"WRITE_REPO_Test",	// Writing excess wrote WRITE_ and in last name of Repository which excess provided like REPO_Test
+				"READ_REPO_Test",	// Reading excess wrote READ_ and in last name of Repository which excess provided like REPO_Test
+				"READ_REPO_EnapsoDotNetProDemo",
+				"ROLE_USER",		// Role of the user
+			],
+			"username": "TestUser",	// Username 
+			"password": "TestUser"	// Password for the user
+		}).then(result => {
+			// console.log(result.statusCode);
+			expect(result).to.have.property('statusCode', 201);
+			done();
+		})
+	});
+
+	it('Update inserted user access in GraphDB', (done) => {
+		lEndpoint.login(
+			"admin",
+			"root"
+		);
+		lEndpoint.updateUser({
+			authorities: [
+					// Writing excess wrote WRITE_ and in last name of Repository which excess provided like REPO_Test
+				"READ_REPO_Test",	// Reading excess wrote READ_ and in last name of Repository which excess provided like REPO_Test
+				"WRITE_REPO_EnapsoDotNetProDemo",
+				"READ_REPO_EnapsoDotNetProDemo",
+				"ROLE_USER",		// Role of the user
+			],
+			"username": "TestUser",	// Username 
+			
+		}).then(result => {
+			// console.log(result.statusCode);
+			expect(result).to.have.property('statusCode', 200);
+			done();
+		})
+	});
+
+	it('Delete updated and inserted user in GraphDB', (done) => {
+		lEndpoint.login(
+			"admin",
+			"root"
+		);
+		lEndpoint.deleteUser({
+			"user": "TestUser"		// username which you want to delete
+		}).then(result => {
+			// console.log(result.statusCode);
+			expect(result).to.have.property('statusCode', 204);
+			done();
+		})
+	});
+
 	it('Garbage Collection', (done) => {
 		lEndpoint.performGarbageCollection({
 		}).then(result => {
@@ -108,7 +165,7 @@ describe("Enapso GraphDB Admin Tests", () => {
 		})
 	});
 
-	it('Delete repository in Graphdb', (done) => {
+	it('Delete newly created repository in Graphdb', (done) => {
 		lEndpoint.deleteRepository({
 			"id": "New"
 		}).then(result => {

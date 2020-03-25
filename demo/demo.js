@@ -82,6 +82,26 @@ const EnapsoGraphDBAdminDemo = {
 		enLogger.info("Create New User:" + JSON.stringify(resp, null, 2));
 	},
 
+	demoUpdateUser: async function () {
+		let lRes = await this.graphDBEndpoint.login(
+			"admin",
+			"root"
+		);
+		// todo: interpret lRes here, it does not makes sense to continue if login does not work!
+		let resp = await this.graphDBEndpoint.updateUser({
+			authorities: [
+					// Writing excess wrote WRITE_ and in last name of Repository which excess provided like REPO_Test
+				"READ_REPO_Test",	// Reading excess wrote READ_ and in last name of Repository which excess provided like REPO_Test
+				"WRITE_REPO_EnapsoDotNetProDemo",
+				"READ_REPO_EnapsoDotNetProDemo",
+				"ROLE_USER",		// Role of the user
+			],
+			"username": "TestUser",	// Username 
+			
+		});
+		enLogger.info("Update Inserted User:" + JSON.stringify(resp, null, 2));
+	},
+
 	demoDeleteUser: async function () {
 		let lRes = await this.graphDBEndpoint.login(
 			"admin",
@@ -487,6 +507,7 @@ const EnapsoGraphDBAdminDemo = {
 		// await this.demoCreateRepository();
 		// await this.demoDeleteRepository();
 		await this.demoCreateUser();
+	    await this.demoUpdateUser();
 		//await this.demoDropUser();
 		// await this.demoClearRepository();
 
