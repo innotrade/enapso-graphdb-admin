@@ -1,6 +1,6 @@
 // Innotrade Enapso GraphDB Admin Example
 // (C) Copyright 2019-2020 Innotrade GmbH, Herzogenrath, NRW, Germany
-
+// Author(s): Alexander Schulze and Muhammad Yasir
 // require the Enapso GraphDB Admin Demo module
 const
 	fsPromises = require('fs').promises,
@@ -61,6 +61,57 @@ const EnapsoGraphDBAdminDemo = {
 			"location": ""
 		});
 		enLogger.info("Create Repository:" + JSON.stringify(resp, null, 2));
+	},
+
+	demoCreateUser: async function () {
+		let lRes = await this.graphDBEndpoint.login(
+			"admin",
+			"root"
+		);
+		// todo: interpret lRes here, it does not makes sense to continue if login does not work!
+		let resp = await this.graphDBEndpoint.createUser({
+			authorities: [
+				"WRITE_REPO_Test",	// Writing excess wrote WRITE_ and in last name of Repository which excess provided like REPO_Test
+				"READ_REPO_Test",	// Reading excess wrote READ_ and in last name of Repository which excess provided like REPO_Test
+				"READ_REPO_EnapsoDotNetProDemo",
+				"ROLE_USER",		// Role of the user
+			],
+			"username": "TestUser",	// Username 
+			"password": "TestUser"	// Password for the user
+		});
+		enLogger.info("Create New User:" + JSON.stringify(resp, null, 2));
+	},
+
+	demoUpdateUser: async function () {
+		let lRes = await this.graphDBEndpoint.login(
+			"admin",
+			"root"
+		);
+		// todo: interpret lRes here, it does not makes sense to continue if login does not work!
+		let resp = await this.graphDBEndpoint.updateUser({
+			authorities: [
+					// Writing excess wrote WRITE_ and in last name of Repository which excess provided like REPO_Test
+				"READ_REPO_Test",	// Reading excess wrote READ_ and in last name of Repository which excess provided like REPO_Test
+				"WRITE_REPO_EnapsoDotNetProDemo",
+				"READ_REPO_EnapsoDotNetProDemo",
+				"ROLE_USER",		// Role of the user
+			],
+			"username": "TestUser",	// Username 
+			
+		});
+		enLogger.info("Update Inserted User:" + JSON.stringify(resp, null, 2));
+	},
+
+	demoDeleteUser: async function () {
+		let lRes = await this.graphDBEndpoint.login(
+			"admin",
+			"root"
+		);
+		// todo: interpret lRes here, it does not makes sense to continue if login does not work!
+		let resp = await this.graphDBEndpoint.deleteUser({
+			"user": "TestUser"		// username which you want to delete
+		});
+		enLogger.info("Delete Exisiting User:" + JSON.stringify(resp, null, 2));
 	},
 
 	demoDeleteRepository: async function () {
@@ -428,7 +479,7 @@ const EnapsoGraphDBAdminDemo = {
 		// this.demoDownloadToFile();
 		// this.demoDownloadToText();
 
-		this.demoShacl();
+		//this.demoShacl();
 
         /*
         enLogger.info("--- Inserting new triple --- ")
@@ -456,7 +507,9 @@ const EnapsoGraphDBAdminDemo = {
 
 		// await this.demoCreateRepository();
 		// await this.demoDeleteRepository();
-
+		await this.demoCreateUser();
+	    await this.demoUpdateUser();
+		await this.demoDeleteUser();
 		// await this.demoClearRepository();
 
 		/*
