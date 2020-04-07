@@ -15,7 +15,7 @@ describe("Enapso GraphDB Admin Tests", () => {
 	// instantiate a new GraphDB endpoint
 	let endpoint = new EnapsoGraphDBClient.Endpoint({
 		baseURL: testConfig.baseURL,
-		repository: testConfig.repository,
+		repository: testConfig.newRepository,
 		prefixes: testConfig.prefixes
 	});
 
@@ -26,118 +26,134 @@ describe("Enapso GraphDB Admin Tests", () => {
 		).then(result => {
 			expect(result).to.have.property('statusCode', 200);
 			done();
+		}).catch(err => {
+			console.log(err.message);
+			done(err);
 		})
 	});
 
-	it('Insert new user in GraphDB To give access', (done) => {
-		lEndpoint.login(
-			"admin",
-			"root"
-		);
-		lEndpoint.createUser({
-			authorities: [
-				"WRITE_REPO_Test",	// Writing excess wrote WRITE_ and in last name of Repository which excess provided like REPO_Test
-				"READ_REPO_Test",	// Reading excess wrote READ_ and in last name of Repository which excess provided like REPO_Test
-				"READ_REPO_EnapsoDotNetProDemo",
+	it('Create test repository in GraphDB instance', (done) => {
+		endpoint.login(
+			testConfig.adminUsername,
+			testConfig.adminPassword
+		).then(result => {
+			endpoint.createRepository({
+				"id": testConfig.newRepository,
+				"title": "Enapso Automatically Created Repository",
+				"location": ""
+			}).then(result => {
+				expect(result.statusCode).to.equal(201);
+				done();
+			}).catch(err => {
+				console.log(err.message);
+				done(err);
+			})
+		})
+	});
+
+	it('Find test repository in GraphDB instance', (done) => {
+		endpoint.getRepositories({
+		}).then(result => {
+			let success = result.statusCode === 200;
+			if (success && result.data) {
+				for (let repo of result.data) {
+					success = repo.id === testConfig.newRepository;
+					if (success) { break; }
+				}
+			}
+			expect(success).to.be.true;
+			done();
+		}).catch(err => {
+			console.log(err.message);
+			done(err);
+		})
+	});
+
+	it('Create test user in GraphDB instance', (done) => {
+		endpoint.createUser({
+			"username": testConfig.newUsername,	// Username 
+			"password": testConfig.newPassword,	// Password for the user
+			"authorities": [
+				"READ_REPO_" + testConfig.newRepository,	// Reading excess wrote READ_ and in last name of Repository which excess provided like REPO_Test
 				"ROLE_USER",		// Role of the user
-			],
-			"username": "TestUser",	// Username 
-			"password": "TestUser"	// Password for the user
+			]
 		}).then(result => {
 			// console.log(result.statusCode);
 			expect(result).to.have.property('statusCode', 201);
 			done();
+		}).catch(err => {
+			console.log(err.message);
+			done(err);
 		})
 	});
 
-	it('Update inserted user access in GraphDB', (done) => {
-		lEndpoint.login(
-			"admin",
-			"root"
-		);
-		lEndpoint.updateUser({
-			authorities: [
-					// Writing excess wrote WRITE_ and in last name of Repository which excess provided like REPO_Test
-				"READ_REPO_Test",	// Reading excess wrote READ_ and in last name of Repository which excess provided like REPO_Test
-				"WRITE_REPO_EnapsoDotNetProDemo",
-				"READ_REPO_EnapsoDotNetProDemo",
-				"ROLE_USER",		// Role of the user
-			],
-			"username": "TestUser",	// Username 
-			
-		}).then(result => {
-			// console.log(result.statusCode);
-			expect(result).to.have.property('statusCode', 200);
-			done();
-		})
-	});
-
-	it('Delete updated and inserted user in GraphDB', (done) => {
-		lEndpoint.login(
-			"admin",
-			"root"
-		);
-		lEndpoint.deleteUser({
-			"user": "TestUser"		// username which you want to delete
-		}).then(result => {
-			// console.log(result.statusCode);
-			expect(result).to.have.property('statusCode', 204);
-			done();
-		})
-	});
-
-	it('Garbage Collection', (done) => {
-		endpoint.performGarbageCollection({
-		}).then(result => {
-			expect(result.statusCode).to.equal(200);
-			done();
-		})
-	});
-
-	it('Create New Repository in GraphDB', (done) => {
-		endpoint.createRepository({
-			"id": "EnapsoAutomatedTest",
-			"title": "Enapso Automatically created Repository",
-			"location": ""
-		}).then(result => {
-			expect(result.statusCode).to.equal(201);
-			done();
-		})
-	});
-
-	it('Get Repositories of GraphDB Instance', (done) => {
-		endpoint.getRepositories({
-		}).then(result => {
-			// console.log(result);
-			// todo: Here we need to check if the new repo really has been created!
-			expect(result.statusCode).to.equal(200);
-			done();
-		})
-	});
-
-	it('Get Users of GraphDB Instance', (done) => {
+	it('Find test users in GraphDB instance', (done) => {
 		endpoint.getUsers({
 		}).then(result => {
-			// console.log(result);
-			// todo: Here we need to check if the user "Test" really exists!
-			expect(result.statusCode).to.equal(200);
+			let success = result.statusCode === 200;
+			if (success && result.data) {
+				for (let user of result.data) {
+					success = user.username === testConfig.newUsername;
+					if (success) { break; }
+				}
+			}
+			expect(success).to.be.true;
 			done();
+		}).catch(err => {
+			console.log(err.message);
+			done(err);
 		})
 	});
 
+	it('Update test user´s authorities in GraphDB instance', (done) => {
+		endpoint.updateUser({
+			"username": testConfig.newUsername,	// Username 
+			"authorities": [
+				// Writing excess wrote WRITE_ and in last name of Repository which excess provided like REPO_Test
+				"WRITE_REPO_" + testConfig.newRepository,	// Writing excess wrote WRITE_ and in last name of Repository which excess provided like REPO_Test
+				"READ_REPO_" + testConfig.newRepository,	// Reading excess wrote READ_ and in last name of Repository which excess provided like REPO_Test
+				"ROLE_USER",		// Role of the user
+			]
+		}).then(result => {
+			expect(result).to.have.property('statusCode', 200);
+			done();
+		}).catch(err => {
+			console.log(err.message);
+			done(err);
+		})
+	});
+
+	it('Delete test user from GraphDB instance', (done) => {
+		endpoint.deleteUser({
+			"user": testConfig.newUsername,		// username which you want to delete
+		}).then(result => {
+			expect(result).to.have.property('statusCode', 204);
+			done();
+		}).catch(err => {
+			console.log(err.message);
+			done(err);
+		})
+	});
+
+	/*
 	it('Upload Ontology to GraphDB Repository', (done) => {
 		endpoint.uploadFromFile({
-			filename: "ontologies/EnapsoTest.owl",
-			format: "application/rdf+xml",
-			baseIRI: "http://ont.enapso.com/test#",
-			context: "http://ont.enapso.com/test"
+			"filename": "/System/Volumes/Data/git/enapso-graphdb-admin/ontologies/EnapsoTest.owl",
+			"format": "application/rdf+xml",
+			"baseIRI": "http://ont.enapso.com/test#",
+			"context": "http://ont.enapso.com/test"
 		}).then(result => {
 			// console.log(result);
 			expect(result.statusCode).to.equal(202);
 			done();
+		}).catch(err => {
+			console.log(err.message);
+			done(err);
 		})
-	});	
+	});
+	*/
 
+	/*
 	it('Get Contexts (Graphs) of the "Test" Repository of the GraphDB Instance', (done) => {
 		endpoint.getContexts({
 			repository: "Test"
@@ -148,6 +164,7 @@ describe("Enapso GraphDB Admin Tests", () => {
 			done();
 		})
 	});
+	* /
 
 	/*
 		it('Download the Ontology from Graphdb', (done) => {
@@ -170,7 +187,6 @@ describe("Enapso GraphDB Admin Tests", () => {
 	*/
 
 	/*
-
 	it('Download the Ontology from Graphdb', (done) => {
 		endpoint.downloadToFile({
 		}).then(result => {
@@ -179,22 +195,38 @@ describe("Enapso GraphDB Admin Tests", () => {
 			done();
 		})
 	});
-*/
+	*/
 
-	it('Clear Test Repository', (done) => {
-		endpoint.clearRepository({
+	/*
+		it('Clear Test Repository', (done) => {
+			endpoint.clearRepository({
+			}).then(result => {
+				expect(result.statusCode).to.equal(200);
+				done();
+			})
+		});
+	*/
+
+	it('Delete test repository from GraphDB instance', (done) => {
+		endpoint.deleteRepository({
+			"id": testConfig.newRepository
 		}).then(result => {
 			expect(result.statusCode).to.equal(200);
 			done();
+		}).catch(err => {
+			console.log(err.message);
+			done(err);
 		})
 	});
 
-	it('Delete Test Repository in GraphDB Instance', (done) => {
-		endpoint.deleteRepository({
-			"id": "EnapsoAutomatedTest"
+	it('Perform garbage collection', (done) => {
+		endpoint.performGarbageCollection({
 		}).then(result => {
 			expect(result.statusCode).to.equal(200);
 			done();
+		}).catch(err => {
+			console.log(err.message);
+			done(err);
 		})
 	});
 

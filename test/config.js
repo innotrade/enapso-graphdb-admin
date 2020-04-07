@@ -4,10 +4,18 @@
 
 module.exports = (Object.freeze({
 
-	baseURL: 'http://localhost:7200',
+    baseURL: 'http://localhost:7200',
+    
 	repository: 'Test',
     username: 'Test',
     password: 'Test',
+
+	newRepository: 'EnapsoAutomatedRepo',
+    newUsername: 'EnapsoAutomatedUser',
+    newPassword: 'EnapsoAutomatedPass',
+
+    adminUsername: 'admin',
+    adminPassword: 'root',
 
     prefixes: {
         PREFIX_OWL: {
