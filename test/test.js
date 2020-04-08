@@ -10,7 +10,9 @@ const { EnapsoGraphDBAdmin } = require('../index');
 const testConfig = require("./config");
 
 
-describe("Enapso GraphDB Admin Tests", () => {
+describe("Enapso GraphDB Admin Tests", function () {
+
+	this.timeout(60000);
 
 	// instantiate a new GraphDB endpoint
 	let endpoint = new EnapsoGraphDBClient.Endpoint({
@@ -19,7 +21,7 @@ describe("Enapso GraphDB Admin Tests", () => {
 		prefixes: testConfig.prefixes
 	});
 
-	it('Authenticate against GraphDB instance', (done) => {
+	it('Authenticate against GraphDB instance', function (done) {
 		endpoint.login(
 			testConfig.username,
 			testConfig.password
@@ -27,12 +29,12 @@ describe("Enapso GraphDB Admin Tests", () => {
 			expect(result).to.have.property('statusCode', 200);
 			done();
 		}).catch(err => {
-			console.log(err.message);
+			console.log('Authentication: ' + err.message);
 			done(err);
 		})
 	});
 
-	it('Create test repository in GraphDB instance', (done) => {
+	it('Create test repository in GraphDB instance', function (done) {
 		endpoint.login(
 			testConfig.adminUsername,
 			testConfig.adminPassword
@@ -45,13 +47,13 @@ describe("Enapso GraphDB Admin Tests", () => {
 				expect(result.statusCode).to.equal(201);
 				done();
 			}).catch(err => {
-				console.log(err.message);
+				console.log('Create repository: ' + err.message);
 				done(err);
 			})
 		})
 	});
 
-	it('Find test repository in GraphDB instance', (done) => {
+	it('Find test repository in GraphDB instance', function (done) {
 		endpoint.getRepositories({
 		}).then(result => {
 			let success = result.statusCode === 200;
@@ -64,12 +66,12 @@ describe("Enapso GraphDB Admin Tests", () => {
 			expect(success).to.be.true;
 			done();
 		}).catch(err => {
-			console.log(err.message);
+			console.log('Find repository: ' + err.message);
 			done(err);
 		})
 	});
 
-	it('Create test user in GraphDB instance', (done) => {
+	it('Create test user in GraphDB instance', function (done) {
 		endpoint.createUser({
 			"username": testConfig.newUsername,	// Username 
 			"password": testConfig.newPassword,	// Password for the user
@@ -82,12 +84,12 @@ describe("Enapso GraphDB Admin Tests", () => {
 			expect(result).to.have.property('statusCode', 201);
 			done();
 		}).catch(err => {
-			console.log(err.message);
+			console.log('Create user: ' + err.message);
 			done(err);
 		})
 	});
 
-	it('Find test users in GraphDB instance', (done) => {
+	it('Find test users in GraphDB instance', function (done) {
 		endpoint.getUsers({
 		}).then(result => {
 			let success = result.statusCode === 200;
@@ -100,12 +102,12 @@ describe("Enapso GraphDB Admin Tests", () => {
 			expect(success).to.be.true;
 			done();
 		}).catch(err => {
-			console.log(err.message);
+			console.log('Find user: ' + err.message);
 			done(err);
 		})
 	});
 
-	it('Update test user´s authorities in GraphDB instance', (done) => {
+	it('Update test user´s authorities in GraphDB instance', function (done) {
 		endpoint.updateUser({
 			"username": testConfig.newUsername,	// Username 
 			"authorities": [
@@ -118,103 +120,106 @@ describe("Enapso GraphDB Admin Tests", () => {
 			expect(result).to.have.property('statusCode', 200);
 			done();
 		}).catch(err => {
-			console.log(err.message);
+			console.log('Update user: ' + err.message);
 			done(err);
 		})
 	});
 
-	it('Delete test user from GraphDB instance', (done) => {
+	it('Delete test user from GraphDB instance', function (done) {
 		endpoint.deleteUser({
 			"user": testConfig.newUsername,		// username which you want to delete
 		}).then(result => {
 			expect(result).to.have.property('statusCode', 204);
 			done();
 		}).catch(err => {
-			console.log(err.message);
+			console.log('Delete user: ' + err.message);
 			done(err);
 		})
 	});
 
-	/*
-	it('Upload Ontology to GraphDB Repository', (done) => {
+	it('Upload ontology to GraphDB repository', function (done) {
+		this.timeout(60000);
 		endpoint.uploadFromFile({
-			"filename": "/System/Volumes/Data/git/enapso-graphdb-admin/ontologies/EnapsoTest.owl",
+			"filename": "ontologies/EnapsoTest.owl",
 			"format": "application/rdf+xml",
-			"baseIRI": "http://ont.enapso.com/test#",
-			"context": "http://ont.enapso.com/test"
+			"baseIRI": testConfig.testBaseIRI,
+			"context": testConfig.testContext
 		}).then(result => {
 			// console.log(result);
 			expect(result.statusCode).to.equal(202);
 			done();
 		}).catch(err => {
-			console.log(err.message);
+			console.log('Upload ontology ' + err.message);
 			done(err);
 		})
 	});
-	*/
 
-	/*
-	it('Get Contexts (Graphs) of the "Test" Repository of the GraphDB Instance', (done) => {
+	it('Get contexts (graphs) of the test repository of the GraphDB instance', function (done) {
 		endpoint.getContexts({
-			repository: "Test"
+			repository: testConfig.newRepository
 		}).then(result => {
-			console.log(JSON.stringify(result, null, 2));
-			// todo: To make this test reasonable, we need to chech the graph created by the upload in the test repo before!
-			expect(result.statusCode).to.equal(200);
+			// console.log(JSON.stringify(result, null, 2));
+			let success = result.statusCode === 200;
+			if (success && result.data && result.data.results && result.data.results.bindings) {
+				for (let binding of result.data.results.bindings) {
+					success = binding.contextID.value === testConfig.testContext;
+					if (success) { break; }
+				}
+			}
+			expect(success).to.be.true;
 			done();
+		}).catch(err => {
+			console.log('Get contexts: ' + err.message);
+			done(err);
 		})
 	});
-	* /
 
-	/*
-		it('Download the Ontology from Graphdb', (done) => {
-			endpoint.downloadToFile({
-			}).then(result => {
-				// console.log(result);
-				expect(result).to.have.property('success', true);
-				done();
-			})
-		});
-	
-		it('Get Query from Graphdb', (done) => {
-			endpoint.getQuery({
-			}).then(result => {
-				// console.log(result);
-				expect(result).to.have.property('success', true);
-				done();
-			})
-		});
-	*/
-
-	/*
-	it('Download the Ontology from Graphdb', (done) => {
-		endpoint.downloadToFile({
+	it('Get running queries from GraphDB', (done) => {
+		endpoint.getQuery({
 		}).then(result => {
 			// console.log(result);
-			expect(result.statusCode).to.equal(201);
+			expect(result).to.have.property('success', true);
 			done();
+		}).catch(err => {
+			console.log('Get running queries: ' + err.message);
+			done(err);
 		})
 	});
-	*/
 
-	/*
-		it('Clear Test Repository', (done) => {
-			endpoint.clearRepository({
-			}).then(result => {
-				expect(result.statusCode).to.equal(200);
-				done();
-			})
-		});
-	*/
+	it('Download the ontology from GraphDB', function (done) {
+		this.timeout(30000);
+		endpoint.downloadToFile({
+			"filename": "ontologies/EnapsoTest_Downloaded.owl",
+		}).then(result => {
+			// console.log(result);
+			expect(result.statusCode).to.equal(200);
+			done();
+		}).catch(err => {
+			console.log('Download ontology: ' + err.message);
+			done(err);
+		})
+	});
 
-	it('Delete test repository from GraphDB instance', (done) => {
+	it('Clear test repository', function (done) {
+		endpoint.clearRepository({
+		}).then(result => {
+			expect(result.statusCode).to.equal(200);
+			done();
+		}).catch(err => {
+			console.log('Clear repository: ' + err.message);
+			done(err);
+		})
+	});
+
+	it('Delete test repository from GraphDB instance', function (done) {
+		this.timeout(20000);
 		endpoint.deleteRepository({
 			"id": testConfig.newRepository
 		}).then(result => {
 			expect(result.statusCode).to.equal(200);
 			done();
 		}).catch(err => {
-			console.log(err.message);
+			console.log('Delete repository: ' + err.message);
 			done(err);
 		})
 	});
@@ -225,7 +230,7 @@ describe("Enapso GraphDB Admin Tests", () => {
 			expect(result.statusCode).to.equal(200);
 			done();
 		}).catch(err => {
-			console.log(err.message);
+			console.log('Garbage collection: ' + err.message);
 			done(err);
 		})
 	});

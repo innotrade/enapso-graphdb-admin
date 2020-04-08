@@ -10,6 +10,9 @@ module.exports = (Object.freeze({
     username: 'Test',
     password: 'Test',
 
+    testBaseIRI: 'http://ont.enapso.com/test#',
+    testContext: 'http://ont.enapso.com/test',
+
 	newRepository: 'EnapsoAutomatedRepo',
     newUsername: 'EnapsoAutomatedUser',
     newPassword: 'EnapsoAutomatedPass',
