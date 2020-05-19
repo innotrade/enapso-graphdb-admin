@@ -3,9 +3,7 @@ Enapso Ontotext GraphDB 8.x/9.x Administration Toolbox for Node.js
 
 Admin client for OntoText GraphDB to easily perform administrative and monitoring operations against your RDF stores, your OWL ontologies or knowledge graphs in nodes.js applications. This client supports an easy import of existing RDF stores and ontologies to GraphDB by upload via file, strings or URLs as well as an export in numerous formats and also a context management. You can monitor the cpu load and memory usage of GraphDB and run the garbage collector on demand to optimally trigger huge batch operations. Future versions of this client will support a user managememt, the creation and listing of new repositories as well as an location and cluster management of Ontotext GraphDB.
 
-This project is currently work-in-progress and will be subject to further changes until its version 1.0. Examples and documentation are pending and will be published soon.
-
-**The following demos require a running GraphDB 8.x/9.x instance on localhost at port 7200. The demos as well as the automated tests require a fully working Ontotext GraphDB repository "Test" and a user "Test" with the password "Test" being set up, which has read/write access to the "Test" Repository. Base URL: http://ont.enapso.com/test#, graph: http://ont.enapso.com/test#**
+**The following demos require a running GraphDB 8.x/9.x instance on localhost at port 7200. The demos as well as the automated tests require a fully working Ontotext GraphDB repository "Test" and a user "Test" with the password "Test" being set up, which has read/write access to the "Test" Repository and repository ruleset must have OWL Horst(Optimizes) Base URL: http://ont.enapso.com/test#, graph: http://ont.enapso.com/test#**
 Get the latest version of GraphDB for free at https://www.ontotext.com/free-graphdb-download-copy/.
 
 **This project is actively developed and maintained.**
@@ -97,6 +95,20 @@ demoUploadFromFile: async function () {
     return resp;
 }
 ```
+## Upload From Date to GraphDB
+```javascript
+demoUploadFromData: async function () {
+		// upload a file
+		let resp = await this.graphDBEndpoint.uploadFromData({
+			filename: "ontologies/Test.owl",
+			format: "application/rdf+xml",
+			baseIRI: "http://ont.enapso.com/test#",
+			context: "http://ont.enapso.com/test"
+		});
+		enLogger.info("\nUploadFromData:\n" + JSON.stringify(resp, null, 2));
+		return resp;
+	}
+```
 ## Download a graph from GraphDB to a text variable
 For the available export formats, please refer to the EnapsoGraphDBClient.FORMAT_xxx constants.
 The context is optional. If you do not pass a context, the entire repository is exported.
@@ -129,6 +141,35 @@ demoDownloadToFile: async function () {
     return resp;
 }
 ```
+## Perform Garbage Collection in your GraphDB instance
+```javascript
+demoPerformGarbageCollection: async function () {
+		// lists all contexts (named graph) in the repository
+		let resp = await this.graphDBEndpoint.performGarbageCollection();
+		enLogger.info("\nGarbage Collection:\n" + JSON.stringify(resp, null, 2));
+		return resp;
+	}
+```
+## Get Resource of GraphDB instance
+```javascript
+demoGetResources: async function () {
+		// lists all contexts (named graph) in the repository
+		let resp = await this.graphDBEndpoint.getResources();
+		enLogger.info("\nResources:\n" + JSON.stringify(resp, null, 2));
+		return resp;
+	}
+```
+
+## Lists all contexts (named graph) in the repository
+```javascript
+demoGetQuery: async function () {
+		// lists all contexts (named graph) in the repository
+		let resp = await this.graphDBEndpoint.getQuery();
+		enLogger.info("\nGet Query:\n" + JSON.stringify(resp, null, 2));
+		return resp;
+	}
+```
+
 ## List all repositories configured in your GraphDB instance
 ```javascript
 demoGetRepositories: async function () {
@@ -328,4 +369,62 @@ demoGetSavedQueries: async function () {
     }
   ]
 }
+```
+## Create new reposiotry in your GraphDB instance
+```javascript
+demoCreateRepository: async function () {
+		let resp = await this.graphDBEndpoint.createRepository({
+			"id": "AutomatedTest",
+			"title": "Enapso Automated Test Repository",
+			"location": ""
+		});
+		enLogger.info("Create Repository:" + JSON.stringify(resp, null, 2));
+	}
+```
+### Result
+```json
+Create Repository:{
+  "success": true,
+  "statusCode": 201,
+  "statusMessage": "OK"
+}
+```
+## Delete reposiotry in your GraphDB instance
+```javascript
+demoDeleteRepository: async function () {
+		let resp = await this.graphDBEndpoint.deleteRepository({
+			"id": "AutomatedTest"
+		});
+		enLogger.info("Delete Repository:" + JSON.stringify(resp, null, 2));
+	}
+```
+### Result
+```json
+Delete Repository:{
+  "success": true,
+  "statusCode": 200,
+  "statusMessage": "OK"
+}
+
+```
+## Drop SHACL in your GraphDB instance
+```javascript
+demoDropShaclGraph: async function () {
+		// clear entire repository
+		// CAUTION! This operation empties the entire repository 
+		// and cannot be undone!
+		let resp = await this.graphDBEndpoint.dropShaclGraph();
+		enLogger.info("\nDropShaclGraph :\n" + JSON.stringify(resp, null, 2));
+		return resp;
+	}
+```
+### Result
+```json
+DropShaclGraph :
+{
+  "success": true,
+  "statusCode": 200,
+  "message": "OK"
+}
+
 ```

@@ -427,8 +427,8 @@ const EnapsoGraphDBAdminDemo = {
 		// this.demoDownloadToFile();
 		// this.demoDownloadToText();
 
-		this.demoShacl();
-
+		//this.demoShacl();
+    await  this.demoDropShaclGraph();
         /*
         enLogger.info("--- Inserting new triple --- ")
 		await this.demoInsert();
@@ -453,8 +453,8 @@ const EnapsoGraphDBAdminDemo = {
 	   await this.demoGetResources();
 	   */
 
-		// await this.demoCreateRepository();
-		// await this.demoDeleteRepository();
+		await this.demoCreateRepository();
+		await this.demoDeleteRepository();
 
 		// await this.demoClearRepository();
 
