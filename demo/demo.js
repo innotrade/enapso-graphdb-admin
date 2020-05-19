@@ -191,7 +191,7 @@ const EnapsoGraphDBAdminDemo = {
 	demoUploadFromFile: async function () {
 		// upload a file
 		let resp = await this.graphDBEndpoint.uploadFromFile({
-			filename: "ontologies/Test.owl",
+			filename: "ontologies/EnapsoTest.owl",
 			format: "application/rdf+xml",
 			baseIRI: "http://ont.enapso.com/test#",
 			context: "http://ont.enapso.com/test"
@@ -365,13 +365,13 @@ const EnapsoGraphDBAdminDemo = {
 		let resp;
 
 		// read sparqls
-		let validSparql = await fsPromises.readFile('./test/validUpdate.sparql', 'utf-8');
-		let invalidSparql = await fsPromises.readFile('./test/invalidUpdate.sparql', 'utf-8');
-		let getPersonsSparql = await fsPromises.readFile('./test/selectAllPersons.sparql', 'utf-8');
+		let validSparql = await fsPromises.readFile('../test/validUpdate.sparql', 'utf-8');
+		let invalidSparql = await fsPromises.readFile('../test/invalidUpdate.sparql', 'utf-8');
+		let getPersonsSparql = await fsPromises.readFile('../test/selectAllPersons.sparql', 'utf-8');
 		// read the shacl turtle
-		let shaclTtl = await fsPromises.readFile('./ontologies/EnapsoTestShacl.ttl', 'utf-8');
+		let shaclTtl = await fsPromises.readFile('../ontologies/EnapsoTestShacl.ttl', 'utf-8');
 		// read the shacl json-ld
-		let shaclJsonLd = await fsPromises.readFile('./ontologies/EnapsoTestShacl.jsonld', 'utf-8');
+		let shaclJsonLd = await fsPromises.readFile('../ontologies/EnapsoTestShacl.jsonld', 'utf-8');
 
 		// first drop the shacl graph if exists, if it does not exist, this will not be a problem
 		enLogger.info("\nDropping SHACL Graph...");
@@ -458,27 +458,27 @@ const EnapsoGraphDBAdminDemo = {
 
 		// clear entire repository
 		// CAUTION! This operation empties the entire repository and cannot be undone!
-		// this.demoClearRepository();
+		this.demoClearRepository();
 
 		// clear entire context (named graph)
 		// CAUTION! This operation empties the entire context (named graph) and cannot be undone!
-		// this.demoClearContext();
+		 this.demoClearContext();
 
-		// this.demoGetRepositories();
+		 this.demoGetRepositories();
 
 		// getLocations requires repository manager role!
-		// this.demoGetLocations();
+		this.demoGetLocations();
 
 		// getUsers requires admin role!
-		// this.demoGetUsers();
+		 this.demoGetUsers();
 
-		// this.demoGetContexts();
-		// this.demoGetSavedQueries();
+		this.demoGetContexts();
+		 this.demoGetSavedQueries();
 
-		// this.demoUploadFromFile();
-		// this.demoDownloadToFile();
-		// this.demoDownloadToText();
-		//this.demoShacl();
+		 this.demoUploadFromFile();
+		 this.demoDownloadToFile();
+		 this.demoDownloadToText();
+		this.demoShacl();
     await  this.demoDropShaclGraph();
         /*
         enLogger.info("--- Inserting new triple --- ")
@@ -497,22 +497,17 @@ const EnapsoGraphDBAdminDemo = {
         enLogger.info("--- Graph should not contain TestClassUpdated anymore --- ")
         await this.demoQuery();
         */
-
-		/*
 	   await this.demoGetResources();
 	   await this.demoPerformGarbageCollection();
 	   await this.demoGetResources();
-	   */
+
 
 		await this.demoCreateRepository();
 		await this.demoDeleteRepository();
-
-		// await this.demoCreateRepository();
-		// await this.demoDeleteRepository();
 		await this.demoCreateUser();
 	    await this.demoUpdateUser();
 		await this.demoDeleteUser();
-		// await this.demoClearRepository();
+		await this.demoClearRepository();
 
 		/*
 		  enLogger.info("Start: " + new Date().toISOString());

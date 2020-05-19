@@ -1,0 +1,49 @@
+@prefix entest: <http://ont.enapso.com/test#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+entest:TestClass a owl:Class .
+
+<http://ont.enapso.com/test> a owl:Ontology;
+  rdfs:comment "(C) Copyright 2019-2020 Innotrade GmbH, Herzogenrath, NRW, Germany"@en,
+    "Enapso Test Ontology"@en;
+  owl:versionIRI <http://ont.enapso.com/test/1.0.0> .
+
+entest:firstName a owl:DatatypeProperty;
+  rdfs:subPropertyOf entest:name .
+
+entest:name a owl:DatatypeProperty .
+
+entest:lastName a owl:DatatypeProperty;
+  rdfs:subPropertyOf entest:name .
+
+entest:Instance a owl:Class .
+
+entest:Person a owl:Class;
+  rdfs:subClassOf _:node8995 .
+
+_:node8995 a owl:Restriction;
+  owl:onDataRange xsd:string;
+  owl:onProperty entest:firstName;
+  owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger .
+
+entest:Person rdfs:subClassOf _:node8996 .
+
+_:node8996 a owl:Restriction;
+  owl:onDataRange xsd:string;
+  owl:onProperty entest:lastName;
+  owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger .
+
+entest:Person_AlexanderSchulze a entest:Person, owl:NamedIndividual;
+  entest:firstName "Alexander";
+  entest:lastName "Schulze" .
+
+entest:Person_AsheshGoplani a entest:Person, owl:NamedIndividual;
+  entest:firstName "Ashesh";
+  entest:lastName "Goplani" .
+
+entest:Person_MuhammadYasir a entest:Person, owl:NamedIndividual;
+  entest:firstName "Muhammad";
+  entest:lastName "Yasir" .

@@ -170,6 +170,63 @@ demoGetQuery: async function () {
 	}
 ```
 
+## Create new user and assign role
+```javascript
+demoCreateUser: async function () {
+		let lRes = await this.graphDBEndpoint.login(
+			"admin",
+			"root"
+		);
+		// todo: interpret lRes here, it does not makes sense to continue if login does not work!
+		let resp = await this.graphDBEndpoint.createUser({
+			authorities: [
+				"WRITE_REPO_Test",	// Writing excess wrote WRITE_ and in last name of Repository which excess provided like REPO_Test
+				"READ_REPO_Test",	// Reading excess wrote READ_ and in last name of Repository which excess provided like REPO_Test
+				"READ_REPO_EnapsoDotNetProDemo",
+				"ROLE_USER",		// Role of the user
+			],
+			"username": "TestUser",	// Username 
+			"password": "TestUser"	// Password for the user
+		});
+		enLogger.info("Create New User:" + JSON.stringify(resp, null, 2));
+	}
+```
+## Update user role and authorities
+```javascript
+	demoUpdateUser: async function () {
+		let lRes = await this.graphDBEndpoint.login(
+			"admin",
+			"root"
+		);
+		// todo: interpret lRes here, it does not makes sense to continue if login does not work!
+		let resp = await this.graphDBEndpoint.updateUser({
+			authorities: [
+					// Writing excess wrote WRITE_ and in last name of Repository which excess provided like REPO_Test
+				"READ_REPO_Test",	// Reading excess wrote READ_ and in last name of Repository which excess provided like REPO_Test
+				"WRITE_REPO_EnapsoDotNetProDemo",
+				"READ_REPO_EnapsoDotNetProDemo",
+				"ROLE_USER",		// Role of the user
+			],
+			"username": "TestUser",	// Username 
+			
+		});
+		enLogger.info("Update Inserted User:" + JSON.stringify(resp, null, 2));
+	}
+```
+## Delete user role
+```javascript
+demoDeleteUser: async function () {
+		let lRes = await this.graphDBEndpoint.login(
+			"admin",
+			"root"
+		);
+		// todo: interpret lRes here, it does not makes sense to continue if login does not work!
+		let resp = await this.graphDBEndpoint.deleteUser({
+			"user": "TestUser"		// username which you want to delete
+		});
+		enLogger.info("Delete Exisiting User:" + JSON.stringify(resp, null, 2));
+	}
+```
 ## List all repositories configured in your GraphDB instance
 ```javascript
 demoGetRepositories: async function () {
@@ -407,6 +464,105 @@ Delete Repository:{
 }
 
 ```
+## Upload SHACL in your GraphDB instance
+```javascript
+demoShacl: async function () {
+		let resp;
+
+		// read sparqls
+		let validSparql = await fsPromises.readFile('../test/validUpdate.sparql', 'utf-8');
+		let invalidSparql = await fsPromises.readFile('../test/invalidUpdate.sparql', 'utf-8');
+		let getPersonsSparql = await fsPromises.readFile('../test/selectAllPersons.sparql', 'utf-8');
+		// read the shacl turtle
+		let shaclTtl = await fsPromises.readFile('../ontologies/EnapsoTestShacl.ttl', 'utf-8');
+		// read the shacl json-ld
+		let shaclJsonLd = await fsPromises.readFile('../ontologies/EnapsoTestShacl.jsonld', 'utf-8');
+
+		// first drop the shacl graph if exists, if it does not exist, this will not be a problem
+		enLogger.info("\nDropping SHACL Graph...");
+		resp = await this.graphDBEndpoint.dropShaclGraph();
+		enLogger.info("\nDrop SHACL Graph:\n" + JSON.stringify(resp, null, 2));
+
+		// now clear the current repository to ensure that there is no old data inside that could disturb the tests
+		enLogger.info("\nClearing repository...");
+		resp = await this.graphDBEndpoint.clearRepository();
+		enLogger.info("\nCleared repository:\n" + JSON.stringify(resp, null, 2));
+
+		// now upload ontology directly from test ontology file into test graph into the test repository
+		enLogger.info("\nUploading ontology from file...");
+		resp = await this.graphDBEndpoint.uploadFromFile({
+			filename: "./ontologies/EnapsoTest.owl",
+			context: GRAPHDB_CONTEXT_TEST,
+			format: EnapsoGraphDBClient.FORMAT_RDF_XML.type
+		});
+		enLogger.info("\nUploaded ontology from file:\n" + JSON.stringify(resp, null, 2));
+
+		resp = await this.graphDBEndpoint.query(getPersonsSparql);
+		enLogger.info("\nGet Persons after upload (supposed to work):\n" + JSON.stringify(resp, null, 2));
+
+		// first try all actions w/o a shacl being applied
+		resp = await this.graphDBEndpoint.update(validSparql);
+		enLogger.info("\nValid SPARQL w/o SHACL (supposed to work):\n" + JSON.stringify(resp, null, 2));
+
+		resp = await this.graphDBEndpoint.update(invalidSparql);
+		enLogger.info("\Invalid SPARQL w/o SHACL (supposed to work):\n" + JSON.stringify(resp, null, 2));
+
+		resp = await this.graphDBEndpoint.query(getPersonsSparql);
+		enLogger.info("\nGet Persons w/o SHACL (supposed to work):\n" + JSON.stringify(resp, null, 2));
+
+		// now clear the repository again, it contains invalid data from the tests w/o shacl support
+		enLogger.info("\nClearing repository...");
+		resp = await this.graphDBEndpoint.clearRepository();
+		enLogger.info("\nCleared repository:\n" + JSON.stringify(resp, null, 2));
+
+		// and upload ontology again to have the same initital status for shacl tests as w/o the shacl tests
+		enLogger.info("\nUploading ontology from file...");
+		resp = await this.graphDBEndpoint.uploadFromFile({
+			filename: "./ontologies/EnapsoTest.owl",
+			context: GRAPHDB_CONTEXT_TEST,
+			format: EnapsoGraphDBClient.FORMAT_RDF_XML.type
+		});
+		enLogger.info("\nUploaded ontology from file:\n" + JSON.stringify(resp, null, 2));
+
+		// now load the shacl on top of the correct ontology
+		enLogger.info("\nUploading SHACL from Data...");
+		// now upload the shacl file, using correct context (graph name) and format!
+		resp = await this.graphDBEndpoint.uploadFromData({
+			// data: shaclTtl,
+			data: shaclJsonLd,
+			context: GRAPHDB_CONTEXT_SHACL,
+			// format: EnapsoGraphDBClient.FORMAT_TURTLE.type
+			format: EnapsoGraphDBClient.FORMAT_JSON_LD.type
+		});
+		enLogger.info("\nUploaded SHACL from Data:\n" + JSON.stringify(resp, null, 2));
+
+		// next try all actions w/o a shacl being applied
+		resp = await this.graphDBEndpoint.update(validSparql);
+		enLogger.info("\nValid SPARQL with SHACL support (supposed to work):\n" + JSON.stringify(resp, null, 2));
+
+		resp = await this.graphDBEndpoint.update(invalidSparql);
+		enLogger.info("\nInvalid SPARQL with SHACL support (NOT supposed to work):\n" + JSON.stringify(resp, null, 2));
+
+		resp = await this.graphDBEndpoint.query(getPersonsSparql);
+		enLogger.info("\nGet Persons with SHACL support (supposed to work):\n" + JSON.stringify(resp, null, 2));
+
+		enLogger.info("\nDone");
+	}
+```
+### Result
+```json
+DropShaclGraph :
+{
+  "success": true,
+  "statusCode": 200,
+  "message": "OK"
+}
+
+```
+
+
+
+
 ## Drop SHACL in your GraphDB instance
 ```javascript
 demoDropShaclGraph: async function () {
