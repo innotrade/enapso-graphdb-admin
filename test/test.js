@@ -36,10 +36,10 @@ describe("Enapso GraphDB Admin Tests", function () {
 			"title": "Enapso Automated Test Repository",
 			"location": ""
 		}).then(result => {
-		expect(result).to.have.property('success', true);
+			expect(result).to.have.property('success', true);
 			done();
 		})
-		});
+	});
 	it('Create test user in GraphDB instance', function (done) {
 		lEndpoint.createUser({
 			"username": testConfig.newUsername,	// Username 
@@ -54,7 +54,7 @@ describe("Enapso GraphDB Admin Tests", function () {
 		})
 	});
 
-    it('Find test users in GraphDB instance', function (done) {
+	it('Find test users in GraphDB instance', function (done) {
 		lEndpoint.getUsers({
 		}).then(result => {
 			let success = result.statusCode === 200;
@@ -122,7 +122,7 @@ describe("Enapso GraphDB Admin Tests", function () {
 			expect(result).to.have.property('success', true);
 			done();
 		})
-	});	
+	});
 	it('Drop SHACL from GraphDB', (done) => {
 		lEndpoint.dropShaclGraph().then(result => {
 			expect(result).to.have.property('success', true);
@@ -146,7 +146,7 @@ describe("Enapso GraphDB Admin Tests", function () {
 		lEndpoint.downloadToFile({
 			format: lFormat.type,
 			filename: "./ontologies/" +
-			lEndpoint.getRepository() +
+				lEndpoint.getRepository() +
 				lFormat.extension
 		}).then(result => {
 			expect(result).to.have.property('success', true);
@@ -156,9 +156,9 @@ describe("Enapso GraphDB Admin Tests", function () {
 	it('Clear context of graph', (done) => {
 		lEndpoint.clearContext(
 			'http://ont.enapso.com/test').then(result => {
-			expect(result).to.have.property('success', true);
-			done();
-		})
+				expect(result).to.have.property('success', true);
+				done();
+			})
 	});
 	it('Get running queries from GraphDB', (done) => {
 		lEndpoint.getQuery({

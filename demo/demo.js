@@ -90,14 +90,14 @@ const EnapsoGraphDBAdminDemo = {
 		// todo: interpret lRes here, it does not makes sense to continue if login does not work!
 		let resp = await this.graphDBEndpoint.updateUser({
 			authorities: [
-					// Writing excess wrote WRITE_ and in last name of Repository which excess provided like REPO_Test
+				// Writing excess wrote WRITE_ and in last name of Repository which excess provided like REPO_Test
 				"READ_REPO_Test",	// Reading excess wrote READ_ and in last name of Repository which excess provided like REPO_Test
 				"WRITE_REPO_EnapsoDotNetProDemo",
 				"READ_REPO_EnapsoDotNetProDemo",
 				"ROLE_USER",		// Role of the user
 			],
 			"username": "TestUser",	// Username 
-			
+
 		});
 		enLogger.info("Update Inserted User:" + JSON.stringify(resp, null, 2));
 	},
@@ -462,24 +462,24 @@ const EnapsoGraphDBAdminDemo = {
 
 		// clear entire context (named graph)
 		// CAUTION! This operation empties the entire context (named graph) and cannot be undone!
-		 this.demoClearContext();
+		this.demoClearContext();
 
-		 this.demoGetRepositories();
+		this.demoGetRepositories();
 
 		// getLocations requires repository manager role!
 		this.demoGetLocations();
 
 		// getUsers requires admin role!
-		 this.demoGetUsers();
+		this.demoGetUsers();
 
 		this.demoGetContexts();
-		 this.demoGetSavedQueries();
+		this.demoGetSavedQueries();
 
-		 this.demoUploadFromFile();
-		 this.demoDownloadToFile();
-		 this.demoDownloadToText();
+		this.demoUploadFromFile();
+		this.demoDownloadToFile();
+		this.demoDownloadToText();
 		this.demoShacl();
-    await  this.demoDropShaclGraph();
+		await this.demoDropShaclGraph();
         /*
         enLogger.info("--- Inserting new triple --- ")
 		await this.demoInsert();
@@ -497,15 +497,15 @@ const EnapsoGraphDBAdminDemo = {
         enLogger.info("--- Graph should not contain TestClassUpdated anymore --- ")
         await this.demoQuery();
         */
-	   await this.demoGetResources();
-	   await this.demoPerformGarbageCollection();
-	   await this.demoGetResources();
+		await this.demoGetResources();
+		await this.demoPerformGarbageCollection();
+		await this.demoGetResources();
 
 
 		await this.demoCreateRepository();
 		await this.demoDeleteRepository();
 		await this.demoCreateUser();
-	    await this.demoUpdateUser();
+		await this.demoUpdateUser();
 		await this.demoDeleteUser();
 		await this.demoClearRepository();
 

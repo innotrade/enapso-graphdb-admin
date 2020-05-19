@@ -1,4 +1,5 @@
 # enapso-graphdb-admin
+
 Enapso Ontotext GraphDB 8.x/9.x Administration Toolbox for Node.js
 
 Admin client for OntoText GraphDB to easily perform administrative and monitoring operations against your RDF stores, your OWL ontologies or knowledge graphs in nodes.js applications. This client supports an easy import of existing RDF stores and ontologies to GraphDB by upload via file, strings or URLs as well as an export in numerous formats and also a context management. You can monitor the cpu load and memory usage of GraphDB and run the garbage collector on demand to optimally trigger huge batch operations. Future versions of this client will support a user managememt, the creation and listing of new repositories as well as an location and cluster management of Ontotext GraphDB.
@@ -9,79 +10,84 @@ Get the latest version of GraphDB for free at https://www.ontotext.com/free-grap
 **This project is actively developed and maintained.**
 To discuss questions and suggestions with the Enapso and GraphDB community, we'll be happy to meet you in our forum at https://www.innotrade.com/forum/.
 
-# Installation 
+# Installation
+
 ```
 npm i @innotrade/enapso-graphdb-admin --save
 ```
+
 # Example
+
 ## Instantiate an Enapso GraphDB and Admin Client
+
 ```javascript
 // require the Enapso GraphDB Client and Admin packages
-const { EnapsoGraphDBClient } = require('@innotrade/enapso-graphdb-client');
-const { EnapsoGraphDBAdmin } = require('@innotrade/enapso-graphdb-admin');
+const { EnapsoGraphDBClient } = require("@innotrade/enapso-graphdb-client");
+const { EnapsoGraphDBAdmin } = require("@innotrade/enapso-graphdb-admin");
 
 // connection data to the running GraphDB instance
-const
-    GRAPHDB_BASE_URL = 'http://localhost:7200',
-    GRAPHDB_REPOSITORY = 'Test',
-    GRAPHDB_USERNAME = 'Test',
-    GRAPHDB_PASSWORD = 'Test',
-    GRAPHDB_CONTEXT_TEST = 'http://ont.enapso.com/test'
+const GRAPHDB_BASE_URL = "http://localhost:7200",
+  GRAPHDB_REPOSITORY = "Test",
+  GRAPHDB_USERNAME = "Test",
+  GRAPHDB_PASSWORD = "Test",
+  GRAPHDB_CONTEXT_TEST = "http://ont.enapso.com/test";
 
 // the default prefixes for all SPARQL queries
 const GRAPHDB_DEFAULT_PREFIXES = [
-    EnapsoGraphDBClient.PREFIX_OWL,
-    EnapsoGraphDBClient.PREFIX_RDF,
-    EnapsoGraphDBClient.PREFIX_RDFS
+  EnapsoGraphDBClient.PREFIX_OWL,
+  EnapsoGraphDBClient.PREFIX_RDF,
+  EnapsoGraphDBClient.PREFIX_RDFS,
 ];
 
 console.log("Innotrade Enapso GraphDB Admin Demo");
 
 const EnapsoGraphDBAdminDemo = {
+  graphDBEndpoint: null,
+  authentication: null,
 
-    graphDBEndpoint: null,
-    authentication: null,
+  createEndpoint: async function () {
+    // instantiate a new GraphDB endpoint
+    return new EnapsoGraphDBClient.Endpoint({
+      baseURL: GRAPHDB_BASE_URL,
+      repository: GRAPHDB_REPOSITORY,
+      prefixes: GRAPHDB_DEFAULT_PREFIXES,
+    });
+  },
 
-    createEndpoint: async function () {
-        // instantiate a new GraphDB endpoint
-        return new EnapsoGraphDBClient.Endpoint({
-            baseURL: GRAPHDB_BASE_URL,
-            repository: GRAPHDB_REPOSITORY,
-            prefixes: GRAPHDB_DEFAULT_PREFIXES
-        });
-    },
+  login: async function () {
+    // login into GraphDB using JWT
+    let lRes = await this.graphDBEndpoint.login(
+      GRAPHDB_USERNAME,
+      GRAPHDB_PASSWORD
+    );
+    return lRes;
+  },
 
-    login: async function () {
-        // login into GraphDB using JWT
-        let lRes = await this.graphDBEndpoint.login(
-            GRAPHDB_USERNAME,
-            GRAPHDB_PASSWORD
-        );
-        return lRes;
-    },
+  // here numerous demo methods are located
 
-    // here numerous demo methods are located
-
-    demo: async function () {
-        this.graphDBEndpoint = await this.createEndpoint();
-        this.authentication = await this.login();
-        // verify authentication
-        if (!this.authentication.success) {
-            console.log("\nLogin failed:\n" +
-                JSON.stringify(this.authentication, null, 2));
-            return;
-        }
-        console.log("\nLogin successful");
-
-        // continue to work with this.graphDBEndpoint
-        // :
+  demo: async function () {
+    this.graphDBEndpoint = await this.createEndpoint();
+    this.authentication = await this.login();
+    // verify authentication
+    if (!this.authentication.success) {
+      console.log(
+        "\nLogin failed:\n" + JSON.stringify(this.authentication, null, 2)
+      );
+      return;
     }
-}
+    console.log("\nLogin successful");
+
+    // continue to work with this.graphDBEndpoint
+    // :
+  },
+};
 
 // execute the demo(s)
 EnapsoGraphDBAdminDemo.demo();
 ```
+
 ## Upload a file to GraphDB
+
 ```javascript
 demoUploadFromFile: async function () {
     // upload a file
@@ -95,7 +101,9 @@ demoUploadFromFile: async function () {
     return resp;
 }
 ```
+
 ## Upload From Date to GraphDB
+
 ```javascript
 demoUploadFromData: async function () {
 		// upload a file
@@ -109,23 +117,29 @@ demoUploadFromData: async function () {
 		return resp;
 	}
 ```
+
 ## Download a graph from GraphDB to a text variable
+
 For the available export formats, please refer to the EnapsoGraphDBClient.FORMAT_xxx constants.
 The context is optional. If you do not pass a context, the entire repository is exported.
+
 ```javascript
 demoDownloadToText: async function () {
     // download a repository or named graph to memory
     resp = await this.graphDBEndpoint.downloadToText({
         format: EnapsoGraphDBClient.FORMAT_TURTLE.type
     });
-    console.log("\nDownload (text):\n" + 
+    console.log("\nDownload (text):\n" +
         JSON.stringify(resp, null, 2));
     return resp;
 }
 ```
+
 ## Download a graph from GraphDB directly to a local file
+
 For the available export formats, please refer to the EnapsoGraphDBClient.FORMAT_xxx constants.
 The context is optional. If you do not pass a context, the entire repository is exported.
+
 ```javascript
 demoDownloadToFile: async function () {
     // download a repository or named graph to file
@@ -141,7 +155,9 @@ demoDownloadToFile: async function () {
     return resp;
 }
 ```
+
 ## Perform Garbage Collection in your GraphDB instance
+
 ```javascript
 demoPerformGarbageCollection: async function () {
 		// lists all contexts (named graph) in the repository
@@ -150,7 +166,9 @@ demoPerformGarbageCollection: async function () {
 		return resp;
 	}
 ```
+
 ## Get Resource of GraphDB instance
+
 ```javascript
 demoGetResources: async function () {
 		// lists all contexts (named graph) in the repository
@@ -161,6 +179,7 @@ demoGetResources: async function () {
 ```
 
 ## Lists all contexts (named graph) in the repository
+
 ```javascript
 demoGetQuery: async function () {
 		// lists all contexts (named graph) in the repository
@@ -171,6 +190,7 @@ demoGetQuery: async function () {
 ```
 
 ## Create new user and assign role
+
 ```javascript
 demoCreateUser: async function () {
 		let lRes = await this.graphDBEndpoint.login(
@@ -185,13 +205,15 @@ demoCreateUser: async function () {
 				"READ_REPO_EnapsoDotNetProDemo",
 				"ROLE_USER",		// Role of the user
 			],
-			"username": "TestUser",	// Username 
+			"username": "TestUser",	// Username
 			"password": "TestUser"	// Password for the user
 		});
 		enLogger.info("Create New User:" + JSON.stringify(resp, null, 2));
 	}
 ```
+
 ## Update user role and authorities
+
 ```javascript
 	demoUpdateUser: async function () {
 		let lRes = await this.graphDBEndpoint.login(
@@ -207,13 +229,15 @@ demoCreateUser: async function () {
 				"READ_REPO_EnapsoDotNetProDemo",
 				"ROLE_USER",		// Role of the user
 			],
-			"username": "TestUser",	// Username 
-			
+			"username": "TestUser",	// Username
+
 		});
 		enLogger.info("Update Inserted User:" + JSON.stringify(resp, null, 2));
 	}
 ```
+
 ## Delete user role
+
 ```javascript
 demoDeleteUser: async function () {
 		let lRes = await this.graphDBEndpoint.login(
@@ -227,7 +251,9 @@ demoDeleteUser: async function () {
 		enLogger.info("Delete Exisiting User:" + JSON.stringify(resp, null, 2));
 	}
 ```
+
 ## List all repositories configured in your GraphDB instance
+
 ```javascript
 demoGetRepositories: async function () {
     // lists all repositories
@@ -236,7 +262,9 @@ demoGetRepositories: async function () {
     return resp;
 }
 ```
+
 ### Result
+
 ```json
 [
   {
@@ -267,28 +295,35 @@ demoGetRepositories: async function () {
     "unsupported": false,
     "local": true
   }
-]  
+]
 ```
+
 ## Clear entire repository of your GraphDB instance
+
 **Caution! This removes ALL triples of the given repository! This operation cannot be undone!**
 The entire repository will be emptied, i.e. all data of this repository will be removed. The repository remains active.
+
 ```javascript
 demoClearRepository: async function () {
     // clear entire repository
-    // CAUTION! This operation empties the entire repository 
+    // CAUTION! This operation empties the entire repository
     // and cannot be undone!
     let resp = await this.graphDBEndpoint.clearRepository();
     console.log("\ClearRepository :\n" + JSON.stringify(resp, null, 2));
     return resp;
 }
 ```
+
 ### Result
+
 ```json
 {
   "success": true
 }
 ```
+
 ## List all users of your GraphDB instance
+
 ```javascript
 demoGetUsers: async function () {
     // lists all users (requires admin role)
@@ -297,17 +332,15 @@ demoGetUsers: async function () {
     return resp;
 }
 ```
+
 ### Result
+
 ```json
 [
   {
     "username": "Test",
     "password": "",
-    "grantedAuthorities": [
-      "WRITE_REPO_Test",
-      "READ_REPO_Test",
-      "ROLE_USER"
-    ],
+    "grantedAuthorities": ["WRITE_REPO_Test", "READ_REPO_Test", "ROLE_USER"],
     "appSettings": {
       "DEFAULT_SAMEAS": true,
       "DEFAULT_INFERENCE": true,
@@ -318,9 +351,7 @@ demoGetUsers: async function () {
   {
     "username": "admin",
     "password": "",
-    "grantedAuthorities": [
-      "ROLE_ADMIN"
-    ],
+    "grantedAuthorities": ["ROLE_ADMIN"],
     "appSettings": {
       "DEFAULT_INFERENCE": true,
       "DEFAULT_SAMEAS": true,
@@ -330,7 +361,9 @@ demoGetUsers: async function () {
   }
 ]
 ```
+
 ## List all contexts used in a given repository
+
 ```javascript
 demoGetContexts: async function () {
     // lists all contexts (named graph) in the repository
@@ -339,7 +372,9 @@ demoGetContexts: async function () {
     return resp;
 }
 ```
+
 ### Result
+
 ```json
 {
   "total": 1,
@@ -351,13 +386,16 @@ demoGetContexts: async function () {
   ]
 }
 ```
+
 ## Clear entire context in a given repository
+
 **Caution! This removes ALL triples of the given context! This operation cannot be undone!**
 The entire context will be emptied, i.e. all data from this context will be removed. The repository and other contexts remain active.
+
 ```javascript
 demoClearContext: async function () {
     // clear context (named graph)
-    // CAUTION! This operation empties the named graph 
+    // CAUTION! This operation empties the named graph
     // of the repository and cannot be undone!
     let resp = await this.graphDBEndpoint.clearContext(
         GRAPHDB_CONTEXT_TEST);
@@ -366,13 +404,17 @@ demoClearContext: async function () {
     return;
 }
 ```
+
 ### Result
+
 ```json
 {
   "success": true
 }
 ```
+
 ## List all locations configured in your GraphDB instance
+
 ```javascript
 demoGetLocations: async function () {
     // lists all locations, requires repository manager role!
@@ -381,7 +423,9 @@ demoGetLocations: async function () {
     return resp;
 }
 ```
+
 ### Result
+
 ```json
 [
   {
@@ -397,11 +441,13 @@ demoGetLocations: async function () {
   }
 ]
 ```
+
 ## List all save queries in your GraphDB instance
+
 ```javascript
 demoGetSavedQueries: async function () {
     // clear context (named graph)
-    // CAUTION! This operation empties the named graph 
+    // CAUTION! This operation empties the named graph
     // of the repository and cannot be undone!
     let resp = await this.graphDBEndpoint.getSavedQueries();
     console.log("\nGetSavedQueries :\n" +
@@ -409,7 +455,9 @@ demoGetSavedQueries: async function () {
     return;
 }
 ```
+
 ### Result
+
 ```json
 {
   "success": true,
@@ -427,7 +475,9 @@ demoGetSavedQueries: async function () {
   ]
 }
 ```
+
 ## Create new reposiotry in your GraphDB instance
+
 ```javascript
 demoCreateRepository: async function () {
 		let resp = await this.graphDBEndpoint.createRepository({
@@ -438,7 +488,9 @@ demoCreateRepository: async function () {
 		enLogger.info("Create Repository:" + JSON.stringify(resp, null, 2));
 	}
 ```
+
 ### Result
+
 ```json
 Create Repository:{
   "success": true,
@@ -446,7 +498,9 @@ Create Repository:{
   "statusMessage": "OK"
 }
 ```
+
 ## Delete reposiotry in your GraphDB instance
+
 ```javascript
 demoDeleteRepository: async function () {
 		let resp = await this.graphDBEndpoint.deleteRepository({
@@ -455,7 +509,9 @@ demoDeleteRepository: async function () {
 		enLogger.info("Delete Repository:" + JSON.stringify(resp, null, 2));
 	}
 ```
+
 ### Result
+
 ```json
 Delete Repository:{
   "success": true,
@@ -464,7 +520,9 @@ Delete Repository:{
 }
 
 ```
+
 ## Upload SHACL in your GraphDB instance
+
 ```javascript
 demoShacl: async function () {
 		let resp;
@@ -549,7 +607,9 @@ demoShacl: async function () {
 		enLogger.info("\nDone");
 	}
 ```
+
 ### Result
+
 ```json
 DropShaclGraph :
 {
@@ -560,21 +620,21 @@ DropShaclGraph :
 
 ```
 
-
-
-
 ## Drop SHACL in your GraphDB instance
+
 ```javascript
 demoDropShaclGraph: async function () {
 		// clear entire repository
-		// CAUTION! This operation empties the entire repository 
+		// CAUTION! This operation empties the entire repository
 		// and cannot be undone!
 		let resp = await this.graphDBEndpoint.dropShaclGraph();
 		enLogger.info("\nDropShaclGraph :\n" + JSON.stringify(resp, null, 2));
 		return resp;
 	}
 ```
+
 ### Result
+
 ```json
 DropShaclGraph :
 {
