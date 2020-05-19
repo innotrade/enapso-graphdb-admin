@@ -478,13 +478,8 @@ const EnapsoGraphDBAdminDemo = {
 		// this.demoUploadFromFile();
 		// this.demoDownloadToFile();
 		// this.demoDownloadToText();
-
 		//this.demoShacl();
-<<<<<<< HEAD
     await  this.demoDropShaclGraph();
-=======
-
->>>>>>> f1d223f50d12948893ed14bddaef87627f6ed4b3
         /*
         enLogger.info("--- Inserting new triple --- ")
 		await this.demoInsert();
@@ -509,17 +504,14 @@ const EnapsoGraphDBAdminDemo = {
 	   await this.demoGetResources();
 	   */
 
-<<<<<<< HEAD
 		await this.demoCreateRepository();
 		await this.demoDeleteRepository();
 
-=======
 		// await this.demoCreateRepository();
 		// await this.demoDeleteRepository();
 		await this.demoCreateUser();
 	    await this.demoUpdateUser();
 		await this.demoDeleteUser();
->>>>>>> f1d223f50d12948893ed14bddaef87627f6ed4b3
 		// await this.demoClearRepository();
 
 		/*
