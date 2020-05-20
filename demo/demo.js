@@ -203,11 +203,12 @@ const EnapsoGraphDBAdminDemo = {
 	demoUploadFromData: async function () {
 		// upload a file
 		// todo: we upload from data here but pass a file name???
+		let data = await fsPromises.readFile('../ontologies/EnapsoTest.owl', 'utf-8');
 		let resp = await this.graphDBEndpoint.uploadFromData({
-			filename: "ontologies/Test.owl",
-			format: "application/rdf+xml",
-			baseIRI: "http://ont.enapso.com/test#",
-			context: "http://ont.enapso.com/test"
+			data: data,
+			context: "http://ont.enapso.com/test",
+			// format: EnapsoGraphDBClient.FORMAT_TURTLE.type
+			format: "application/rdf+xml"
 		});
 		enLogger.info("\nUploadFromData:\n" + JSON.stringify(resp, null, 2));
 		return resp;
@@ -459,27 +460,27 @@ const EnapsoGraphDBAdminDemo = {
 		// clear entire repository
 		// CAUTION! This operation empties the entire repository and cannot be undone!
 		this.demoClearRepository();
+this.demoUploadFromData();
+		// // clear entire context (named graph)
+		// // CAUTION! This operation empties the entire context (named graph) and cannot be undone!
+		// this.demoClearContext();
 
-		// clear entire context (named graph)
-		// CAUTION! This operation empties the entire context (named graph) and cannot be undone!
-		this.demoClearContext();
+		// this.demoGetRepositories();
 
-		this.demoGetRepositories();
-
-		// getLocations requires repository manager role!
-		this.demoGetLocations();
+		// // getLocations requires repository manager role!
+		// this.demoGetLocations();
 
 		// getUsers requires admin role!
-		this.demoGetUsers();
+		// this.demoGetUsers();
 
-		this.demoGetContexts();
-		this.demoGetSavedQueries();
+		// this.demoGetContexts();
+		// this.demoGetSavedQueries();
 
-		this.demoUploadFromFile();
-		this.demoDownloadToFile();
-		this.demoDownloadToText();
-		this.demoShacl();
-		await this.demoDropShaclGraph();
+		// this.demoUploadFromFile();
+		// this.demoDownloadToFile();
+		// this.demoDownloadToText();
+		// this.demoShacl();
+		// await this.demoDropShaclGraph();
         /*
         enLogger.info("--- Inserting new triple --- ")
 		await this.demoInsert();
@@ -497,17 +498,17 @@ const EnapsoGraphDBAdminDemo = {
         enLogger.info("--- Graph should not contain TestClassUpdated anymore --- ")
         await this.demoQuery();
         */
-		await this.demoGetResources();
-		await this.demoPerformGarbageCollection();
-		await this.demoGetResources();
+		// await this.demoGetResources();
+		// await this.demoPerformGarbageCollection();
+		// await this.demoGetResources();
 
 
-		await this.demoCreateRepository();
-		await this.demoDeleteRepository();
-		await this.demoCreateUser();
-		await this.demoUpdateUser();
-		await this.demoDeleteUser();
-		await this.demoClearRepository();
+		// await this.demoCreateRepository();
+		// await this.demoDeleteRepository();
+		// await this.demoCreateUser();
+		// await this.demoUpdateUser();
+		// await this.demoDeleteUser();
+		// await this.demoClearRepository();
 
 		/*
 		  enLogger.info("Start: " + new Date().toISOString());

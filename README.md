@@ -107,11 +107,13 @@ demoUploadFromFile: async function () {
 ```javascript
 demoUploadFromData: async function () {
 		// upload a file
+		// todo: we upload from data here but pass a file name???
+		let data = await fsPromises.readFile('../ontologies/EnapsoTest.owl', 'utf-8');
 		let resp = await this.graphDBEndpoint.uploadFromData({
-			filename: "ontologies/Test.owl",
-			format: "application/rdf+xml",
-			baseIRI: "http://ont.enapso.com/test#",
-			context: "http://ont.enapso.com/test"
+			data: data,
+			context: "http://ont.enapso.com/test",
+			// format: EnapsoGraphDBClient.FORMAT_TURTLE.type
+			format: "application/rdf+xml"
 		});
 		enLogger.info("\nUploadFromData:\n" + JSON.stringify(resp, null, 2));
 		return resp;
