@@ -460,7 +460,7 @@ const EnapsoGraphDBAdminDemo = {
 		// clear entire repository
 		// CAUTION! This operation empties the entire repository and cannot be undone!
 		this.demoClearRepository();
-this.demoUploadFromData();
+		this.demoUploadFromData();
 		// // clear entire context (named graph)
 		// // CAUTION! This operation empties the entire context (named graph) and cannot be undone!
 		// this.demoClearContext();
