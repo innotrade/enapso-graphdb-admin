@@ -3,7 +3,7 @@
 // Author(s): Alexander Schulze and Muhammad Yasir
 // require the Enapso GraphDB Admin Demo module
 const fsPromises = require("fs").promises,
-	{ EnapsoGraphDBClient } = require("@innotrade/enapso-graphdb-client"),
+	{ EnapsoGraphDBClient } = require("../../enapso-graphdb-client/index"),
 	{ EnapsoGraphDBAdmin } = require("../index"),
 	{ EnapsoLogger, EnapsoLoggerFactory } = require("@innotrade/enapso-logger");
 EnapsoLoggerFactory.createGlobalLogger("enLogger");
@@ -505,63 +505,8 @@ const EnapsoGraphDBAdminDemo = {
 
 		// clear entire repository
 		// CAUTION! This operation empties the entire repository and cannot be undone!
-		this.demoClearRepository();
-		this.demoUploadFromData();
-		// // clear entire context (named graph)
-		// // CAUTION! This operation empties the entire context (named graph) and cannot be undone!
-		// this.demoClearContext();
 
-		// this.demoGetRepositories();
-
-		// // getLocations requires repository manager role!
-		// this.demoGetLocations();
-
-		// getUsers requires admin role!
-		// this.demoGetUsers();
-
-		// this.demoGetContexts();
-		// this.demoGetSavedQueries();
-
-		// this.demoUploadFromFile();
-		// this.demoDownloadToFile();
-		// this.demoDownloadToText();
-		// this.demoShacl();
-		// await this.demoDropShaclGraph();
-		/*
-        enLogger.info("--- Inserting new triple --- ")
-		await this.demoInsert();
-		*/
-		//enLogger.info("--- Graph should contain TestClass now --- ")
-		//await this.demoQuery();
-		/*
-        // await this.demoDownloadToFile();
-        enLogger.info("--- Updating existing triple --- ")
-        await this.demoUpdate();
-        enLogger.info("--- Graph should contain TestClassUpdated now --- ")
-        await this.demoQuery();
-        enLogger.info("--- Deleting existing triple --- ")
-        await this.demoDelete();
-        enLogger.info("--- Graph should not contain TestClassUpdated anymore --- ")
-        await this.demoQuery();
-        */
-		// await this.demoGetResources();
-		// await this.demoPerformGarbageCollection();
-		// await this.demoGetResources();
-
-		// await this.demoCreateRepository();
-		// await this.demoDeleteRepository();
-		// await this.demoCreateUser();
-		// await this.demoUpdateUser();
-		// await this.demoDeleteUser();
-		// await this.demoClearRepository();
-
-		/*
-		  enLogger.info("Start: " + new Date().toISOString());
-		  await this.demoWaitForGraphDB();
-		  enLogger.info("Finish: " + new Date().toISOString());
-		  */
-
-		// await this.demoGetQuery();
+		await this.demoCreateRepository();
 	},
 };
 
