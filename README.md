@@ -24,13 +24,13 @@ npm i @innotrade/enapso-graphdb-admin --save
 // require the Enapso GraphDB Client and Admin packages
 const { EnapsoGraphDBClient } = require("@innotrade/enapso-graphdb-client");
 const { EnapsoGraphDBAdmin } = require("@innotrade/enapso-graphdb-admin");
-
 // connection data to the running GraphDB instance
 const GRAPHDB_BASE_URL = "http://localhost:7200",
   GRAPHDB_REPOSITORY = "Test",
   GRAPHDB_USERNAME = "Test",
   GRAPHDB_PASSWORD = "Test",
-  GRAPHDB_CONTEXT_TEST = "http://ont.enapso.com/test";
+  GRAPHDB_CONTEXT_TEST = "http://ont.enapso.com/repo",
+  GRAPHDB_CONTEXT_SHACL = "http://rdf4j.org/schema/rdf4j#SHACLShapeGraph";
 
 // the default prefixes for all SPARQL queries
 const GRAPHDB_DEFAULT_PREFIXES = [
@@ -38,86 +38,72 @@ const GRAPHDB_DEFAULT_PREFIXES = [
   EnapsoGraphDBClient.PREFIX_RDF,
   EnapsoGraphDBClient.PREFIX_RDFS,
 ];
+```
 
-console.log("Innotrade Enapso GraphDB Admin Demo");
+## Connection with GraphDB to create an End Point
 
-const EnapsoGraphDBAdminDemo = {
-  graphDBEndpoint: null,
-  authentication: null,
+```javascript
+let graphDBEndpoint = new EnapsoGraphDBClient.Endpoint({
+  baseURL: GRAPHDB_BASE_URL,
+  repository: GRAPHDB_REPOSITORY,
+  prefixes: GRAPHDB_DEFAULT_PREFIXES,
+});
+```
 
-  createEndpoint: async function () {
-    // instantiate a new GraphDB endpoint
-    return new EnapsoGraphDBClient.Endpoint({
-      baseURL: GRAPHDB_BASE_URL,
-      repository: GRAPHDB_REPOSITORY,
-      prefixes: GRAPHDB_DEFAULT_PREFIXES,
-    });
-  },
+## Login to GraphDB
 
-  login: async function () {
-    // login into GraphDB using JWT
-    let lRes = await this.graphDBEndpoint.login(
-      GRAPHDB_USERNAME,
-      GRAPHDB_PASSWORD
-    );
-    return lRes;
-  },
-
-  // here numerous demo methods are located
-
-  demo: async function () {
-    this.graphDBEndpoint = await this.createEndpoint();
-    this.authentication = await this.login();
-    // verify authentication
-    if (!this.authentication.success) {
-      console.log(
-        "\nLogin failed:\n" + JSON.stringify(this.authentication, null, 2)
-      );
-      return;
-    }
-    console.log("\nLogin successful");
-
-    // continue to work with this.graphDBEndpoint
-    // :
-  },
-};
-
-// execute the demo(s)
-EnapsoGraphDBAdminDemo.demo();
+```javascript
+graphDBEndpoint
+  .login(GRAPHDB_USERNAME, GRAPHDB_PASSWORD)
+  .then((result) => {
+    console.log(result);
+  })
+  .catch((err) => {
+    console.log(err, "here in error");
+  });
 ```
 
 ## Upload a file to GraphDB
 
 ```javascript
-demoUploadFromFile: async function () {
-    // upload a file
-    let resp = await this.graphDBEndpoint.uploadFromFile({
-        filename: "ontologies/test.owl",
-        format: "application/rdf+xml",
-        baseIRI: "http://ont.enapso.com/test#",
-        context: "http://ont.enapso.com/test"
-    });
-    console.log("\nUploadFromFile:\n" + JSON.stringify(resp, null, 2));
-    return resp;
-}
+graphDBEndpoint
+  .uploadFromFile({
+    filename: "../ontologies/EnapsoTest.owl",
+    format: "application/rdf+xml",
+    baseIRI: "http://ont.enapso.com/test#",
+    context: "http://ont.enapso.com/test",
+  })
+  .then((result) => {
+    console.log(result);
+  })
+  .catch((err) => {
+    console.log(err, "here in error");
+  });
 ```
 
 ## Upload From Date to GraphDB
 
 ```javascript
-demoUploadFromData: async function () {
-		// upload a file
-		// todo: we upload from data here but pass a file name???
-		let data = await fsPromises.readFile('../ontologies/EnapsoTest.owl', 'utf-8');
-		let resp = await this.graphDBEndpoint.uploadFromData({
-			data: data,
-			context: "http://ont.enapso.com/test",
-			// format: EnapsoGraphDBClient.FORMAT_TURTLE.type
-			format: "application/rdf+xml"
-		});
-		enLogger.info("\nUploadFromData:\n" + JSON.stringify(resp, null, 2));
-		return resp;
-	}
+fsPromises
+  .readFile("../ontologies/EnapsoTest.owl", "utf-8")
+  .then((data) => {
+    graphDBEndpoint
+      .uploadFromData({
+        data: data,
+        context: "http://ont.enapso.com/test",
+        // format: EnapsoGraphDBClient.FORMAT_TURTLE.type
+        format: "application/rdf+xml",
+      })
+      .then((result) => {
+        console.log(result);
+      })
+      .catch((err) => {
+        console.log(err, "here in err");
+      });
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 ```
 
 ## Download a graph from GraphDB to a text variable
@@ -126,15 +112,16 @@ For the available export formats, please refer to the EnapsoGraphDBClient.FORMAT
 The context is optional. If you do not pass a context, the entire repository is exported.
 
 ```javascript
-demoDownloadToText: async function () {
-    // download a repository or named graph to memory
-    resp = await this.graphDBEndpoint.downloadToText({
-        format: EnapsoGraphDBClient.FORMAT_TURTLE.type
-    });
-    console.log("\nDownload (text):\n" +
-        JSON.stringify(resp, null, 2));
-    return resp;
-}
+graphDBEndpoint
+  .downloadToText({
+    format: EnapsoGraphDBClient.FORMAT_TURTLE.type,
+  })
+  .then((result) => {
+    console.log(result);
+  })
+  .catch((err) => {
+    console.log(err, "here in error");
+  });
 ```
 
 ## Download a graph from GraphDB directly to a local file
@@ -143,75 +130,80 @@ For the available export formats, please refer to the EnapsoGraphDBClient.FORMAT
 The context is optional. If you do not pass a context, the entire repository is exported.
 
 ```javascript
-demoDownloadToFile: async function () {
-    // download a repository or named graph to file
-    let lFormat = EnapsoGraphDBClient.FORMAT_TURTLE;
-    let resp = await this.graphDBEndpoint.downloadToFile({
-        format: lFormat.type,
-        filename: "ontologies/" +
-            this.graphDBEndpoint.getRepository() +
-            lFormat.extension
-    });
-    console.log("\nDownload (file):\n" +
-        JSON.stringify(resp, null, 2));
-    return resp;
-}
+let lFormat = EnapsoGraphDBClient.FORMAT_TURTLE;
+graphDBEndpoint
+  .downloadToFile({
+    format: lFormat.type,
+    filename:
+      "../ontologies/" + graphDBEndpoint.getRepository() + lFormat.extension,
+  })
+  .then((result) => {
+    console.log(result);
+  })
+  .catch((err) => {
+    console.log(err, "here in error");
+  });
 ```
 
 ## Perform Garbage Collection in your GraphDB instance
 
 ```javascript
-demoPerformGarbageCollection: async function () {
-		// lists all contexts (named graph) in the repository
-		let resp = await this.graphDBEndpoint.performGarbageCollection();
-		enLogger.info("\nGarbage Collection:\n" + JSON.stringify(resp, null, 2));
-		return resp;
-	}
+graphDBEndpoint
+  .performGarbageCollection()
+  .then((result) => {
+    console.log(result);
+  })
+  .catch((err) => {
+    console.log(err, "here in error");
+  });
 ```
 
 ## Get Resource of GraphDB instance
 
 ```javascript
-demoGetResources: async function () {
-		// lists all contexts (named graph) in the repository
-		let resp = await this.graphDBEndpoint.getResources();
-		enLogger.info("\nResources:\n" + JSON.stringify(resp, null, 2));
-		return resp;
-	}
+graphDBEndpoint
+  .getResources()
+  .then((result) => {
+    console.log(result);
+  })
+  .catch((err) => {
+    console.log(err, "here in error");
+  });
 ```
 
 ## Lists all contexts (named graph) in the repository
 
 ```javascript
-demoGetQuery: async function () {
-		// lists all contexts (named graph) in the repository
-		let resp = await this.graphDBEndpoint.getQuery();
-		enLogger.info("\nGet Query:\n" + JSON.stringify(resp, null, 2));
-		return resp;
-	}
+graphDBEndpoint
+  .getQuery()
+  .then((result) => {
+    console.log(result);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 ```
 
 ## Create new user and assign role
 
 ```javascript
-demoCreateUser: async function () {
-		let lRes = await this.graphDBEndpoint.login(
-			"admin",
-			"root"
-		);
-		// todo: interpret lRes here, it does not makes sense to continue if login does not work!
-		let resp = await this.graphDBEndpoint.createUser({
-			authorities: [
-				"WRITE_REPO_Test",	// Writing excess wrote WRITE_ and in last name of Repository which excess provided like REPO_Test
-				"READ_REPO_Test",	// Reading excess wrote READ_ and in last name of Repository which excess provided like REPO_Test
-				"READ_REPO_EnapsoDotNetProDemo",
-				"ROLE_USER",		// Role of the user
-			],
-			"username": "TestUser",	// Username
-			"password": "TestUser"	// Password for the user
-		});
-		enLogger.info("Create New User:" + JSON.stringify(resp, null, 2));
-	}
+graphDBEndpoint
+  .createUser({
+    authorities: [
+      "WRITE_REPO_Test", // Writing excess wrote WRITE_ and in last name of Repository which excess provided like REPO_Test
+      "READ_REPO_Test", // Reading excess wrote READ_ and in last name of Repository which excess provided like REPO_Test
+      "READ_REPO_EnapsoDotNetProDemo",
+      "ROLE_USER", // Role of the user
+    ],
+    username: "TestUser2", // Username
+    password: "TestUser2", // Password for the user
+  })
+  .then((result) => {
+    console.log(result);
+  })
+  .catch((err) => {
+    console.log(err, "here in error");
+  });
 ```
 
 ## Update user role and authorities
@@ -235,34 +227,51 @@ demoCreateUser: async function () {
 
 		});
 		enLogger.info("Update Inserted User:" + JSON.stringify(resp, null, 2));
-	}
+  }
+  graphDBEndpoint.updateUser({
+			authorities: [
+					// Writing excess wrote WRITE_ and in last name of Repository which excess provided like REPO_Test
+				"READ_REPO_Test",	// Reading excess wrote READ_ and in last name of Repository which excess provided like REPO_Test
+				"WRITE_REPO_EnapsoDotNetProDemo",
+				"READ_REPO_EnapsoDotNetProDemo",
+				"ROLE_USER",		// Role of the user
+			],
+			"username": "TestUser",	// Username
+
+		}).then((result) => {
+		console.log(result);
+	})
+	.catch((err) => {
+		console.log(err);
+	});
 ```
 
 ## Delete user role
 
 ```javascript
-demoDeleteUser: async function () {
-		let lRes = await this.graphDBEndpoint.login(
-			"admin",
-			"root"
-		);
-		// todo: interpret lRes here, it does not makes sense to continue if login does not work!
-		let resp = await this.graphDBEndpoint.deleteUser({
-			"user": "TestUser"		// username which you want to delete
-		});
-		enLogger.info("Delete Exisiting User:" + JSON.stringify(resp, null, 2));
-	}
+graphDBEndpoint
+  .deleteUser({
+    user: "TestUser2", // username which you want to delete
+  })
+  .then((result) => {
+    console.log(result);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 ```
 
 ## List all repositories configured in your GraphDB instance
 
 ```javascript
-demoGetRepositories: async function () {
-    // lists all repositories
-    resp = await this.graphDBEndpoint.getRepositories();
-    console.log("\nRepositories:\n" + JSON.stringify(resp, null, 2));
-    return resp;
-}
+graphDBEndpoint
+  .getRepositories()
+  .then((result) => {
+    console.log(result);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 ```
 
 ### Result
@@ -306,14 +315,14 @@ demoGetRepositories: async function () {
 The entire repository will be emptied, i.e. all data of this repository will be removed. The repository remains active.
 
 ```javascript
-demoClearRepository: async function () {
-    // clear entire repository
-    // CAUTION! This operation empties the entire repository
-    // and cannot be undone!
-    let resp = await this.graphDBEndpoint.clearRepository();
-    console.log("\ClearRepository :\n" + JSON.stringify(resp, null, 2));
-    return resp;
-}
+graphDBEndpoint
+  .clearRepository()
+  .then((result) => {
+    console.log(result);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 ```
 
 ### Result
@@ -327,12 +336,14 @@ demoClearRepository: async function () {
 ## List all users of your GraphDB instance
 
 ```javascript
-demoGetUsers: async function () {
-    // lists all users (requires admin role)
-    let resp = await this.graphDBEndpoint.getUsers();
-    console.log("\nUsers:\n" + JSON.stringify(resp, null, 2));
-    return resp;
-}
+graphDBEndpoint
+  .getUsers()
+  .then((result) => {
+    console.log(result);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 ```
 
 ### Result
@@ -367,12 +378,14 @@ demoGetUsers: async function () {
 ## List all contexts used in a given repository
 
 ```javascript
-demoGetContexts: async function () {
-    // lists all contexts (named graph) in the repository
-    let resp = await this.graphDBEndpoint.getContexts();
-    console.log("\nContexts:\n" + JSON.stringify(resp, null, 2));
-    return resp;
-}
+graphDBEndpoint
+  .getContexts()
+  .then((result) => {
+    console.log(result);
+  })
+  .catch((err) => {
+    console.log(err, "here in error");
+  });
 ```
 
 ### Result
@@ -395,16 +408,14 @@ demoGetContexts: async function () {
 The entire context will be emptied, i.e. all data from this context will be removed. The repository and other contexts remain active.
 
 ```javascript
-demoClearContext: async function () {
-    // clear context (named graph)
-    // CAUTION! This operation empties the named graph
-    // of the repository and cannot be undone!
-    let resp = await this.graphDBEndpoint.clearContext(
-        GRAPHDB_CONTEXT_TEST);
-    console.log("\ClearContext :\n" +
-        JSON.stringify(resp, null, 2));
-    return;
-}
+graphDBEndpoint
+  .clearContext(GRAPHDB_CONTEXT_TEST)
+  .then((result) => {
+    console.log(result);
+  })
+  .catch((err) => {
+    console.log(err, "here in error");
+  });
 ```
 
 ### Result
@@ -418,12 +429,14 @@ demoClearContext: async function () {
 ## List all locations configured in your GraphDB instance
 
 ```javascript
-demoGetLocations: async function () {
-    // lists all locations, requires repository manager role!
-    let resp = await this.graphDBEndpoint.getLocations();
-    console.log("\nLocations:\n" + JSON.stringify(resp, null, 2));
-    return resp;
-}
+graphDBEndpoint
+  .getLocations()
+  .then((result) => {
+    console.log(result);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 ```
 
 ### Result
@@ -447,15 +460,14 @@ demoGetLocations: async function () {
 ## List all save queries in your GraphDB instance
 
 ```javascript
-demoGetSavedQueries: async function () {
-    // clear context (named graph)
-    // CAUTION! This operation empties the named graph
-    // of the repository and cannot be undone!
-    let resp = await this.graphDBEndpoint.getSavedQueries();
-    console.log("\nGetSavedQueries :\n" +
-        JSON.stringify(resp, null, 2));
-    return;
-}
+graphDBEndpoint
+  .getSavedQueries()
+  .then((result) => {
+    console.log(result);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 ```
 
 ### Result
@@ -481,14 +493,18 @@ demoGetSavedQueries: async function () {
 ## Create new reposiotry in your GraphDB instance
 
 ```javascript
-demoCreateRepository: async function () {
-		let resp = await this.graphDBEndpoint.createRepository({
-			"id": "AutomatedTest",
-			"title": "Enapso Automated Test Repository",
-			"location": ""
-		});
-		enLogger.info("Create Repository:" + JSON.stringify(resp, null, 2));
-	}
+graphDBEndpoint
+  .createRepository({
+    id: "AutomatedTest4",
+    title: "Enapso Automated Test Repository",
+    location: "",
+  })
+  .then((result) => {
+    console.log(result);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 ```
 
 ### Result
@@ -504,12 +520,16 @@ Create Repository:{
 ## Delete reposiotry in your GraphDB instance
 
 ```javascript
-demoDeleteRepository: async function () {
-		let resp = await this.graphDBEndpoint.deleteRepository({
-			"id": "AutomatedTest"
-		});
-		enLogger.info("Delete Repository:" + JSON.stringify(resp, null, 2));
-	}
+graphDBEndpoint
+  .deleteRepository({
+    id: "AutomatedTest",
+  })
+  .then((result) => {
+    console.log(result);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 ```
 
 ### Result
@@ -625,14 +645,14 @@ DropShaclGraph :
 ## Drop SHACL in your GraphDB instance
 
 ```javascript
-demoDropShaclGraph: async function () {
-		// clear entire repository
-		// CAUTION! This operation empties the entire repository
-		// and cannot be undone!
-		let resp = await this.graphDBEndpoint.dropShaclGraph();
-		enLogger.info("\nDropShaclGraph :\n" + JSON.stringify(resp, null, 2));
-		return resp;
-	}
+graphDBEndpoint
+  .dropShaclGraph()
+  .then((result) => {
+    console.log(result);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 ```
 
 ### Result

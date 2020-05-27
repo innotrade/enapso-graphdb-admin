@@ -1,5 +1,5 @@
 const fsPromises = require("fs").promises,
-	{ EnapsoGraphDBClient } = require("../../enapso-graphdb-client/index"),
+	{ EnapsoGraphDBClient } = require("@innotrade/enapso-graphdb-client"),
 	{ EnapsoGraphDBAdmin } = require("../index");
 
 // connection data to the running GraphDB instance

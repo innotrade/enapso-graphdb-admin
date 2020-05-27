@@ -4,12 +4,12 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
+entest:TestClass a owl:Class .
+
 <http://ont.enapso.com/test> a owl:Ontology;
   rdfs:comment "(C) Copyright 2019-2020 Innotrade GmbH, Herzogenrath, NRW, Germany"@en,
     "Enapso Test Ontology"@en;
   owl:versionIRI <http://ont.enapso.com/test/1.0.0> .
-
-entest:TestClass a owl:Class .
 
 entest:firstName a owl:DatatypeProperty;
   rdfs:subPropertyOf entest:name .
@@ -22,44 +22,16 @@ entest:lastName a owl:DatatypeProperty;
 entest:Instance a owl:Class .
 
 entest:Person a owl:Class;
-  rdfs:subClassOf _:node411 .
+  rdfs:subClassOf _:node9029 .
 
-_:node411 a owl:Restriction;
+_:node9029 a owl:Restriction;
   owl:onDataRange xsd:string;
   owl:onProperty entest:firstName;
   owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger .
 
-entest:Person rdfs:subClassOf _:node412 .
+entest:Person rdfs:subClassOf _:node9030 .
 
-_:node412 a owl:Restriction;
-  owl:onDataRange xsd:string;
-  owl:onProperty entest:lastName;
-  owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger .
-
-entest:Person rdfs:subClassOf _:node413 .
-
-_:node413 a owl:Restriction;
-  owl:onDataRange xsd:string;
-  owl:onProperty entest:firstName;
-  owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger .
-
-entest:Person rdfs:subClassOf _:node414 .
-
-_:node414 a owl:Restriction;
-  owl:onDataRange xsd:string;
-  owl:onProperty entest:lastName;
-  owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger .
-
-entest:Person rdfs:subClassOf _:node415 .
-
-_:node415 a owl:Restriction;
-  owl:onDataRange xsd:string;
-  owl:onProperty entest:firstName;
-  owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger .
-
-entest:Person rdfs:subClassOf _:node416 .
-
-_:node416 a owl:Restriction;
+_:node9030 a owl:Restriction;
   owl:onDataRange xsd:string;
   owl:onProperty entest:lastName;
   owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger .
