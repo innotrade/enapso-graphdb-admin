@@ -78,7 +78,7 @@ graphDBEndpoint
 graphDBEndpoint
 	.updateUser({
 		authorities: [
-		//	Writing excess wrote WRITE_ and in last name of Repository which excess provided like REPO_Test
+			// Writing excess wrote WRITE_ and in last name of Repository which excess provided like REPO_Test
 			"READ_REPO_Test", // Reading excess wrote READ_ and in last name of Repository which excess provided like REPO_Test
 			"WRITE_REPO_EnapsoDotNetProDemo",
 			"READ_REPO_EnapsoDotNetProDemo",
@@ -199,7 +199,8 @@ fsPromises
 			.uploadFromData({
 				data: data,
 				context: "http://ont.enapso.com/test",
-				format: EnapsoGraphDBClient.FORMAT_TURTLE.type
+				// format: EnapsoGraphDBClient.FORMAT_TURTLE.type
+				format: "application/rdf+xml",
 			})
 			.then((result) => {
 				console.log(result);
