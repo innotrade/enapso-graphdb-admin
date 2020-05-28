@@ -36,7 +36,7 @@ const GRAPHDB_BASE_URL = "http://localhost:7200",
 const GRAPHDB_DEFAULT_PREFIXES = [
   EnapsoGraphDBClient.PREFIX_OWL,
   EnapsoGraphDBClient.PREFIX_RDF,
-  EnapsoGraphDBClient.PREFIX_RDFS,
+  EnapsoGraphDBClient.PREFIX_RDFS
 ];
 ```
 
@@ -46,7 +46,7 @@ const GRAPHDB_DEFAULT_PREFIXES = [
 let graphDBEndpoint = new EnapsoGraphDBClient.Endpoint({
   baseURL: GRAPHDB_BASE_URL,
   repository: GRAPHDB_REPOSITORY,
-  prefixes: GRAPHDB_DEFAULT_PREFIXES,
+  prefixes: GRAPHDB_DEFAULT_PREFIXES
 });
 ```
 
