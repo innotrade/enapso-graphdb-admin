@@ -41,7 +41,7 @@ const GRAPHDB_DEFAULT_PREFIXES = [
 ```
 
 ## Connection with GraphDB to create an End Point
-
+Create an endpoint client with graphdb to perform operation 
 ```javascript
 let graphDBEndpoint = new EnapsoGraphDBClient.Endpoint({
   baseURL: GRAPHDB_BASE_URL,
@@ -51,7 +51,7 @@ let graphDBEndpoint = new EnapsoGraphDBClient.Endpoint({
 ```
 
 ## Login to GraphDB
-
+Login to the GraphDB to verify the user and provide them authorities which assign that user
 ```javascript
 graphDBEndpoint
   .login(GRAPHDB_USERNAME, GRAPHDB_PASSWORD)
@@ -64,7 +64,7 @@ graphDBEndpoint
 ```
 
 ## Upload a file to GraphDB
-
+Upload the Ontology and import it automatically when it uploaded successfully
 ```javascript
 graphDBEndpoint
   .uploadFromFile({
@@ -82,7 +82,7 @@ graphDBEndpoint
 ```
 
 ## Upload From Date to GraphDB
-
+Upload the data and import it in GraphDB rather than file
 ```javascript
 fsPromises
   .readFile("../ontologies/EnapsoTest.owl", "utf-8")
@@ -91,7 +91,6 @@ fsPromises
       .uploadFromData({
         data: data,
         context: "http://ont.enapso.com/test",
-        // format: EnapsoGraphDBClient.FORMAT_TURTLE.type
         format: "application/rdf+xml",
       })
       .then((result) => {
@@ -146,7 +145,7 @@ graphDBEndpoint
 ```
 
 ## Perform Garbage Collection in your GraphDB instance
-
+Do garbage collection in by default repository using which you create connection with client for better performance
 ```javascript
 graphDBEndpoint
   .performGarbageCollection()
@@ -159,7 +158,7 @@ graphDBEndpoint
 ```
 
 ## Get Resource of GraphDB instance
-
+Get resouces Details of the repository whose connection esatablish when creating an endpoints
 ```javascript
 graphDBEndpoint
   .getResources()
@@ -172,7 +171,7 @@ graphDBEndpoint
 ```
 
 ## Lists all contexts (named graph) in the repository
-
+List down all the graph name which are uploaded in Repository of GraphDB
 ```javascript
 graphDBEndpoint
   .getQuery()
@@ -185,7 +184,7 @@ graphDBEndpoint
 ```
 
 ## Create new user and assign role
-
+Create a new user and provide the new user the read write access of repository of GraphDB
 ```javascript
 graphDBEndpoint
   .createUser({
@@ -202,12 +201,12 @@ graphDBEndpoint
     console.log(result);
   })
   .catch((err) => {
-    console.log(err, "here in error");
+    console.log(err);
   });
 ```
 
 ## Update user role and authorities
-
+Update the user the access of read write of repository and role
 ```javascript
 	demoUpdateUser: async function () {
 		let lRes = await this.graphDBEndpoint.login(
@@ -247,7 +246,7 @@ graphDBEndpoint
 ```
 
 ## Delete user role
-
+Delete the user of GraphDB 
 ```javascript
 graphDBEndpoint
   .deleteUser({
@@ -262,7 +261,7 @@ graphDBEndpoint
 ```
 
 ## List all repositories configured in your GraphDB instance
-
+Get details of all repsoitory of the GraphDB running on your localHost
 ```javascript
 graphDBEndpoint
   .getRepositories()
@@ -334,7 +333,7 @@ graphDBEndpoint
 ```
 
 ## List all users of your GraphDB instance
-
+Get all details of user of GraphDN
 ```javascript
 graphDBEndpoint
   .getUsers()
@@ -376,7 +375,7 @@ graphDBEndpoint
 ```
 
 ## List all contexts used in a given repository
-
+all content detail of repository 
 ```javascript
 graphDBEndpoint
   .getContexts()
@@ -427,7 +426,7 @@ graphDBEndpoint
 ```
 
 ## List all locations configured in your GraphDB instance
-
+Get details of all location which are in GraphDB running on your localhost
 ```javascript
 graphDBEndpoint
   .getLocations()
@@ -458,7 +457,7 @@ graphDBEndpoint
 ```
 
 ## List all save queries in your GraphDB instance
-
+Get details of all queries which are saved in GraphDB
 ```javascript
 graphDBEndpoint
   .getSavedQueries()
@@ -491,7 +490,7 @@ graphDBEndpoint
 ```
 
 ## Create new reposiotry in your GraphDB instance
-
+Create a new repository in your GraphDB instance
 ```javascript
 graphDBEndpoint
   .createRepository({
@@ -518,7 +517,7 @@ Create Repository:{
 ```
 
 ## Delete reposiotry in your GraphDB instance
-
+Delete the repsoitry of GraphDB
 ```javascript
 graphDBEndpoint
   .deleteRepository({
@@ -544,7 +543,7 @@ Delete Repository:{
 ```
 
 ## Upload SHACL in your GraphDB instance
-
+Upload the shacl for which we perform some operation step by step in async function 
 ```javascript
 demoShacl: async function () {
 		let resp;
@@ -643,7 +642,7 @@ DropShaclGraph :
 ```
 
 ## Drop SHACL in your GraphDB instance
-
+drop the shacl from GraphDB to remove the restrication on uploaded dta
 ```javascript
 graphDBEndpoint
   .dropShaclGraph()
