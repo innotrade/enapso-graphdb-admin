@@ -1,4 +1,4 @@
-// Innotrade Enapso GraphDB Admin - Automated Test Suite
+// Innotrade enapso GraphDB Admin - Automated Test Suite
 // (C) Copyright 2019-2020 Innotrade GmbH, Herzogenrath, NRW, Germany
 // Author: Alexander Schulze and Muhammad Yasir
 
@@ -10,7 +10,7 @@ const { EnapsoGraphDBAdmin } = require('../index');
 const testConfig = require("./config");
 
 
-describe("Enapso GraphDB Admin Tests", function () {
+describe("enapso GraphDB Admin Tests", function () {
 
 	this.timeout(60000);
 
@@ -33,7 +33,7 @@ describe("Enapso GraphDB Admin Tests", function () {
 	it('Create new repository in Graphdb', (done) => {
 		lEndpoint.createRepository({
 			"id": testConfig.newRepository,
-			"title": "Enapso Automated Test Repository",
+			"title": "enapso Automated Test Repository",
 			"location": ""
 		}).then(result => {
 			expect(result).to.have.property('success', true);

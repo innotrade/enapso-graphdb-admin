@@ -1,6 +1,6 @@
 # enapso-graphdb-admin
 
-Enapso Ontotext GraphDB 8.x/9.x Administration Toolbox for Node.js
+enapso Ontotext GraphDB 8.x/9.x Administration Toolbox for Node.js
 
 Admin client for OntoText GraphDB to easily perform administrative and monitoring operations against your RDF stores, your OWL ontologies or knowledge graphs in nodes.js applications. This client supports an easy import of existing RDF stores and ontologies to GraphDB by upload via file, strings or URLs as well as an export in numerous formats and also a context management. You can monitor the cpu load and memory usage of GraphDB and run the garbage collector on demand to optimally trigger huge batch operations. Future versions of this client will support a user managememt, the creation and listing of new repositories as well as an location and cluster management of Ontotext GraphDB.
 
@@ -8,7 +8,7 @@ Admin client for OntoText GraphDB to easily perform administrative and monitorin
 Get the latest version of GraphDB for free at https://www.ontotext.com/free-graphdb-download-copy/.
 
 **This project is actively developed and maintained.**
-To discuss questions and suggestions with the Enapso and GraphDB community, we'll be happy to meet you in our forum at https://www.innotrade.com/forum/.
+To discuss questions and suggestions with the enapso and GraphDB community, we'll be happy to meet you in our forum at https://www.innotrade.com/forum/.
 
 # Installation
 
@@ -18,10 +18,10 @@ npm i @innotrade/enapso-graphdb-admin --save
 
 # Example
 
-## Instantiate an Enapso GraphDB and Admin Client
+## Instantiate an enapso GraphDB and Admin Client
 
 ```javascript
-// require the Enapso GraphDB Client and Admin packages
+// require the enapso GraphDB Client and Admin packages
 const { EnapsoGraphDBClient } = require("@innotrade/enapso-graphdb-client");
 const { EnapsoGraphDBAdmin } = require("@innotrade/enapso-graphdb-admin");
 // connection data to the running GraphDB instance
@@ -36,22 +36,26 @@ const GRAPHDB_BASE_URL = "http://localhost:7200",
 const GRAPHDB_DEFAULT_PREFIXES = [
   EnapsoGraphDBClient.PREFIX_OWL,
   EnapsoGraphDBClient.PREFIX_RDF,
-  EnapsoGraphDBClient.PREFIX_RDFS
+  EnapsoGraphDBClient.PREFIX_RDFS,
 ];
 ```
 
-## Connection with GraphDB to create an End Point
-Create an endpoint client with graphdb to perform operation 
+## Connection with GraphDB to create an Endpoint
+
+Create an endpoint client with graphdb to perform operation:
+
 ```javascript
 let graphDBEndpoint = new EnapsoGraphDBClient.Endpoint({
   baseURL: GRAPHDB_BASE_URL,
   repository: GRAPHDB_REPOSITORY,
-  prefixes: GRAPHDB_DEFAULT_PREFIXES
+  prefixes: GRAPHDB_DEFAULT_PREFIXES,
 });
 ```
 
 ## Login to GraphDB
-Login to the GraphDB to verify the user and provide them authorities which assign that user
+
+Login to authenticate the user against GraphDB and authorize the user according to his roles:
+
 ```javascript
 graphDBEndpoint
   .login(GRAPHDB_USERNAME, GRAPHDB_PASSWORD)
@@ -59,12 +63,14 @@ graphDBEndpoint
     console.log(result);
   })
   .catch((err) => {
-    console.log(err, "here in error");
+    console.log(err, "process error here...");
   });
 ```
 
-## Upload a file to GraphDB
-Upload the Ontology and import it automatically when it uploaded successfully
+## Upload a File to GraphDB
+
+Upload an ontology and import it into a GraphDB repository and optional context (graph) automatically if upload was successful:
+
 ```javascript
 graphDBEndpoint
   .uploadFromFile({
@@ -77,12 +83,14 @@ graphDBEndpoint
     console.log(result);
   })
   .catch((err) => {
-    console.log(err, "here in error");
+    console.log(err, "process error here...");
   });
 ```
 
-## Upload From Date to GraphDB
-Upload the data and import it in GraphDB rather than file
+## Upload from Data to GraphDB
+
+Upload data (rather than a file) and automatically import the data into a GraphDB repository and optional context (graph):
+
 ```javascript
 fsPromises
   .readFile("../ontologies/EnapsoTest.owl", "utf-8")
@@ -97,7 +105,7 @@ fsPromises
         console.log(result);
       })
       .catch((err) => {
-        console.log(err, "here in err");
+        console.log(err, "process error here...");
       });
   })
   .catch((err) => {
@@ -105,10 +113,10 @@ fsPromises
   });
 ```
 
-## Download a graph from GraphDB to a text variable
+## Download a Graph from GraphDB to a Text Variable
 
 For the available export formats, please refer to the EnapsoGraphDBClient.FORMAT_xxx constants.
-The context is optional. If you do not pass a context, the entire repository is exported.
+The context (graph) is optional. If you do not pass a context (graph), the entire repository is exported.
 
 ```javascript
 graphDBEndpoint
@@ -119,11 +127,11 @@ graphDBEndpoint
     console.log(result);
   })
   .catch((err) => {
-    console.log(err, "here in error");
+    console.log(err, "process error here...");
   });
 ```
 
-## Download a graph from GraphDB directly to a local file
+## Download a graph from GraphDB directly to a Local File
 
 For the available export formats, please refer to the EnapsoGraphDBClient.FORMAT_xxx constants.
 The context is optional. If you do not pass a context, the entire repository is exported.
@@ -140,12 +148,14 @@ graphDBEndpoint
     console.log(result);
   })
   .catch((err) => {
-    console.log(err, "here in error");
+    console.log(err, "process error here...");
   });
 ```
 
-## Perform Garbage Collection in your GraphDB instance
-Do garbage collection in by default repository using which you create connection with client for better performance
+## Perform Garbage Collection in your GraphDB Instance
+
+Perform the garbage collection on the server side to release allocated resources:
+
 ```javascript
 graphDBEndpoint
   .performGarbageCollection()
@@ -153,12 +163,14 @@ graphDBEndpoint
     console.log(result);
   })
   .catch((err) => {
-    console.log(err, "here in error");
+    console.log(err, "process error here...");
   });
 ```
 
-## Get Resource of GraphDB instance
-Get resouces Details of the repository whose connection esatablish when creating an endpoints
+## Get Resource of GraphDB Instance
+
+Get resource details of the repository current connected to the endpoint:
+
 ```javascript
 graphDBEndpoint
   .getResources()
@@ -166,12 +178,14 @@ graphDBEndpoint
     console.log(result);
   })
   .catch((err) => {
-    console.log(err, "here in error");
+    console.log(err, "process error here...");
   });
 ```
 
-## Lists all contexts (named graph) in the repository
-List down all the graph name which are uploaded in Repository of GraphDB
+## Lists all Contexts (Named Graphs) in the Repository
+
+Get all graph names (contexts), which are operated in the current GraphDB repository:
+
 ```javascript
 graphDBEndpoint
   .getQuery()
@@ -183,8 +197,10 @@ graphDBEndpoint
   });
 ```
 
-## Create new user and assign role
-Create a new user and provide the new user the read write access of repository of GraphDB
+## Create New User and Assign Role
+
+Create a new user and provide him/her with read/write access to certain repositories in a GraphDB instance:
+
 ```javascript
 graphDBEndpoint
   .createUser({
@@ -205,8 +221,10 @@ graphDBEndpoint
   });
 ```
 
-## Update user role and authorities
-Update the user the access of read write of repository and role
+## Update User Role and Authorities
+
+Update the user's roles (read/write rights) for certain repositories:
+
 ```javascript
 	demoUpdateUser: async function () {
 		let lRes = await this.graphDBEndpoint.login(
@@ -223,7 +241,6 @@ Update the user the access of read write of repository and role
 				"ROLE_USER",		// Role of the user
 			],
 			"username": "TestUser",	// Username
-
 		});
 		enLogger.info("Update Inserted User:" + JSON.stringify(resp, null, 2));
   }
@@ -245,8 +262,11 @@ Update the user the access of read write of repository and role
 	});
 ```
 
-## Delete user role
-Delete the user of GraphDB 
+## Delete User
+
+**Caution! This deletes the user including all assigend authorities (roles)! This operation cannot be undone!**
+Deletes a user from the GraphDB instance:
+
 ```javascript
 graphDBEndpoint
   .deleteUser({
@@ -260,8 +280,10 @@ graphDBEndpoint
   });
 ```
 
-## List all repositories configured in your GraphDB instance
-Get details of all repsoitory of the GraphDB running on your localHost
+## List all Repositories operated in a GraphDB Instance
+
+Get details of all repositories of the GraphDB repositories operated on the connected host:
+
 ```javascript
 graphDBEndpoint
   .getRepositories()
@@ -308,7 +330,7 @@ graphDBEndpoint
 ]
 ```
 
-## Clear entire repository of your GraphDB instance
+## Clear entire Repository of your GraphDB Instance
 
 **Caution! This removes ALL triples of the given repository! This operation cannot be undone!**
 The entire repository will be emptied, i.e. all data of this repository will be removed. The repository remains active.
@@ -332,8 +354,10 @@ graphDBEndpoint
 }
 ```
 
-## List all users of your GraphDB instance
-Get all details of user of GraphDN
+## List all Users of a GraphDB Instance
+
+Get all details of all users of a certain GraphDB instance:
+
 ```javascript
 graphDBEndpoint
   .getUsers()
@@ -374,8 +398,10 @@ graphDBEndpoint
 ]
 ```
 
-## List all contexts used in a given repository
-all content detail of repository 
+## List all Contexts (Name Graphs) used in a given Repository
+
+List all named graphs inside a given repository:
+
 ```javascript
 graphDBEndpoint
   .getContexts()
@@ -383,7 +409,7 @@ graphDBEndpoint
     console.log(result);
   })
   .catch((err) => {
-    console.log(err, "here in error");
+    console.log(err, "process error here...");
   });
 ```
 
@@ -401,7 +427,7 @@ graphDBEndpoint
 }
 ```
 
-## Clear entire context in a given repository
+## Clear entire Context (Named Graph) of a given Repository
 
 **Caution! This removes ALL triples of the given context! This operation cannot be undone!**
 The entire context will be emptied, i.e. all data from this context will be removed. The repository and other contexts remain active.
@@ -413,7 +439,7 @@ graphDBEndpoint
     console.log(result);
   })
   .catch((err) => {
-    console.log(err, "here in error");
+    console.log(err, "process error here...");
   });
 ```
 
@@ -425,8 +451,10 @@ graphDBEndpoint
 }
 ```
 
-## List all locations configured in your GraphDB instance
-Get details of all location which are in GraphDB running on your localhost
+## List all GraphDB Locations
+
+Get details of all location which are assosciated with the connected GraphDB instance:
+
 ```javascript
 graphDBEndpoint
   .getLocations()
@@ -456,8 +484,10 @@ graphDBEndpoint
 ]
 ```
 
-## List all save queries in your GraphDB instance
-Get details of all queries which are saved in GraphDB
+## List all saved Queries in a GraphDB Instance
+
+Get details of all queries which are saved in a GraphDB instance:
+
 ```javascript
 graphDBEndpoint
   .getSavedQueries()
@@ -489,14 +519,16 @@ graphDBEndpoint
 }
 ```
 
-## Create new reposiotry in your GraphDB instance
-Create a new repository in your GraphDB instance
+## Create new Repository in your GraphDB Instance
+
+Create a new repository in your GraphDB instance:
+
 ```javascript
 graphDBEndpoint
   .createRepository({
     id: "AutomatedTest4",
-    title: "Enapso Automated Test Repository",
-    location: "",
+    title: "enapso Automated Test Repository",
+    location: ""
   })
   .then((result) => {
     console.log(result);
@@ -516,8 +548,10 @@ Create Repository:{
 }
 ```
 
-## Delete reposiotry in your GraphDB instance
-Delete the repsoitry of GraphDB
+## Delete Repository in a GraphDB Instance
+
+Delete a repository in the connected GraphDB instance:
+
 ```javascript
 graphDBEndpoint
   .deleteRepository({
@@ -542,8 +576,10 @@ Delete Repository:{
 
 ```
 
-## Upload SHACL in your GraphDB instance
-Upload the shacl for which we perform some operation step by step in async function 
+## Upload SHACL Shape to a GraphDB Instance
+
+The following code demonstrate how to upload and manage a shacl shape in a GraphDB instance:
+
 ```javascript
 demoShacl: async function () {
 		let resp;
@@ -641,8 +677,10 @@ DropShaclGraph :
 
 ```
 
-## Drop SHACL in your GraphDB instance
-drop the shacl from GraphDB to remove the restrication on uploaded dta
+## Drop SHACL Shape in a GraphDB instance
+
+Drop a shacl Shape from GraphDB to remove all validations:
+
 ```javascript
 graphDBEndpoint
   .dropShaclGraph()
