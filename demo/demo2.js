@@ -5,8 +5,8 @@ const fsPromises = require("fs").promises,
 // connection data to the running GraphDB instance
 const GRAPHDB_BASE_URL = "http://localhost:7200",
 	GRAPHDB_REPOSITORY = "Test",
-	GRAPHDB_USERNAME = "Test",
-	GRAPHDB_PASSWORD = "Test",
+	GRAPHDB_USERNAME = "admin",
+	GRAPHDB_PASSWORD = "root",
 	GRAPHDB_CONTEXT_TEST = "http://ont.enapso.com/repo",
 	GRAPHDB_CONTEXT_SHACL = "http://rdf4j.org/schema/rdf4j#SHACLShapeGraph";
 
