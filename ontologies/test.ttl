@@ -4,8 +4,6 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-entest:TestClass a owl:Class .
-
 <http://ont.enapso.com/test> a owl:Ontology;
   rdfs:comment "(C) Copyright 2019-2020 Innotrade GmbH, Herzogenrath, NRW, Germany"@en,
     "Enapso Test Ontology"@en;
@@ -22,19 +20,21 @@ entest:lastName a owl:DatatypeProperty;
 entest:Instance a owl:Class .
 
 entest:Person a owl:Class;
-  rdfs:subClassOf _:node580 .
+  rdfs:subClassOf _:node287 .
 
-_:node580 a owl:Restriction;
+_:node287 a owl:Restriction;
   owl:onDataRange xsd:string;
   owl:onProperty entest:firstName;
   owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger .
 
-entest:Person rdfs:subClassOf _:node581 .
+entest:Person rdfs:subClassOf _:node288 .
 
-_:node581 a owl:Restriction;
+_:node288 a owl:Restriction;
   owl:onDataRange xsd:string;
   owl:onProperty entest:lastName;
   owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger .
+
+entest:TestClass a owl:Class .
 
 entest:Person_AlexanderSchulze a entest:Person, owl:NamedIndividual;
   entest:firstName "Alexander";

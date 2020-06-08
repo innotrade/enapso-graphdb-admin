@@ -103,7 +103,7 @@ describe("enapso GraphDB Admin Tests", function () {
 					if (success) { break; }
 				}
 			}
-			expect(success).to.be.true;
+			expect(result).to.have.property('success', true);
 			done();
 		})
 	});
