@@ -22,16 +22,16 @@ entest:lastName a owl:DatatypeProperty;
 entest:Instance a owl:Class .
 
 entest:Person a owl:Class;
-  rdfs:subClassOf _:node9029 .
+  rdfs:subClassOf _:node580 .
 
-_:node9029 a owl:Restriction;
+_:node580 a owl:Restriction;
   owl:onDataRange xsd:string;
   owl:onProperty entest:firstName;
   owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger .
 
-entest:Person rdfs:subClassOf _:node9030 .
+entest:Person rdfs:subClassOf _:node581 .
 
-_:node9030 a owl:Restriction;
+_:node581 a owl:Restriction;
   owl:onDataRange xsd:string;
   owl:onProperty entest:lastName;
   owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger .
