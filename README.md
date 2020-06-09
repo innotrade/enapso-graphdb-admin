@@ -4,7 +4,7 @@ enapso Ontotext GraphDB 8.x/9.x Administration Toolbox for Node.js
 
 Admin client for OntoText GraphDB to easily perform administrative and monitoring operations against your RDF stores, your OWL ontologies or knowledge graphs in nodes.js applications. This client supports an easy import of existing RDF stores and ontologies to GraphDB by upload via file, strings or URLs as well as an export in numerous formats and also a context management. You can monitor the cpu load and memory usage of GraphDB and run the garbage collector on demand to optimally trigger huge batch operations. Future versions of this client will support a user managememt, the creation and listing of new repositories as well as an location and cluster management of Ontotext GraphDB.
 
-**The following demos require a running GraphDB 8.x/9.x instance on localhost at port 7200. The demos as well as the automated tests require a fully working Ontotext GraphDB repository "Test" and a user "Test" with the password "Test" being set up, which has read/write access to the "Test" Repository and repository ruleset must have OWL Horst(Optimizes) Base URL: http://ont.enapso.com/test#, graph: http://ont.enapso.com/test#**
+**The following demos require a running GraphDB 8.x/9.x instance on localhost at port 7200. The demos as well as the automated tests require a fully working Ontotext GraphDB repository "Test" and a user "admin" with the password "root" being set up as an administrator and repository ruleset must have OWL Horst(Optimizes) Base URL: http://ont.enapso.com/test#, graph: http://ont.enapso.com/test#**
 Get the latest version of GraphDB for free at https://www.ontotext.com/free-graphdb-download-copy/.
 
 **This project is actively developed and maintained.**
@@ -155,6 +155,7 @@ graphDBEndpoint
 ## Perform Garbage Collection in your GraphDB Instance
 
 Perform the garbage collection on the server side to release allocated resources:
+if security is on then for Garbage Collection user role need to be Adminstrator else operation not performed
 
 ```javascript
 graphDBEndpoint
@@ -182,24 +183,10 @@ graphDBEndpoint
   });
 ```
 
-## Lists all Contexts (Named Graphs) in the Repository
-
-Get all graph names (contexts), which are operated in the current GraphDB repository:
-
-```javascript
-graphDBEndpoint
-  .getQuery()
-  .then((result) => {
-    console.log(result);
-  })
-  .catch((err) => {
-    console.log(err);
-  });
-```
-
 ## Create New User and Assign Role
 
 Create a new user and provide him/her with read/write access to certain repositories in a GraphDB instance:
+if security is on then for Creating new User user role need to be Adminstrator else operation not performed
 
 ```javascript
 graphDBEndpoint
@@ -224,48 +211,33 @@ graphDBEndpoint
 ## Update User Role and Authorities
 
 Update the user's roles (read/write rights) for certain repositories:
+if security is on then for Updating Exisiting User user role need to be Adminstrator else operation not performed
 
 ```javascript
-	demoUpdateUser: async function () {
-		let lRes = await this.graphDBEndpoint.login(
-			"admin",
-			"root"
-		);
-		// todo: interpret lRes here, it does not makes sense to continue if login does not work!
-		let resp = await this.graphDBEndpoint.updateUser({
-			authorities: [
-					// Writing excess wrote WRITE_ and in last name of Repository which excess provided like REPO_Test
-				"READ_REPO_Test",	// Reading excess wrote READ_ and in last name of Repository which excess provided like REPO_Test
-				"WRITE_REPO_EnapsoDotNetProDemo",
-				"READ_REPO_EnapsoDotNetProDemo",
-				"ROLE_USER",		// Role of the user
-			],
-			"username": "TestUser",	// Username
-		});
-		enLogger.info("Update Inserted User:" + JSON.stringify(resp, null, 2));
-  }
-  graphDBEndpoint.updateUser({
-			authorities: [
-					// Writing excess wrote WRITE_ and in last name of Repository which excess provided like REPO_Test
-				"READ_REPO_Test",	// Reading excess wrote READ_ and in last name of Repository which excess provided like REPO_Test
-				"WRITE_REPO_EnapsoDotNetProDemo",
-				"READ_REPO_EnapsoDotNetProDemo",
-				"ROLE_USER",		// Role of the user
-			],
-			"username": "TestUser",	// Username
-
-		}).then((result) => {
-		console.log(result);
-	})
-	.catch((err) => {
-		console.log(err);
-	});
+graphDBEndpoint
+  .updateUser({
+    authorities: [
+      // Writing excess wrote WRITE_ and in last name of Repository which excess provided like REPO_Test
+      "READ_REPO_Test", // Reading excess wrote READ_ and in last name of Repository which excess provided like REPO_Test
+      "WRITE_REPO_EnapsoDotNetProDemo",
+      "READ_REPO_EnapsoDotNetProDemo",
+      "ROLE_USER", // Role of the user
+    ],
+    username: "TestUser", // Username
+  })
+  .then((result) => {
+    console.log(result);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 ```
 
 ## Delete User
 
 **Caution! This deletes the user including all assigend authorities (roles)! This operation cannot be undone!**
 Deletes a user from the GraphDB instance:
+if security is on then for Deleting User user role need to be Adminstrator else operation not performed
 
 ```javascript
 graphDBEndpoint
@@ -398,6 +370,21 @@ graphDBEndpoint
 ]
 ```
 
+## Get Query from GraphDB
+
+Get Query from GraphDB:
+
+```javascript
+graphDBEndpoint
+  .getQuery()
+  .then((result) => {
+    console.log(result);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+```
+
 ## List all Contexts (Name Graphs) used in a given Repository
 
 List all named graphs inside a given repository:
@@ -521,14 +508,16 @@ graphDBEndpoint
 
 ## Create new Repository in your GraphDB Instance
 
-Create a new repository in your GraphDB instance:
+Create a new repository in your GraphDB instance isShacl option is optional if want to enable then set it as true and by default it is false:
+if security is on then for creating repository user role need to be Repository Manager else operation not performed
 
 ```javascript
 graphDBEndpoint
   .createRepository({
     id: "AutomatedTest4",
     title: "enapso Automated Test Repository",
-    location: ""
+    location: "",
+    isShacl: true,
   })
   .then((result) => {
     console.log(result);
@@ -551,6 +540,7 @@ Create Repository:{
 ## Delete Repository in a GraphDB Instance
 
 Delete a repository in the connected GraphDB instance:
+if security is on then for deleting repository user role need to be Repository Manager else operation not performed
 
 ```javascript
 graphDBEndpoint
@@ -579,6 +569,7 @@ Delete Repository:{
 ## Upload SHACL Shape to a GraphDB Instance
 
 The following code demonstrate how to upload and manage a shacl shape in a GraphDB instance:
+Here we are using different method of GraphDB first we get read some sparql queries and shacl from files save them in variables after this we drop the existing shacl using dropShaclGraph method of admin, clear our repository, upload ontology to GraphDB insert some valid and invalid data successfully in ontology then read it again clear the repository upload the ontology again and also upload the shacl using uploadFromData method of our pacakge now again insert valid and invalid data now after uploading shacl you can see it show errors when you insert invalid data which violated restriction which applied through shacl so thats the benefit of shacl to not deal with data which didn't follow restriction rules.
 
 ```javascript
 demoShacl: async function () {
