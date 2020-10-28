@@ -82,7 +82,7 @@ describe("enapso GraphDB Admin Tests", function () {
 			let success = result.statusCode === 200;
 			if (success && result.data) {
 				for (let repository of result.data) {
-					success = repository.username === testConfig.newUsername;
+					success = repository.repository === testConfig.newRepository;
 					if (success) { break; }
 				}
 			}
