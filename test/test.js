@@ -24,7 +24,7 @@ describe('enapso GraphDB Admin Tests', function () {
 
     it('Authenticate against GraphDB instance', function (done) {
         lEndpoint
-            .login(testConfig.username, testConfig.password)
+            .login(testConfig.adminUsername, testConfig.adminPassword)
             .then((result) => {
                 expect(result).to.have.property('statusCode', 200);
                 done();
