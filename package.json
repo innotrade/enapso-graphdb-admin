@@ -4,7 +4,7 @@
     "description": "ENAPSO Ontotext GraphDB 8.x/9.x Admin for Node.js",
     "main": "index.js",
     "scripts": {
-        "test": "mocha"
+        "test": "mocha --timeout 10000"
     },
     "repository": {
         "type": "git",
