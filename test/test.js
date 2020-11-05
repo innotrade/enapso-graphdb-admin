@@ -13,7 +13,7 @@ const { EnapsoGraphDBClient } = require('@innotrade/enapso-graphdb-client');
 const { EnapsoGraphDBAdmin } = require('../index');
 const testConfig = require('./config');
 
-describe('Enapso GraphDB Admin Test Suites', function () {
+describe('ENAPSO GraphDB Admin Automated Test Suite', function () {
     // this.timeout(60000);
 
     // instantiate a new GraphDB endpoint
