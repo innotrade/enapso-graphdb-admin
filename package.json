@@ -31,6 +31,7 @@
     },
     "homepage": "https://github.com/innotrade/enapso-graphdb-admin#readme",
     "dependencies": {
+        "@innotrade/enapso-config": "^1.1.2",
         "@innotrade/enapso-graphdb-client": "^1.8.1",
         "@innotrade/enapso-logger": "^1.1.0",
         "chai": "^4.2.0",

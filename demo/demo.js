@@ -2,15 +2,16 @@
 // (C) Copyright 2019-2020 Innotrade GmbH, Herzogenrath, NRW, Germany
 // Author(s): Alexander Schulze and Muhammad Yasir
 // require the enapso GraphDB Admin Demo module
-
+require('@innotrade/enapso-config');
 const fsPromises = require('fs').promises,
-    { EnapsoGraphDBClient } = require('@innotrade/enapso-graphdb-client'),
+    { EnapsoGraphDBClient } = requireEx('@innotrade/enapso-graphdb-client'),
     { EnapsoGraphDBAdmin } = require('../index'),
     { EnapsoLogger, EnapsoLoggerFactory } = require('@innotrade/enapso-logger');
 EnapsoLoggerFactory.createGlobalLogger('enLogger');
 enLogger.setLevel(EnapsoLogger.ALL);
 
-// connection data to the running GraphDB instance
+// // connection data to the running GraphDB instance
+
 const GRAPHDB_BASE_URL = 'http://localhost:7200',
     GRAPHDB_REPOSITORY = 'Test',
     GRAPHDB_USERNAME = 'admin',
@@ -18,7 +19,7 @@ const GRAPHDB_BASE_URL = 'http://localhost:7200',
     GRAPHDB_CONTEXT_TEST = 'http://ont.enapso.com/test',
     GRAPHDB_CONTEXT_SHACL = 'http://rdf4j.org/schema/rdf4j#SHACLShapeGraph';
 
-// the default prefixes for all SPARQL queries
+// // the default prefixes for all SPARQL queries
 const GRAPHDB_DEFAULT_PREFIXES = [
     EnapsoGraphDBClient.PREFIX_OWL,
     EnapsoGraphDBClient.PREFIX_RDF,
@@ -191,7 +192,7 @@ const EnapsoGraphDBAdminDemo = {
         // upload a file
         // todo: we upload from data here but pass a file name???
         let data = await fsPromises.readFile(
-            './ontologies/EnapsoTest.owl',
+            '../ontologies/EnapsoTest.owl',
             'utf-8'
         );
         let resp = await this.graphDBEndpoint.uploadFromData({
@@ -200,7 +201,9 @@ const EnapsoGraphDBAdminDemo = {
             // format: EnapsoGraphDBClient.FORMAT_TURTLE.type
             format: 'application/rdf+xml'
         });
-        enLogger.info('\nUploadFromData:\n' + JSON.stringify(resp, null, 2));
+        enLogger.info(
+            '\nUploadFromData:\n' + JSON.stringify(resp.success, null, 2)
+        );
         return resp;
     },
 

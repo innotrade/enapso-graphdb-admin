@@ -1,22 +1,27 @@
+/* eslint-disable one-var */
+/* eslint-disable prefer-destructuring */
+/* eslint-disable no-undef */
+/* eslint-disable prettier/prettier */
 /* eslint-disable no-console */
 // Innotrade enapso - GraphDB Admin Example
 // (C) Copyright 2019-2020 Innotrade GmbH, Herzogenrath, NRW, Germany
 // Author(s): Alexander Schulze and Muhammad Yasir
 // require the enapso GraphDB Admin Demo module
-
+require('@innotrade/enapso-config');
+// eslint-disable-next-line import/newline-after-import
 const fsPromises = require('fs').promises;
-const { EnapsoGraphDBClient } = require('@innotrade/enapso-graphdb-client');
+const { EnapsoGraphDBClient } = requireEx('@innotrade/enapso-graphdb-client');
 /* eslint-disable no-unused-vars */
 // this is required to add the admin features for the client
 const { EnapsoGraphDBAdmin } = require('../index');
 
 // connection data to the running GraphDB instance
-const GRAPHDB_BASE_URL = 'http://localhost:7200';
-const GRAPHDB_REPOSITORY = 'Test';
-const GRAPHDB_USERNAME = 'admin';
-const GRAPHDB_PASSWORD = 'root';
-const GRAPHDB_CONTEXT_TEST = 'http://ont.enapso.com/repo';
-const GRAPHDB_CONTEXT_SHACL = 'http://rdf4j.org/schema/rdf4j#SHACLShapeGraph';
+const GRAPHDB_BASE_URL = 'http://localhost:7200',
+    GRAPHDB_REPOSITORY = 'Test',
+    GRAPHDB_USERNAME = 'admin',
+    GRAPHDB_PASSWORD = 'root',
+    GRAPHDB_CONTEXT_TEST = 'http://ont.enapso.com/test',
+    GRAPHDB_CONTEXT_SHACL = 'http://rdf4j.org/schema/rdf4j#SHACLShapeGraph';
 
 // the default prefixes for all SPARQL queries
 const GRAPHDB_DEFAULT_PREFIXES = [

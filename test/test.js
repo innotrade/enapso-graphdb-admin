@@ -3,11 +3,11 @@
 // Innotrade enapso GraphDB Admin - Automated Test Suite
 // (C) Copyright 2019-2020 Innotrade GmbH, Herzogenrath, NRW, Germany
 // Author: Alexander Schulze and Muhammad Yasir
-
+require('@innotrade/enapso-config');
 const chai = require('chai');
 
 const { expect } = chai;
-const { EnapsoGraphDBClient } = require('@innotrade/enapso-graphdb-client');
+const { EnapsoGraphDBClient } = requireEx('@innotrade/enapso-graphdb-client');
 /* eslint-disable no-unused-vars */
 // this is required to add the admin features for the client
 const { EnapsoGraphDBAdmin } = require('../index');
