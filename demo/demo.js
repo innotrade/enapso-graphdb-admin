@@ -27,7 +27,7 @@ const GRAPHDB_DEFAULT_PREFIXES = [
 ];
 
 enLogger.info(
-    'enapso GraphDB Admin Demo\n(C) Copyright 2019-2020 Innotrade GmbH, Herzogenrath, NRW, Germany'
+    'ENAPSO GraphDB Admin Demo\n(C) Copyright 2019-2020 Innotrade GmbH, Herzogenrath, NRW, Germany'
 );
 
 const EnapsoGraphDBAdminDemo = {
@@ -209,7 +209,7 @@ const EnapsoGraphDBAdminDemo = {
 
     async demoDownloadToFile() {
         // download a repository or named graph to file
-        let lFormat = EnapsoGraphDBClient.FORMAT_TURTLE;
+        let lFormat = EnapsoGraphDBClient.FORMAT_JSON_LD;
         let resp = await this.graphDBEndpoint.downloadToFile({
             format: lFormat.type,
             filename:
@@ -510,8 +510,9 @@ const EnapsoGraphDBAdminDemo = {
 
         // clear entire repository
         // CAUTION! This operation empties the entire repository and cannot be undone!
-        this.demoClearRepository();
-        this.demoUploadFromData();
+        // this.demoClearRepository();
+        // this.demoUploadFromData();
+
         // // clear entire context (named graph)
         // // CAUTION! This operation empties the entire context (named graph) and cannot be undone!
         // this.demoClearContext();
@@ -530,8 +531,10 @@ const EnapsoGraphDBAdminDemo = {
         // this.demoUploadFromFile();
         // this.demoDownloadToFile();
         // this.demoDownloadToText();
+
         // this.demoShacl();
         // await this.demoDropShaclGraph();
+
         /*
 			enLogger.info("--- Inserting new triple --- ")
 			await this.demoInsert();
