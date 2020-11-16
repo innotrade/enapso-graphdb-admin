@@ -1,13 +1,19 @@
+/* eslint-disable no-undef */
+/* eslint-disable prettier/prettier */
 // Innotrade Enapso GraphDB Client - Configuration for automated tests
 // (C) Copyright 2019-2020 Innotrade GmbH, Herzogenrath, NRW, Germany
 // Author: Alexander Schulze
+require('@innotrade/enapso-config');
 
 module.exports = Object.freeze({
-    baseURL: 'http://localhost:7200',
+    baseURL: encfg.getConfig(
+        'GraphDB.GRAPHDB_BASE_URL',
+        'http://localhost:7200'
+    ),
 
-    repository: 'Test',
-    username: 'Test',
-    password: 'Test',
+    repository: encfg.getConfig('GraphDB.GRAPHDB_REPOSITORY', 'Test'),
+    username: encfg.getConfig('GraphDB.GRAPHDB_USERNAME', 'Test'),
+    password: encfg.getConfig('GraphDB.GRAPHDB_PASSWORD', 'Test'),
 
     testBaseIRI: 'http://ont.enapso.com/test#',
     testContext: 'http://ont.enapso.com/test',

@@ -16,12 +16,21 @@ const { EnapsoGraphDBClient } = requireEx('@innotrade/enapso-graphdb-client');
 const { EnapsoGraphDBAdmin } = require('../index');
 
 // connection data to the running GraphDB instance
-const GRAPHDB_BASE_URL = 'http://localhost:7200',
-    GRAPHDB_REPOSITORY = 'Test',
-    GRAPHDB_USERNAME = 'admin',
-    GRAPHDB_PASSWORD = 'root',
-    GRAPHDB_CONTEXT_TEST = 'http://ont.enapso.com/test',
-    GRAPHDB_CONTEXT_SHACL = 'http://rdf4j.org/schema/rdf4j#SHACLShapeGraph';
+const GRAPHDB_BASE_URL = encfg.getConfig(
+        'GraphDB.GRAPHDB_BASE_URL',
+        'http://localhost:7200'
+    ),
+    GRAPHDB_REPOSITORY = encfg.getConfig('GraphDB.GRAPHDB_REPOSITORY', 'Test'),
+    GRAPHDB_USERNAME = encfg.getConfig('GraphDB.GRAPHDB_USERNAME', 'admin'),
+    GRAPHDB_PASSWORD = encfg.getConfig('GraphDB.GRAPHDB_PASSWORD', 'root'),
+    GRAPHDB_CONTEXT_TEST = encfg.getConfig(
+        'GraphDB.GRAPHDB_CONTEXT_TEST',
+        'http://ont.enapso.com/test'
+    ),
+    GRAPHDB_CONTEXT_SHACL = encfg.getConfig(
+        'GraphDB.GRAPHDB_CONTEXT_SHACL',
+        'http://rdf4j.org/schema/rdf4j#SHACLShapeGraph'
+    );
 
 // the default prefixes for all SPARQL queries
 const GRAPHDB_DEFAULT_PREFIXES = [

@@ -22,16 +22,16 @@
 :Instance a owl:Class .
 
 :Person a owl:Class;
-  rdfs:subClassOf _:node396 .
+  rdfs:subClassOf _:node745 .
 
-_:node396 a owl:Restriction;
+_:node745 a owl:Restriction;
   owl:onDataRange xsd:string;
   owl:onProperty :firstName;
   owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger .
 
-:Person rdfs:subClassOf _:node397 .
+:Person rdfs:subClassOf _:node746 .
 
-_:node397 a owl:Restriction;
+_:node746 a owl:Restriction;
   owl:onDataRange xsd:string;
   owl:onProperty :lastName;
   owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger .
