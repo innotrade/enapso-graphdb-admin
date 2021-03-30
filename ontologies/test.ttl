@@ -8,6 +8,7 @@
 @prefix foundation: <http://ont.enapso.com/foundation#> .
 @prefix encap: <http://ont.enapso.com/capability#> .
 @prefix enattr: <http://ont.enapso.com/attributes#> .
+@prefix mgm: <http://ont.swr.de/metagraph/model#> .
 @prefix endtype: <http://www.enapso.com/Datatypes#> .
 @prefix rdf4j: <http://rdf4j.org/schema/rdf4j#> .
 @prefix wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
@@ -40,7 +41,7 @@ test:lastName a owl:DatatypeProperty;
 test:Instance a owl:Class .
 
 test:Person a owl:Class;
-  rdfs:subClassOf _:node20642, _:node20643 .
+  rdfs:subClassOf _:node29469, _:node29470 .
 
 test:Person_AlexanderSchulze a owl:NamedIndividual, test:Person;
   test:firstName "Alexander";
@@ -54,12 +55,12 @@ test:Person_MuhammadYasir a owl:NamedIndividual, test:Person;
   test:firstName "Muhammad";
   test:lastName "Yasir" .
 
-_:node20642 a owl:Restriction;
+_:node29469 a owl:Restriction;
   owl:onProperty test:firstName;
   owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger;
   owl:onDataRange xsd:string .
 
-_:node20643 a owl:Restriction;
+_:node29470 a owl:Restriction;
   owl:onProperty test:lastName;
   owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger;
   owl:onDataRange xsd:string .
