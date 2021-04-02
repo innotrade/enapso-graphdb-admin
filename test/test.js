@@ -136,11 +136,9 @@ describe('ENAPSO GraphDB Admin Automated Test Suite', function () {
 
     it('Get contexts (graphs) of the test repository of the GraphDB instance', function (done) {
         lEndpoint
-            .getContexts({
-                repository: testConfig.newRepository
-            })
+            .getContexts()
             .then((result) => {
-                //  console.log(JSON.stringify(result, null, 2));
+                // console.log(JSON.stringify(result, null, 2));
                 expect(result).to.have.property('success', true);
                 done();
             })

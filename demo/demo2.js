@@ -17,18 +17,24 @@ const { EnapsoGraphDBAdmin } = require('../index');
 
 // connection data to the running GraphDB instance
 const GRAPHDB_BASE_URL = encfg.getConfig(
-        'GraphDB.GRAPHDB_BASE_URL',
+        'enapsoDefaultGraphDB.baseUrl',
         'http://localhost:7200'
     ),
-    GRAPHDB_REPOSITORY = encfg.getConfig('GraphDB.GRAPHDB_REPOSITORY', 'Test'),
-    GRAPHDB_USERNAME = encfg.getConfig('GraphDB.GRAPHDB_USERNAME', 'admin'),
-    GRAPHDB_PASSWORD = encfg.getConfig('GraphDB.GRAPHDB_PASSWORD', 'root'),
+    GRAPHDB_REPOSITORY = encfg.getConfig(
+        'enapsoDefaultGraphDB.repository',
+        'Test'
+    ),
+    GRAPHDB_USERNAME = encfg.getConfig(
+        'enapsoDefaultGraphDB.userName',
+        'admin'
+    ),
+    GRAPHDB_PASSWORD = encfg.getConfig('enapsoDefaultGraphDB.password', 'root'),
     GRAPHDB_CONTEXT_TEST = encfg.getConfig(
-        'GraphDB.GRAPHDB_CONTEXT_TEST',
+        'enapsoDefaultGraphDB.ContextTests',
         'http://ont.enapso.com/test'
     ),
     GRAPHDB_CONTEXT_SHACL = encfg.getConfig(
-        'GraphDB.GRAPHDB_CONTEXT_SHACL',
+        'enapsoDefaultGraphDB.ContextShacl',
         'http://rdf4j.org/schema/rdf4j#SHACLShapeGraph'
     );
 

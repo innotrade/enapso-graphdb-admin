@@ -1,0 +1,66 @@
+@prefix : <http://ont.enapso.com/datatypes#> .
+@prefix enauth: <http://ont.enapso.com/auth#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix enrepo: <http://ont.enapso.com/repo#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix fn: <http://www.w3.org/2005/xpath-functions#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix foundation: <http://ont.enapso.com/foundation#> .
+@prefix encap: <http://ont.enapso.com/capability#> .
+@prefix enattr: <http://ont.enapso.com/attributes#> .
+@prefix mgm: <http://ont.swr.de/metagraph/model#> .
+@prefix endtype: <http://www.enapso.com/Datatypes#> .
+@prefix rdf4j: <http://rdf4j.org/schema/rdf4j#> .
+@prefix wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix enterms: <http://ont.enapso.com/terms#> .
+@prefix ensw: <http://ont.enapso.com/software#> .
+@prefix test: <http://ont.enapso.com/test#> .
+@prefix gn: <http://www.geonames.org/ontology#> .
+@prefix dnp: <http://ont.enapso.com/dotnetpro#> .
+@prefix enbehav: <http://ont.enapso.com/behavior#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix protons: <http://proton.semanticweb.org/protonsys#> .
+@prefix sesame: <http://www.openrdf.org/schema/sesame#> .
+@prefix sfn: <http://www.w3.org/ns/sparql#> .
+
+test:TestClass a owl:Class .
+
+<http://ont.enapso.com/test> a owl:Ontology;
+  rdfs:comment "(C) Copyright 2019-2020 Innotrade GmbH, Herzogenrath, NRW, Germany"@en,
+    "Enapso Test Ontology"@en;
+  owl:versionIRI <http://ont.enapso.com/test/1.0.0> .
+
+test:firstName a owl:DatatypeProperty;
+  rdfs:subPropertyOf test:name .
+
+test:name a owl:DatatypeProperty .
+
+test:lastName a owl:DatatypeProperty;
+  rdfs:subPropertyOf test:name .
+
+test:Instance a owl:Class .
+
+test:Person a owl:Class;
+  rdfs:subClassOf _:node29469, _:node29470 .
+
+test:Person_AlexanderSchulze a owl:NamedIndividual, test:Person;
+  test:firstName "Alexander";
+  test:lastName "Schulze" .
+
+test:Person_AsheshGoplani a owl:NamedIndividual, test:Person;
+  test:firstName "Ashesh";
+  test:lastName "Goplani" .
+
+test:Person_MuhammadYasir a owl:NamedIndividual, test:Person;
+  test:firstName "Muhammad";
+  test:lastName "Yasir" .
+
+_:node29469 a owl:Restriction;
+  owl:onProperty test:firstName;
+  owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger;
+  owl:onDataRange xsd:string .
+
+_:node29470 a owl:Restriction;
+  owl:onProperty test:lastName;
+  owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger;
+  owl:onDataRange xsd:string .
