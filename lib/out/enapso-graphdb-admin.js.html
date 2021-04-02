@@ -1,4 +1,32 @@
-// Innotrade enapso GraphDB Admin
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: enapso-graphdb-admin.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: enapso-graphdb-admin.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>// Innotrade enapso GraphDB Admin
 // (C) Copyright 2019 Innotrade GmbH, Herzogenrath, NRW, Germany
 // Author(s):  Alexander Schulze and Muhammad Yasir
 // For further detalils please also refer to the GraphDB admin documentation at: http://localhost:7200/webapi
@@ -55,7 +83,7 @@ const EnapsoGraphDBAdmin = {
                     success: false,
                     statusCode: err.statusCode ? err.statusCode : -1,
                     statusMessage:
-                        err.error && err.error.message
+                        err.error &amp;&amp; err.error.message
                             ? err.error.message
                             : err.message
                 };
@@ -110,12 +138,12 @@ const EnapsoGraphDBAdmin = {
             // console.log("WAITING: " + JSON.stringify(resp));
             if (resp === '0' || resp === 0) {
                 finish = true;
-            } else if (resp && resp.data && Array.isArray(resp.data)) {
+            } else if (resp &amp;&amp; resp.data &amp;&amp; Array.isArray(resp.data)) {
                 finish = true;
                 for (let item of resp.data) {
                     if (
-                        item.status &&
-                        item.status !== 'DONE' &&
+                        item.status &amp;&amp;
+                        item.status !== 'DONE' &amp;&amp;
                         item.status !== 'ERROR'
                     ) {
                         finish = false;
@@ -126,15 +154,15 @@ const EnapsoGraphDBAdmin = {
             // console.log("? " + success);
             end = new Date().getTime();
 
-            timeout = start + args.timeout < end;
-            if (!timeout && !finish) {
+            timeout = start + args.timeout &lt; end;
+            if (!timeout &amp;&amp; !finish) {
                 await new Promise(function (resolve) {
                     setTimeout(function () {
                         resolve();
                     }, args.interval);
                 });
             }
-        } while (!timeout && !finish);
+        } while (!timeout &amp;&amp; !finish);
         return resp;
     },
 
@@ -827,11 +855,11 @@ const EnapsoGraphDBAdmin = {
                     '/statements' +
                     '?infer=' +
                     (aOptions.inference ? 'true' : 'false') +
-                    '&Accept=' +
+                    '&amp;Accept=' +
                     encodeURIComponent(aOptions.format) +
                     (aOptions.context
-                        ? '&context=' +
-                          encodeURIComponent('<' + aOptions.context) +
+                        ? '&amp;context=' +
+                          encodeURIComponent('&lt;' + aOptions.context) +
                           '>'
                         : '')
             };
@@ -979,7 +1007,7 @@ const EnapsoGraphDBAdmin = {
                 };
             }
             options.context = options.context || this.getDefaultContext();
-            let sparql = `clear graph <${options.context}>`;
+            let sparql = `clear graph &lt;${options.context}>`;
 
             try {
                 let res = await this.update(sparql);
@@ -1007,7 +1035,7 @@ const EnapsoGraphDBAdmin = {
             options.context =
                 options.context ||
                 'http://rdf4j.org/schema/rdf4j#SHACLShapeGraph';
-            let sparql = `drop graph <${options.context}>`;
+            let sparql = `drop graph &lt;${options.context}>`;
 
             try {
                 let res = await this.update(sparql);
@@ -1196,7 +1224,7 @@ const EnapsoGraphDBAdmin = {
                 if (aOptions.callback) {
                     aOptions.callback(lResources);
                 }
-                lYetAgain = new Date().getTime() < lTimeout;
+                lYetAgain = new Date().getTime() &lt; lTimeout;
                 if (lYetAgain) {
                     await this.wait(aOptions.interval);
                 }
@@ -1335,3 +1363,26 @@ for (let key in EnapsoGraphDBAdmin) {
 }
 
 module.exports = EnapsoGraphDBAdmin;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="EnapsoGraphDBAdmin.html">EnapsoGraphDBAdmin</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Tue Feb 23 2021 16:55:26 GMT+0500 (Pakistan Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
