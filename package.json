@@ -1,7 +1,7 @@
 {
     "name": "@innotrade/enapso-graphdb-admin",
-    "version": "1.3.6",
-    "description": "ENAPSO Ontotext GraphDB 8.x/9.x Admin for Node.js",
+    "version": "1.3.7",
+    "description": "ENAPSO Ontotext GraphDB 8.x/9.x Admin Tools for Node.js",
     "main": "index.js",
     "scripts": {
         "test": "mocha --timeout 10000"
@@ -35,7 +35,7 @@
         "@innotrade/enapso-graphdb-client": "^1.8.3",
         "@innotrade/enapso-logger": "^1.1.0",
         "chai": "^4.3.4",
-        "mocha": "^8.4.0",
+        "mocha": "^9.0.0",
         "request-promise": "^4.2.6"
     },
     "devDependencies": {
