@@ -2,7 +2,7 @@
 
 enapso Ontotext GraphDB 8.x/9.x Administration Toolbox for Node.js
 
-Admin client for OntoText GraphDB to easily perform administrative and monitoring operations against your RDF stores, your OWL ontologies or knowledge graphs in nodes.js applications. This client supports an easy import of existing RDF stores and ontologies to GraphDB by upload via file, strings or URLs as well as an export in numerous formats and also a context management. You can monitor the cpu load and memory usage of GraphDB and run the garbage collector on demand to optimally trigger huge batch operations. Future versions of this client will support a user managememt, the creation and listing of new repositories as well as an location and cluster management of Ontotext GraphDB.
+Admin client for OntoText GraphDB to easily perform administrative and monitoring operations against your RDF stores, your OWL ontologies or knowledge graphs in nodes.js applications. This client supports an easy import of existing RDF stores and ontologies to GraphDB by upload via file, strings or URLs as well as an export in numerous formats and also a context management. You can monitor the cpu load and memory usage of GraphDB and run the garbage collector on demand to optimally trigger huge batch operations also provide the user managememt, the creation and listing of new repositories as well as an location and cluster management of Ontotext GraphDB.
 
 **The following demos require a running GraphDB 8.x/9.x instance on localhost at port 7200. The demos as well as the automated tests require a fully working Ontotext GraphDB repository "Test" and a user "admin" with the password "root" being set up as an administrator and repository ruleset must have OWL Horst(Optimizes) Base URL: http://ont.enapso.com/test#, graph: http://ont.enapso.com/test#**
 Get the latest version of GraphDB for free at https://www.ontotext.com/free-graphdb-download-copy/.
@@ -22,21 +22,21 @@ npm i @innotrade/enapso-graphdb-admin --save
 
 ```javascript
 // require the enapso GraphDB Client and Admin packages
-const { EnapsoGraphDBClient } = require("@innotrade/enapso-graphdb-client");
-const { EnapsoGraphDBAdmin } = require("@innotrade/enapso-graphdb-admin");
+const { EnapsoGraphDBClient } = require('@innotrade/enapso-graphdb-client');
+const { EnapsoGraphDBAdmin } = require('@innotrade/enapso-graphdb-admin');
 // connection data to the running GraphDB instance
-const GRAPHDB_BASE_URL = "http://localhost:7200",
-  GRAPHDB_REPOSITORY = "Test",
-  GRAPHDB_USERNAME = "Test",
-  GRAPHDB_PASSWORD = "Test",
-  GRAPHDB_CONTEXT_TEST = "http://ont.enapso.com/repo",
-  GRAPHDB_CONTEXT_SHACL = "http://rdf4j.org/schema/rdf4j#SHACLShapeGraph";
+const GRAPHDB_BASE_URL = 'http://localhost:7200',
+    GRAPHDB_REPOSITORY = 'Test',
+    GRAPHDB_USERNAME = 'Test',
+    GRAPHDB_PASSWORD = 'Test',
+    GRAPHDB_CONTEXT_TEST = 'http://ont.enapso.com/repo',
+    GRAPHDB_CONTEXT_SHACL = 'http://rdf4j.org/schema/rdf4j#SHACLShapeGraph';
 
 // the default prefixes for all SPARQL queries
 const GRAPHDB_DEFAULT_PREFIXES = [
-  EnapsoGraphDBClient.PREFIX_OWL,
-  EnapsoGraphDBClient.PREFIX_RDF,
-  EnapsoGraphDBClient.PREFIX_RDFS,
+    EnapsoGraphDBClient.PREFIX_OWL,
+    EnapsoGraphDBClient.PREFIX_RDF,
+    EnapsoGraphDBClient.PREFIX_RDFS
 ];
 ```
 
@@ -46,9 +46,9 @@ Create an endpoint client with graphdb to perform operation:
 
 ```javascript
 let graphDBEndpoint = new EnapsoGraphDBClient.Endpoint({
-  baseURL: GRAPHDB_BASE_URL,
-  repository: GRAPHDB_REPOSITORY,
-  prefixes: GRAPHDB_DEFAULT_PREFIXES,
+    baseURL: GRAPHDB_BASE_URL,
+    repository: GRAPHDB_REPOSITORY,
+    prefixes: GRAPHDB_DEFAULT_PREFIXES
 });
 ```
 
@@ -58,13 +58,13 @@ Login to authenticate the user against GraphDB and authorize the user according 
 
 ```javascript
 graphDBEndpoint
-  .login(GRAPHDB_USERNAME, GRAPHDB_PASSWORD)
-  .then((result) => {
-    console.log(result);
-  })
-  .catch((err) => {
-    console.log(err, "process error here...");
-  });
+    .login(GRAPHDB_USERNAME, GRAPHDB_PASSWORD)
+    .then((result) => {
+        console.log(result);
+    })
+    .catch((err) => {
+        console.log(err, 'process error here...');
+    });
 ```
 
 ## Upload a File to GraphDB
@@ -73,18 +73,18 @@ Upload an ontology and import it into a GraphDB repository and optional context 
 
 ```javascript
 graphDBEndpoint
-  .uploadFromFile({
-    filename: "../ontologies/EnapsoTest.owl",
-    format: "application/rdf+xml",
-    baseIRI: "http://ont.enapso.com/test#",
-    context: "http://ont.enapso.com/test",
-  })
-  .then((result) => {
-    console.log(result);
-  })
-  .catch((err) => {
-    console.log(err, "process error here...");
-  });
+    .uploadFromFile({
+        filename: '../ontologies/EnapsoTest.owl',
+        format: 'application/rdf+xml',
+        baseIRI: 'http://ont.enapso.com/test#',
+        context: 'http://ont.enapso.com/test'
+    })
+    .then((result) => {
+        console.log(result);
+    })
+    .catch((err) => {
+        console.log(err, 'process error here...');
+    });
 ```
 
 ## Upload from Data to GraphDB
@@ -93,24 +93,24 @@ Upload data (rather than a file) and automatically import the data into a GraphD
 
 ```javascript
 fsPromises
-  .readFile("../ontologies/EnapsoTest.owl", "utf-8")
-  .then((data) => {
-    graphDBEndpoint
-      .uploadFromData({
-        data: data,
-        context: "http://ont.enapso.com/test",
-        format: "application/rdf+xml",
-      })
-      .then((result) => {
-        console.log(result);
-      })
-      .catch((err) => {
-        console.log(err, "process error here...");
-      });
-  })
-  .catch((err) => {
-    console.log(err);
-  });
+    .readFile('../ontologies/EnapsoTest.owl', 'utf-8')
+    .then((data) => {
+        graphDBEndpoint
+            .uploadFromData({
+                data: data,
+                context: 'http://ont.enapso.com/test',
+                format: 'application/rdf+xml'
+            })
+            .then((result) => {
+                console.log(result);
+            })
+            .catch((err) => {
+                console.log(err, 'process error here...');
+            });
+    })
+    .catch((err) => {
+        console.log(err);
+    });
 ```
 
 ## Download a Graph from GraphDB to a Text Variable
@@ -120,15 +120,15 @@ The context (graph) is optional. If you do not pass a context (graph), the entir
 
 ```javascript
 graphDBEndpoint
-  .downloadToText({
-    format: EnapsoGraphDBClient.FORMAT_TURTLE.type,
-  })
-  .then((result) => {
-    console.log(result);
-  })
-  .catch((err) => {
-    console.log(err, "process error here...");
-  });
+    .downloadToText({
+        format: EnapsoGraphDBClient.FORMAT_TURTLE.type
+    })
+    .then((result) => {
+        console.log(result);
+    })
+    .catch((err) => {
+        console.log(err, 'process error here...');
+    });
 ```
 
 ## Download a graph from GraphDB directly to a Local File
@@ -139,17 +139,19 @@ The context is optional. If you do not pass a context, the entire repository is 
 ```javascript
 let lFormat = EnapsoGraphDBClient.FORMAT_TURTLE;
 graphDBEndpoint
-  .downloadToFile({
-    format: lFormat.type,
-    filename:
-      "../ontologies/" + graphDBEndpoint.getRepository() + lFormat.extension,
-  })
-  .then((result) => {
-    console.log(result);
-  })
-  .catch((err) => {
-    console.log(err, "process error here...");
-  });
+    .downloadToFile({
+        format: lFormat.type,
+        filename:
+            '../ontologies/' +
+            graphDBEndpoint.getRepository() +
+            lFormat.extension
+    })
+    .then((result) => {
+        console.log(result);
+    })
+    .catch((err) => {
+        console.log(err, 'process error here...');
+    });
 ```
 
 ## Perform Garbage Collection in your GraphDB Instance
@@ -159,13 +161,13 @@ if security is on then for Garbage Collection user role need to be Adminstrator 
 
 ```javascript
 graphDBEndpoint
-  .performGarbageCollection()
-  .then((result) => {
-    console.log(result);
-  })
-  .catch((err) => {
-    console.log(err, "process error here...");
-  });
+    .performGarbageCollection()
+    .then((result) => {
+        console.log(result);
+    })
+    .catch((err) => {
+        console.log(err, 'process error here...');
+    });
 ```
 
 ## Get Resource of GraphDB Instance
@@ -174,13 +176,13 @@ Get resource details of the repository current connected to the endpoint:
 
 ```javascript
 graphDBEndpoint
-  .getResources()
-  .then((result) => {
-    console.log(result);
-  })
-  .catch((err) => {
-    console.log(err, "process error here...");
-  });
+    .getResources()
+    .then((result) => {
+        console.log(result);
+    })
+    .catch((err) => {
+        console.log(err, 'process error here...');
+    });
 ```
 
 ## Create New User and Assign Role
@@ -190,22 +192,22 @@ if security is on then for Creating new User user role need to be Adminstrator e
 
 ```javascript
 graphDBEndpoint
-  .createUser({
-    authorities: [
-      "WRITE_REPO_Test", // Writing excess wrote WRITE_ and in last name of Repository which excess provided like REPO_Test
-      "READ_REPO_Test", // Reading excess wrote READ_ and in last name of Repository which excess provided like REPO_Test
-      "READ_REPO_EnapsoDotNetProDemo",
-      "ROLE_USER", // Role of the user
-    ],
-    username: "TestUser2", // Username
-    password: "TestUser2", // Password for the user
-  })
-  .then((result) => {
-    console.log(result);
-  })
-  .catch((err) => {
-    console.log(err);
-  });
+    .createUser({
+        authorities: [
+            'WRITE_REPO_Test', // Writing excess wrote WRITE_ and in last name of Repository which excess provided like REPO_Test
+            'READ_REPO_Test', // Reading excess wrote READ_ and in last name of Repository which excess provided like REPO_Test
+            'READ_REPO_EnapsoDotNetProDemo',
+            'ROLE_USER' // Role of the user
+        ],
+        username: 'TestUser2', // Username
+        password: 'TestUser2' // Password for the user
+    })
+    .then((result) => {
+        console.log(result);
+    })
+    .catch((err) => {
+        console.log(err);
+    });
 ```
 
 ## Update User Role and Authorities
@@ -215,22 +217,22 @@ if security is on then for Updating Exisiting User user role need to be Adminstr
 
 ```javascript
 graphDBEndpoint
-  .updateUser({
-    authorities: [
-      // Writing excess wrote WRITE_ and in last name of Repository which excess provided like REPO_Test
-      "READ_REPO_Test", // Reading excess wrote READ_ and in last name of Repository which excess provided like REPO_Test
-      "WRITE_REPO_EnapsoDotNetProDemo",
-      "READ_REPO_EnapsoDotNetProDemo",
-      "ROLE_USER", // Role of the user
-    ],
-    username: "TestUser", // Username
-  })
-  .then((result) => {
-    console.log(result);
-  })
-  .catch((err) => {
-    console.log(err);
-  });
+    .updateUser({
+        authorities: [
+            // Writing excess wrote WRITE_ and in last name of Repository which excess provided like REPO_Test
+            'READ_REPO_Test', // Reading excess wrote READ_ and in last name of Repository which excess provided like REPO_Test
+            'WRITE_REPO_EnapsoDotNetProDemo',
+            'READ_REPO_EnapsoDotNetProDemo',
+            'ROLE_USER' // Role of the user
+        ],
+        username: 'TestUser' // Username
+    })
+    .then((result) => {
+        console.log(result);
+    })
+    .catch((err) => {
+        console.log(err);
+    });
 ```
 
 ## Delete User
@@ -241,15 +243,15 @@ if security is on then for Deleting User user role need to be Adminstrator else 
 
 ```javascript
 graphDBEndpoint
-  .deleteUser({
-    user: "TestUser2", // username which you want to delete
-  })
-  .then((result) => {
-    console.log(result);
-  })
-  .catch((err) => {
-    console.log(err);
-  });
+    .deleteUser({
+        user: 'TestUser2' // username which you want to delete
+    })
+    .then((result) => {
+        console.log(result);
+    })
+    .catch((err) => {
+        console.log(err);
+    });
 ```
 
 ## List all Repositories operated in a GraphDB Instance
@@ -258,13 +260,13 @@ Get details of all repositories of the GraphDB repositories operated on the conn
 
 ```javascript
 graphDBEndpoint
-  .getRepositories()
-  .then((result) => {
-    console.log(result);
-  })
-  .catch((err) => {
-    console.log(err);
-  });
+    .getRepositories()
+    .then((result) => {
+        console.log(result);
+    })
+    .catch((err) => {
+        console.log(err);
+    });
 ```
 
 ### Result
@@ -309,20 +311,20 @@ The entire repository will be emptied, i.e. all data of this repository will be 
 
 ```javascript
 graphDBEndpoint
-  .clearRepository()
-  .then((result) => {
-    console.log(result);
-  })
-  .catch((err) => {
-    console.log(err);
-  });
+    .clearRepository()
+    .then((result) => {
+        console.log(result);
+    })
+    .catch((err) => {
+        console.log(err);
+    });
 ```
 
 ### Result
 
 ```json
 {
-  "success": true
+    "success": true
 }
 ```
 
@@ -332,41 +334,45 @@ Get all details of all users of a certain GraphDB instance:
 
 ```javascript
 graphDBEndpoint
-  .getUsers()
-  .then((result) => {
-    console.log(result);
-  })
-  .catch((err) => {
-    console.log(err);
-  });
+    .getUsers()
+    .then((result) => {
+        console.log(result);
+    })
+    .catch((err) => {
+        console.log(err);
+    });
 ```
 
 ### Result
 
 ```json
 [
-  {
-    "username": "Test",
-    "password": "",
-    "grantedAuthorities": ["WRITE_REPO_Test", "READ_REPO_Test", "ROLE_USER"],
-    "appSettings": {
-      "DEFAULT_SAMEAS": true,
-      "DEFAULT_INFERENCE": true,
-      "EXECUTE_COUNT": true
+    {
+        "username": "Test",
+        "password": "",
+        "grantedAuthorities": [
+            "WRITE_REPO_Test",
+            "READ_REPO_Test",
+            "ROLE_USER"
+        ],
+        "appSettings": {
+            "DEFAULT_SAMEAS": true,
+            "DEFAULT_INFERENCE": true,
+            "EXECUTE_COUNT": true
+        },
+        "dateCreated": 1549545975380
     },
-    "dateCreated": 1549545975380
-  },
-  {
-    "username": "admin",
-    "password": "",
-    "grantedAuthorities": ["ROLE_ADMIN"],
-    "appSettings": {
-      "DEFAULT_INFERENCE": true,
-      "DEFAULT_SAMEAS": true,
-      "EXECUTE_COUNT": true
-    },
-    "dateCreated": 1478943858311
-  }
+    {
+        "username": "admin",
+        "password": "",
+        "grantedAuthorities": ["ROLE_ADMIN"],
+        "appSettings": {
+            "DEFAULT_INFERENCE": true,
+            "DEFAULT_SAMEAS": true,
+            "EXECUTE_COUNT": true
+        },
+        "dateCreated": 1478943858311
+    }
 ]
 ```
 
@@ -376,13 +382,13 @@ Get Query from GraphDB:
 
 ```javascript
 graphDBEndpoint
-  .getQuery()
-  .then((result) => {
-    console.log(result);
-  })
-  .catch((err) => {
-    console.log(err);
-  });
+    .getQuery()
+    .then((result) => {
+        console.log(result);
+    })
+    .catch((err) => {
+        console.log(err);
+    });
 ```
 
 ## List all Contexts (Name Graphs) used in a given Repository
@@ -391,26 +397,26 @@ List all named graphs inside a given repository:
 
 ```javascript
 graphDBEndpoint
-  .getContexts()
-  .then((result) => {
-    console.log(result);
-  })
-  .catch((err) => {
-    console.log(err, "process error here...");
-  });
+    .getContexts()
+    .then((result) => {
+        console.log(result);
+    })
+    .catch((err) => {
+        console.log(err, 'process error here...');
+    });
 ```
 
 ### Result
 
 ```json
 {
-  "total": 1,
-  "success": true,
-  "records": [
-    {
-      "contextID": "http://ont.enapso.com/test"
-    }
-  ]
+    "total": 1,
+    "success": true,
+    "records": [
+        {
+            "contextID": "http://ont.enapso.com/test"
+        }
+    ]
 }
 ```
 
@@ -421,20 +427,20 @@ The entire context will be emptied, i.e. all data from this context will be remo
 
 ```javascript
 graphDBEndpoint
-  .clearContext(GRAPHDB_CONTEXT_TEST)
-  .then((result) => {
-    console.log(result);
-  })
-  .catch((err) => {
-    console.log(err, "process error here...");
-  });
+    .clearContext(GRAPHDB_CONTEXT_TEST)
+    .then((result) => {
+        console.log(result);
+    })
+    .catch((err) => {
+        console.log(err, 'process error here...');
+    });
 ```
 
 ### Result
 
 ```json
 {
-  "success": true
+    "success": true
 }
 ```
 
@@ -444,30 +450,30 @@ Get details of all location which are assosciated with the connected GraphDB ins
 
 ```javascript
 graphDBEndpoint
-  .getLocations()
-  .then((result) => {
-    console.log(result);
-  })
-  .catch((err) => {
-    console.log(err);
-  });
+    .getLocations()
+    .then((result) => {
+        console.log(result);
+    })
+    .catch((err) => {
+        console.log(err);
+    });
 ```
 
 ### Result
 
 ```json
 [
-  {
-    "uri": "",
-    "label": "Local",
-    "username": null,
-    "password": null,
-    "active": true,
-    "local": true,
-    "system": true,
-    "errorMsg": null,
-    "defaultRepository": null
-  }
+    {
+        "uri": "",
+        "label": "Local",
+        "username": null,
+        "password": null,
+        "active": true,
+        "local": true,
+        "system": true,
+        "errorMsg": null,
+        "defaultRepository": null
+    }
 ]
 ```
 
@@ -477,32 +483,32 @@ Get details of all queries which are saved in a GraphDB instance:
 
 ```javascript
 graphDBEndpoint
-  .getSavedQueries()
-  .then((result) => {
-    console.log(result);
-  })
-  .catch((err) => {
-    console.log(err);
-  });
+    .getSavedQueries()
+    .then((result) => {
+        console.log(result);
+    })
+    .catch((err) => {
+        console.log(err);
+    });
 ```
 
 ### Result
 
 ```json
 {
-  "success": true,
-  "statusCode": 200,
-  "statusMessage": "OK",
-  "data": [
-    {
-      "name": "[Name of your query 1]",
-      "body": "[SPARQL query saved with this name]"
-    },
-    {
-      "name": "[Name of your query 2]",
-      "body": "[SPARQL query saved with this name]"
-    }
-  ]
+    "success": true,
+    "statusCode": 200,
+    "statusMessage": "OK",
+    "data": [
+        {
+            "name": "[Name of your query 1]",
+            "body": "[SPARQL query saved with this name]"
+        },
+        {
+            "name": "[Name of your query 2]",
+            "body": "[SPARQL query saved with this name]"
+        }
+    ]
 }
 ```
 
@@ -513,27 +519,27 @@ if security is on then for creating repository user role need to be Repository M
 
 ```javascript
 graphDBEndpoint
-  .createRepository({
-    id: "AutomatedTest4",
-    title: "enapso Automated Test Repository",
-    location: "",
-    isShacl: true,
-  })
-  .then((result) => {
-    console.log(result);
-  })
-  .catch((err) => {
-    console.log(err);
-  });
+    .createRepository({
+        id: 'AutomatedTest4',
+        title: 'enapso Automated Test Repository',
+        location: '',
+        isShacl: true
+    })
+    .then((result) => {
+        console.log(result);
+    })
+    .catch((err) => {
+        console.log(err);
+    });
 ```
 
 ### Result
 
 ```json
-Create Repository:{
-  "success": true,
-  "statusCode": 201,
-  "statusMessage": "OK"
+{
+    "success": true,
+    "statusCode": 201,
+    "statusMessage": "OK"
 }
 ```
 
@@ -544,26 +550,25 @@ if security is on then for deleting repository user role need to be Repository M
 
 ```javascript
 graphDBEndpoint
-  .deleteRepository({
-    id: "AutomatedTest",
-  })
-  .then((result) => {
-    console.log(result);
-  })
-  .catch((err) => {
-    console.log(err);
-  });
+    .deleteRepository({
+        id: 'AutomatedTest'
+    })
+    .then((result) => {
+        console.log(result);
+    })
+    .catch((err) => {
+        console.log(err);
+    });
 ```
 
 ### Result
 
 ```json
-Delete Repository:{
-  "success": true,
-  "statusCode": 200,
-  "statusMessage": "OK"
+{
+    "success": true,
+    "statusCode": 200,
+    "statusMessage": "OK"
 }
-
 ```
 
 ## Upload SHACL Shape to a GraphDB Instance
@@ -674,13 +679,13 @@ Drop a shacl Shape from GraphDB to remove all validations:
 
 ```javascript
 graphDBEndpoint
-  .dropShaclGraph()
-  .then((result) => {
-    console.log(result);
-  })
-  .catch((err) => {
-    console.log(err);
-  });
+    .dropShaclGraph()
+    .then((result) => {
+        console.log(result);
+    })
+    .catch((err) => {
+        console.log(err);
+    });
 ```
 
 ### Result
