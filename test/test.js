@@ -27,7 +27,7 @@ describe('ENAPSO GraphDB Admin Automated Test Suite', function () {
         lEndpoint
             .login(testConfig.adminUsername, testConfig.adminPassword)
             .then((result) => {
-                expect(result).to.have.property('statusCode', 200);
+                expect(result).to.have.property('status', 200);
                 done();
             })
             .catch((err) => {
@@ -65,7 +65,7 @@ describe('ENAPSO GraphDB Admin Automated Test Suite', function () {
                 ]
             })
             .then((result) => {
-                expect(result).to.have.property('statusCode', 201);
+                expect(result).to.have.property('status', 201);
                 done();
             })
             .catch((err) => {
@@ -78,7 +78,7 @@ describe('ENAPSO GraphDB Admin Automated Test Suite', function () {
         lEndpoint
             .getUsers({})
             .then((result) => {
-                let success = result.statusCode === 200;
+                let success = result.status === 200;
                 if (success && result.data) {
                     for (const user of result.data) {
                         success = user.username === testConfig.newUsername;
@@ -102,7 +102,7 @@ describe('ENAPSO GraphDB Admin Automated Test Suite', function () {
                 user: testConfig.newUsername // username which you want to delete
             })
             .then((result) => {
-                expect(result).to.have.property('statusCode', 204);
+                expect(result).to.have.property('status', 204);
                 done();
             })
             .catch((err) => {
@@ -115,7 +115,7 @@ describe('ENAPSO GraphDB Admin Automated Test Suite', function () {
         lEndpoint
             .getRepositories({})
             .then((result) => {
-                let success = result.statusCode === 200;
+                let success = result.status === 200;
                 if (success && result.data) {
                     for (const repository of result.data) {
                         success =
@@ -273,7 +273,7 @@ describe('ENAPSO GraphDB Admin Automated Test Suite', function () {
         lEndpoint
             .performGarbageCollection({})
             .then((result) => {
-                expect(result.statusCode).to.equal(200);
+                expect(result.status).to.equal(200);
                 done();
             })
             .catch((err) => {

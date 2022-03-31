@@ -497,7 +497,7 @@ graphDBEndpoint
 ```json
 {
     "success": true,
-    "statusCode": 200,
+    "": 200,
     "statusMessage": "OK",
     "data": [
         {
@@ -538,7 +538,7 @@ graphDBEndpoint
 ```json
 {
     "success": true,
-    "statusCode": 201,
+    "": 201,
     "statusMessage": "OK"
 }
 ```
@@ -566,7 +566,7 @@ graphDBEndpoint
 ```json
 {
     "success": true,
-    "statusCode": 200,
+    "": 200,
     "statusMessage": "OK"
 }
 ```
@@ -667,7 +667,7 @@ demoShacl: async function () {
 DropShaclGraph :
 {
   "success": true,
-  "statusCode": 200,
+  "": 200,
   "message": "OK"
 }
 
@@ -694,7 +694,7 @@ graphDBEndpoint
 DropShaclGraph :
 {
   "success": true,
-  "statusCode": 200,
+  "": 200,
   "message": "OK"
 }
 
