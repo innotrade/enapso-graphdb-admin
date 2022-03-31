@@ -498,7 +498,7 @@ graphDBEndpoint
 {
     "success": true,
     "": 200,
-    "statusMessage": "OK",
+    "status": "OK",
     "data": [
         {
             "name": "[Name of your query 1]",
@@ -539,7 +539,7 @@ graphDBEndpoint
 {
     "success": true,
     "": 201,
-    "statusMessage": "OK"
+    "status": "OK"
 }
 ```
 
@@ -567,7 +567,7 @@ graphDBEndpoint
 {
     "success": true,
     "": 200,
-    "statusMessage": "OK"
+    "status": "OK"
 }
 ```
 
