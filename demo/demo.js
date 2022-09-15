@@ -32,7 +32,8 @@ const GRAPHDB_BASE_URL = encfg.getConfig(
     GRAPHDB_CONTEXT_SHACL = encfg.getConfig(
         'enapsoDefaultGraphDB.ContextShacl',
         'http://rdf4j.org/schema/rdf4j#SHACLShapeGraph'
-    );
+    ),
+    GRAPHDB_VERSION = 10;
 // // the default prefixes for all SPARQL queries
 const GRAPHDB_DEFAULT_PREFIXES = [
     EnapsoGraphDBClient.PREFIX_OWL,
@@ -55,6 +56,7 @@ const EnapsoGraphDBAdminDemo = {
                 baseURL: GRAPHDB_BASE_URL,
                 repository: GRAPHDB_REPOSITORY,
                 prefixes: GRAPHDB_DEFAULT_PREFIXES
+                // version: GRAPHDB_VERSION
             });
         } catch (err) {
             console.log(err);
@@ -80,7 +82,8 @@ const EnapsoGraphDBAdminDemo = {
             let resp = await this.graphDBEndpoint.createRepository({
                 id: 'AutomatedTest',
                 title: 'enapso Automated Test Repository',
-                location: ''
+                location: '',
+                isShacl: true
             });
             enLogger.info('Create Repository:' + JSON.stringify(resp, null, 2));
         } catch (err) {
@@ -96,7 +99,7 @@ const EnapsoGraphDBAdminDemo = {
                 authorities: [
                     'WRITE_REPO_Test', // Writing excess wrote WRITE_ and in last name of Repository which excess provided like REPO_Test
                     'READ_REPO_Test', // Reading excess wrote READ_ and in last name of Repository which excess provided like REPO_Test
-                    'READ_REPO_EnapsoDotNetProDemo',
+                    'READ_REPO_Vaccine',
                     'ROLE_USER' // Role of the user
                 ],
                 username: 'TestUser', // Username
@@ -116,8 +119,8 @@ const EnapsoGraphDBAdminDemo = {
                 authorities: [
                     // Writing excess wrote WRITE_ and in last name of Repository which excess provided like REPO_Test
                     'READ_REPO_Test', // Reading excess wrote READ_ and in last name of Repository which excess provided like REPO_Test
-                    'WRITE_REPO_EnapsoDotNetProDemo',
-                    'READ_REPO_EnapsoDotNetProDemo',
+                    'WRITE_REPO_Vaccine',
+                    'READ_REPO_Vaccine',
                     'ROLE_USER' // Role of the user
                 ],
                 username: 'TestUser' // Username
@@ -264,7 +267,7 @@ const EnapsoGraphDBAdminDemo = {
         // upload a file
         try {
             let resp = await this.graphDBEndpoint.uploadFromFile({
-                filename: 'ontologies/EnapsoTest.owl',
+                filename: '../ontologies/EnapsoTest.owl',
                 format: 'application/rdf+xml',
                 baseIRI: 'http://ont.enapso.com/test#',
                 context: 'http://ont.enapso.com/test'
@@ -308,7 +311,7 @@ const EnapsoGraphDBAdminDemo = {
             let resp = await this.graphDBEndpoint.downloadToFile({
                 format: lFormat.type,
                 filename:
-                    'ontologies/' +
+                    '../ontologies/' +
                     this.graphDBEndpoint.getRepository() +
                     lFormat.extension
             });
@@ -571,7 +574,7 @@ const EnapsoGraphDBAdminDemo = {
             // now upload ontology directly from test ontology file into test graph into the test repository
             enLogger.info('\nUploading ontology from file...');
             resp = await this.graphDBEndpoint.uploadFromFile({
-                filename: './ontologies/EnapsoTest.owl',
+                filename: '../ontologies/EnapsoTest.owl',
                 context: GRAPHDB_CONTEXT_TEST,
                 format: EnapsoGraphDBClient.FORMAT_RDF_XML.type
             });
@@ -615,7 +618,7 @@ const EnapsoGraphDBAdminDemo = {
             // and upload ontology again to have the same initital status for shacl tests as w/o the shacl tests
             enLogger.info('\nUploading ontology from file...');
             resp = await this.graphDBEndpoint.uploadFromFile({
-                filename: './ontologies/EnapsoTest.owl',
+                filename: '../ontologies/EnapsoTest.owl',
                 context: GRAPHDB_CONTEXT_TEST,
                 format: EnapsoGraphDBClient.FORMAT_RDF_XML.type
             });
@@ -701,15 +704,14 @@ const EnapsoGraphDBAdminDemo = {
         // this.demoDownloadToFile();
         // this.demoDownloadToText();
 
-        // this.demoShacl();
+        this.demoShacl();
         // await this.demoDropShaclGraph();
 
-        /*
-			enLogger.info("--- Inserting new triple --- ")
-			await this.demoInsert();
-			*/
+        // enLogger.info('--- Inserting new triple --- ');
+        // await this.demoInsert();
+
         //enLogger.info("--- Graph should contain TestClass now --- ")
-        //await this.demoQuery();
+        // await this.demoQuery();
         /*
 			// await this.demoDownloadToFile();
 			enLogger.info("--- Updating existing triple --- ")
@@ -732,11 +734,9 @@ const EnapsoGraphDBAdminDemo = {
         // await this.demoDeleteUser();
         // await this.demoClearRepository();
 
-        /*
-			  enLogger.info("Start: " + new Date().toISOString());
-			  await this.demoWaitForGraphDB();
-			  enLogger.info("Finish: " + new Date().toISOString());
-			  */
+        // enLogger.info('Start: ' + new Date().toISOString());
+        // await this.demoWaitForGraphDB();
+        // enLogger.info('Finish: ' + new Date().toISOString());
 
         // await this.demoGetQuery();
     }

@@ -2,9 +2,9 @@
 
 enapso Ontotext GraphDB 8.x/9.x Administration Toolbox for Node.js
 
-Admin client for OntoText GraphDB to easily perform administrative and monitoring operations against your RDF stores, your OWL ontologies or knowledge graphs in nodes.js applications. This client supports an easy import of existing RDF stores and ontologies to GraphDB by upload via file, strings or URLs as well as an export in numerous formats and also a context management. You can monitor the cpu load and memory usage of GraphDB and run the garbage collector on demand to optimally trigger huge batch operations also provide the user managememt, the creation and listing of new repositories as well as an location and cluster management of Ontotext GraphDB.
+Admin client for Ontotext GraphDB to easily perform administrative and monitoring operations against your RDF stores, your OWL ontologies or knowledge graphs in nodes.js applications. This client supports an easy import of existing RDF stores and ontologies to GraphDB by upload via file, strings or URLs as well as an export in numerous formats and also a context management. You can monitor the cpu load and memory usage of GraphDB and run the garbage collector on demand to optimally trigger huge batch operations also provide the user managememt, the creation and listing of new repositories as well as an location and cluster management of Ontotext GraphDB.
 
-**The following demos require a running GraphDB 8.x/9.x instance on localhost at port 7200. The demos as well as the automated tests require a fully working Ontotext GraphDB repository "Test" and a user "admin" with the password "root" being set up as an administrator and repository ruleset must have OWL Horst(Optimizes) Base URL: http://ont.enapso.com/test#, graph: http://ont.enapso.com/test#**
+**The following demos require a running GraphDB 8.x/9.x instance on localhost at port 7200. The demos as well as the automated tests require a fully working Ontotext GraphDB repository "Test" and a user "admin" with the password "root" being set up as an administrator and repository ruleset must have OWL RDFS Plus(Optimized) Base URL: http://ont.enapso.com/test#, graph: http://ont.enapso.com/test#**
 Get the latest version of GraphDB for free at https://www.ontotext.com/free-graphdb-download-copy/.
 
 **This project is actively developed and maintained.**
@@ -30,7 +30,8 @@ const GRAPHDB_BASE_URL = 'http://localhost:7200',
     GRAPHDB_USERNAME = 'Test',
     GRAPHDB_PASSWORD = 'Test',
     GRAPHDB_CONTEXT_TEST = 'http://ont.enapso.com/repo',
-    GRAPHDB_CONTEXT_SHACL = 'http://rdf4j.org/schema/rdf4j#SHACLShapeGraph';
+    GRAPHDB_CONTEXT_SHACL = 'http://rdf4j.org/schema/rdf4j#SHACLShapeGraph',
+    GRAPHDB_VERSION = 9;
 
 // the default prefixes for all SPARQL queries
 const GRAPHDB_DEFAULT_PREFIXES = [
@@ -44,11 +45,14 @@ const GRAPHDB_DEFAULT_PREFIXES = [
 
 Create an endpoint client with graphdb to perform operation:
 
+version parameter is optional by default it work with GraphDB 10.x but to make it also compartiable with GraphDB 8.x/9.x pass the versio.
+
 ```javascript
 let graphDBEndpoint = new EnapsoGraphDBClient.Endpoint({
     baseURL: GRAPHDB_BASE_URL,
     repository: GRAPHDB_REPOSITORY,
-    prefixes: GRAPHDB_DEFAULT_PREFIXES
+    prefixes: GRAPHDB_DEFAULT_PREFIXES,
+    version: GRAPHDB_VERSION
 });
 ```
 
@@ -69,7 +73,7 @@ graphDBEndpoint
 
 ## Upload a File to GraphDB
 
-Upload an ontology and import it into a GraphDB repository and optional context (graph) automatically if upload was successful:
+Upload an ontology and import it into GraphDB repository automatically if upload was successful. context (graph) and baseIRI paramters are optional :
 
 ```javascript
 graphDBEndpoint
@@ -89,7 +93,7 @@ graphDBEndpoint
 
 ## Upload from Data to GraphDB
 
-Upload data (rather than a file) and automatically import the data into a GraphDB repository and optional context (graph):
+Upload data (rather than a file) and automatically import the data into a GraphDB repository and context (graph) is optional paramters:
 
 ```javascript
 fsPromises
@@ -187,8 +191,8 @@ graphDBEndpoint
 
 ## Create New User and Assign Role
 
-Create a new user and provide him/her with read/write access to certain repositories in a GraphDB instance:
-if security is on then for Creating new User user role need to be Adminstrator else operation not performed
+Create a new user and provide user with read/write access to certain repositories in a GraphDB instance:
+if security is on then for Creating new User, user role need to be Adminstrator else operation not performed
 
 ```javascript
 graphDBEndpoint
@@ -213,7 +217,7 @@ graphDBEndpoint
 ## Update User Role and Authorities
 
 Update the user's roles (read/write rights) for certain repositories:
-if security is on then for Updating Exisiting User user role need to be Adminstrator else operation not performed
+if security is on then for Updating Existing User, user role need to be Adminstrator else operation not performed
 
 ```javascript
 graphDBEndpoint
@@ -239,7 +243,7 @@ graphDBEndpoint
 
 **Caution! This deletes the user including all assigend authorities (roles)! This operation cannot be undone!**
 Deletes a user from the GraphDB instance:
-if security is on then for Deleting User user role need to be Adminstrator else operation not performed
+if security is on then for Deleting User, user role need to be Adminstrator else operation not performed
 
 ```javascript
 graphDBEndpoint
@@ -514,8 +518,8 @@ graphDBEndpoint
 
 ## Create new Repository in your GraphDB Instance
 
-Create a new repository in your GraphDB instance isShacl option is optional if want to enable then set it as true and by default it is false:
-if security is on then for creating repository user role need to be Repository Manager else operation not performed
+Create a new repository in your GraphDB instance, isShacl paramter is optional by defult it is false.
+if security is on then for creating repository, user role need to be Repository Manager else operation not performed
 
 ```javascript
 graphDBEndpoint
@@ -546,7 +550,7 @@ graphDBEndpoint
 ## Delete Repository in a GraphDB Instance
 
 Delete a repository in the connected GraphDB instance:
-if security is on then for deleting repository user role need to be Repository Manager else operation not performed
+if security is on then for deleting repository, user role need to be Repository Manager else operation not performed
 
 ```javascript
 graphDBEndpoint

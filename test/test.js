@@ -20,7 +20,8 @@ describe('ENAPSO GraphDB Admin Automated Test Suite', function () {
     const lEndpoint = new EnapsoGraphDBClient.Endpoint({
         baseURL: testConfig.baseURL,
         repository: testConfig.repository,
-        prefixes: testConfig.prefixes
+        prefixes: testConfig.prefixes,
+        version: testConfig.version
     });
 
     it('Authenticate against GraphDB instance', function (done) {
