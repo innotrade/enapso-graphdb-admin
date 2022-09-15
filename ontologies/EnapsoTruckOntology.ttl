@@ -1,0 +1,702 @@
+@prefix : <http://ont.enapso.com/truck#> .
+@prefix enh: <http://ont.enapso.com/truck#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix 1.0.0: <http://ont.enapso.com/truck/1.0.0#> .
+@prefix terms: <http://purl.org/dc/terms/> .
+@prefix schema: <https://schema.org/> .
+@base <http://ont.enapso.com/truck> .
+
+<http://ont.enapso.com/truck> rdf:type owl:Ontology ;
+                               owl:versionIRI <http://ont.enapso.com/truck/1.0.0> ;
+                               rdfs:comment "ENAPSO Haigo Transportation Ontology"@en .
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://ont.enapso.com/truck#haCurrentLocation
+enh:haCurrentLocation rdf:type owl:ObjectProperty ;
+                      rdfs:label "has Current Location"@en .
+
+
+###  http://ont.enapso.com/truck#hasEndPoint
+enh:hasEndPoint rdf:type owl:ObjectProperty ;
+                rdfs:label "has End Point"@en .
+
+
+###  http://ont.enapso.com/truck#hasLoadingService
+enh:hasLoadingService rdf:type owl:ObjectProperty ;
+                      rdfs:label "has Loading Service"@en .
+
+
+###  http://ont.enapso.com/truck#hasMap
+enh:hasMap rdf:type owl:ObjectProperty ;
+           rdfs:label "has Map"@en .
+
+
+###  http://ont.enapso.com/truck#hasOrder
+enh:hasOrder rdf:type owl:ObjectProperty ;
+             rdfs:label "has Order"@en .
+
+
+###  http://ont.enapso.com/truck#hasOwner
+enh:hasOwner rdf:type owl:ObjectProperty ;
+             rdfs:label "has Owner"@en .
+
+
+###  http://ont.enapso.com/truck#hasRate
+enh:hasRate rdf:type owl:ObjectProperty ;
+            rdfs:label "has Rate"@en .
+
+
+###  http://ont.enapso.com/truck#hasRoutes
+enh:hasRoutes rdf:type owl:ObjectProperty ;
+              rdfs:label "has Routes"@en .
+
+
+###  http://ont.enapso.com/truck#hasStartPoint
+enh:hasStartPoint rdf:type owl:ObjectProperty ;
+                  rdfs:label "has Start Point"@en .
+
+
+###  http://ont.enapso.com/truck#hasTruck
+enh:hasTruck rdf:type owl:ObjectProperty ;
+             rdfs:label "has Truck"@en .
+
+
+###  http://ont.enapso.com/truck#hasUnLoadingService
+enh:hasUnLoadingService rdf:type owl:ObjectProperty ;
+                        rdfs:label "has Un Loading Service"@en .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://ont.enapso.com/truck#DeliveryType
+enh:DeliveryType rdf:type owl:DatatypeProperty ;
+                 rdfs:label "delivery Type"@en .
+
+
+###  http://ont.enapso.com/truck#address
+enh:address rdf:type owl:DatatypeProperty ;
+            rdfs:label "address"@en .
+
+
+###  http://ont.enapso.com/truck#averageFuelConsumption
+enh:averageFuelConsumption rdf:type owl:DatatypeProperty ;
+                           rdfs:label "average Fuel Consumption"@en .
+
+
+###  http://ont.enapso.com/truck#averageSpeed
+enh:averageSpeed rdf:type owl:DatatypeProperty ;
+                 rdfs:label "average Speed"@en .
+
+
+###  http://ont.enapso.com/truck#cargoVolume
+enh:cargoVolume rdf:type owl:DatatypeProperty ;
+                rdfs:label "cargo Volume"@en .
+
+
+###  http://ont.enapso.com/truck#chassisNumber
+enh:chassisNumber rdf:type owl:DatatypeProperty ;
+                  rdfs:label "chassis Number"@en .
+
+
+###  http://ont.enapso.com/truck#costPerHour
+enh:costPerHour rdf:type owl:DatatypeProperty ;
+                rdfs:label "cost Per Hour"@en .
+
+
+###  http://ont.enapso.com/truck#costPerkm
+enh:costPerkm rdf:type owl:DatatypeProperty ;
+              rdfs:label "cost Per km"@en .
+
+
+###  http://ont.enapso.com/truck#deliveryAddress
+enh:deliveryAddress rdf:type owl:DatatypeProperty ;
+                    rdfs:label "delivery Address"@en .
+
+
+###  http://ont.enapso.com/truck#deliveryDistance
+enh:deliveryDistance rdf:type owl:DatatypeProperty ;
+                     rdfs:label "delivery Distance"@en .
+
+
+###  http://ont.enapso.com/truck#driveConfiguration
+enh:driveConfiguration rdf:type owl:DatatypeProperty ;
+                       rdfs:label "drive Configuration"@en .
+
+
+###  http://ont.enapso.com/truck#expectedDeliveryDate
+enh:expectedDeliveryDate rdf:type owl:DatatypeProperty ;
+                         rdfs:label "expected Delivery Date"@en .
+
+
+###  http://ont.enapso.com/truck#licenceNumber
+enh:licenceNumber rdf:type owl:DatatypeProperty ;
+                  rdfs:label "licence Number"@en .
+
+
+###  http://ont.enapso.com/truck#loadCapacity
+enh:loadCapacity rdf:type owl:DatatypeProperty ;
+                 rdfs:label "load Capacity"@en .
+
+
+###  http://ont.enapso.com/truck#loadingCost
+enh:loadingCost rdf:type owl:DatatypeProperty ;
+                rdfs:label "loading Cost" .
+
+
+###  http://ont.enapso.com/truck#loadingTime
+enh:loadingTime rdf:type owl:DatatypeProperty ;
+                rdfs:label "loading Time" .
+
+
+###  http://ont.enapso.com/truck#make
+enh:make rdf:type owl:DatatypeProperty ;
+         rdfs:label "make"@en .
+
+
+###  http://ont.enapso.com/truck#maximumSpeed
+enh:maximumSpeed rdf:type owl:DatatypeProperty ;
+                 rdfs:label "maximum Speed"@en .
+
+
+###  http://ont.enapso.com/truck#mileageReadDate
+enh:mileageReadDate rdf:type owl:DatatypeProperty ;
+                    rdfs:label "mileage Read Date"@en .
+
+
+###  http://ont.enapso.com/truck#model
+enh:model rdf:type owl:DatatypeProperty ;
+          rdfs:label "model"@en .
+
+
+###  http://ont.enapso.com/truck#name
+enh:name rdf:type owl:DatatypeProperty ;
+         rdfs:label "name"@en .
+
+
+###  http://ont.enapso.com/truck#noOfSeats
+enh:noOfSeats rdf:type owl:DatatypeProperty ;
+              rdfs:label "no of seats"@en .
+
+
+###  http://ont.enapso.com/truck#orderId
+enh:orderId rdf:type owl:DatatypeProperty ;
+            rdfs:label "order Id"@en .
+
+
+###  http://ont.enapso.com/truck#orderdate
+enh:orderdate rdf:type owl:DatatypeProperty ;
+              rdfs:label "order Date"@en .
+
+
+###  http://ont.enapso.com/truck#power
+enh:power rdf:type owl:DatatypeProperty ;
+          rdfs:label "power"@en .
+
+
+###  http://ont.enapso.com/truck#ratePerVolume
+enh:ratePerVolume rdf:type owl:DatatypeProperty ;
+                  rdfs:label "rate Per Volume"@en .
+
+
+###  http://ont.enapso.com/truck#status
+enh:status rdf:type owl:DatatypeProperty ;
+           rdfs:label "status"@en .
+
+
+###  http://ont.enapso.com/truck#time
+enh:time rdf:type owl:DatatypeProperty ;
+         rdfs:label "time"@en .
+
+
+###  http://ont.enapso.com/truck#totalMileage
+enh:totalMileage rdf:type owl:DatatypeProperty ;
+                 rdfs:label "total Mileage"@en .
+
+
+###  http://ont.enapso.com/truck#transportCharges
+enh:transportCharges rdf:type owl:DatatypeProperty ;
+                     rdfs:label "transport Charges"@en .
+
+
+###  http://ont.enapso.com/truck#truckNumber
+enh:truckNumber rdf:type owl:DatatypeProperty ;
+                rdfs:label "truck Number"@en .
+
+
+###  http://ont.enapso.com/truck#unLoadingCost
+enh:unLoadingCost rdf:type owl:DatatypeProperty ;
+                  rdfs:label "un Loading Cost"@en .
+
+
+###  http://ont.enapso.com/truck#unLoadingTime
+enh:unLoadingTime rdf:type owl:DatatypeProperty ;
+                  rdfs:label "un Loading Time"@en .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://ont.enapso.com/truck#DeliveryPlan
+enh:DeliveryPlan rdf:type owl:Class ;
+                 rdfs:subClassOf [ rdf:type owl:Restriction ;
+                                   owl:onProperty enh:hasOrder ;
+                                   owl:allValuesFrom enh:Order
+                                 ] ,
+                                 [ rdf:type owl:Restriction ;
+                                   owl:onProperty enh:hasTruck ;
+                                   owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                   owl:onClass enh:Truck
+                                 ] ,
+                                 [ rdf:type owl:Restriction ;
+                                   owl:onProperty enh:status ;
+                                   owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                   owl:onDataRange xsd:string
+                                 ] ;
+                 rdfs:comment "Delivery plan means how a order deliver through which truck and using which route through map"@en ;
+                 rdfs:label "Delivery Plan"@en .
+
+
+###  http://ont.enapso.com/truck#GeoLocation
+enh:GeoLocation rdf:type owl:Class ;
+                rdfs:subClassOf enh:Location ;
+                rdfs:comment "Gro Location is a technique of identifying the geographical location of a person or device by means of digital information processed via the internet."@en ;
+                rdfs:label "Geo Location"@en .
+
+
+###  http://ont.enapso.com/truck#Location
+enh:Location rdf:type owl:Class ;
+             rdfs:subClassOf [ rdf:type owl:Restriction ;
+                               owl:onProperty enh:address ;
+                               owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                               owl:onDataRange xsd:string
+                             ] ;
+             rdfs:comment "Location is a particular place or position."@en ;
+             rdfs:label "Location"@en .
+
+
+###  http://ont.enapso.com/truck#Map
+enh:Map rdf:type owl:Class ;
+        rdfs:subClassOf [ rdf:type owl:Restriction ;
+                          owl:onProperty enh:hasRoutes ;
+                          owl:allValuesFrom enh:Route
+                        ] ;
+        rdfs:label "Map"@en .
+
+
+###  http://ont.enapso.com/truck#Order
+enh:Order rdf:type owl:Class ;
+          rdfs:subClassOf [ rdf:type owl:Restriction ;
+                            owl:onProperty enh:hasRate ;
+                            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                            owl:onClass enh:Rate
+                          ] ,
+                          [ rdf:type owl:Restriction ;
+                            owl:onProperty enh:hasRoutes ;
+                            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                            owl:onClass enh:Route
+                          ] ,
+                          [ rdf:type owl:Restriction ;
+                            owl:onProperty enh:unLoadingTime ;
+                            owl:someValuesFrom xsd:string
+                          ] ,
+                          [ rdf:type owl:Restriction ;
+                            owl:onProperty enh:cargoVolume ;
+                            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                            owl:onDataRange xsd:string
+                          ] ,
+                          [ rdf:type owl:Restriction ;
+                            owl:onProperty enh:deliveryAddress ;
+                            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                            owl:onDataRange xsd:string
+                          ] ,
+                          [ rdf:type owl:Restriction ;
+                            owl:onProperty enh:expectedDeliveryDate ;
+                            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                            owl:onDataRange xsd:string
+                          ] ,
+                          [ rdf:type owl:Restriction ;
+                            owl:onProperty enh:orderId ;
+                            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                            owl:onDataRange xsd:string
+                          ] ,
+                          [ rdf:type owl:Restriction ;
+                            owl:onProperty enh:orderdate ;
+                            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                            owl:onDataRange xsd:string
+                          ] ,
+                          [ rdf:type owl:Restriction ;
+                            owl:onProperty enh:status ;
+                            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                            owl:onDataRange xsd:string
+                          ] ,
+                          [ rdf:type owl:Restriction ;
+                            owl:onProperty enh:transportCharges ;
+                            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                            owl:onDataRange xsd:string
+                          ] ,
+                          [ rdf:type owl:Restriction ;
+                            owl:onProperty enh:loadingCost ;
+                            owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                            owl:onDataRange xsd:string
+                          ] ,
+                          [ rdf:type owl:Restriction ;
+                            owl:onProperty enh:loadingTime ;
+                            owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                            owl:onDataRange xsd:string
+                          ] ;
+          rdfs:label "Order"@en .
+
+
+###  http://ont.enapso.com/truck#Rate
+enh:Rate rdf:type owl:Class ;
+         rdfs:subClassOf [ rdf:type owl:Restriction ;
+                           owl:onProperty enh:hasOwner ;
+                           owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                           owl:onClass enh:TransportCompany
+                         ] ,
+                         [ rdf:type owl:Restriction ;
+                           owl:onProperty enh:DeliveryType ;
+                           owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                           owl:onDataRange xsd:string
+                         ] ,
+                         [ rdf:type owl:Restriction ;
+                           owl:onProperty enh:ratePerVolume ;
+                           owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                           owl:onDataRange xsd:string
+                         ] ;
+         rdfs:comment "A rate calculator is the ratio between two related quantities in different units."@en ;
+         rdfs:label "Rate"@en .
+
+
+###  http://ont.enapso.com/truck#Route
+enh:Route rdf:type owl:Class ;
+          rdfs:subClassOf [ rdf:type owl:Restriction ;
+                            owl:onProperty enh:hasEndPoint ;
+                            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                            owl:onClass enh:Location
+                          ] ,
+                          [ rdf:type owl:Restriction ;
+                            owl:onProperty enh:hasStartPoint ;
+                            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                            owl:onClass enh:Location
+                          ] ,
+                          [ rdf:type owl:Restriction ;
+                            owl:onProperty enh:deliveryDistance ;
+                            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                            owl:onDataRange xsd:integer
+                          ] ;
+          rdfs:comment "A transportation route is the regular path that is followed by a movement of people or goods."@en ;
+          rdfs:label "Route"@en .
+
+
+###  http://ont.enapso.com/truck#StreetLocation
+enh:StreetLocation rdf:type owl:Class ;
+                   rdfs:subClassOf enh:Location ;
+                   rdfs:comment "Street Location is a location that primarily displays roads and transport links."@en ;
+                   rdfs:label "Street Location"@en .
+
+
+###  http://ont.enapso.com/truck#TransportCompany
+enh:TransportCompany rdf:type owl:Class ;
+                     rdfs:subClassOf [ rdf:type owl:Restriction ;
+                                       owl:onProperty enh:address ;
+                                       owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                       owl:onDataRange xsd:string
+                                     ] ,
+                                     [ rdf:type owl:Restriction ;
+                                       owl:onProperty enh:name ;
+                                       owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                       owl:onDataRange xsd:string
+                                     ] ;
+                     rdfs:comment "A transportation company is a business that transports freight from one location to another which is a key in the value chain in manufacturing"@en ;
+                     rdfs:label "Transport Company"@en .
+
+
+###  http://ont.enapso.com/truck#Truck
+enh:Truck rdf:type owl:Class ;
+          rdfs:subClassOf [ rdf:type owl:Restriction ;
+                            owl:onProperty enh:hasOwner ;
+                            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                            owl:onClass enh:TransportCompany
+                          ] ,
+                          [ rdf:type owl:Restriction ;
+                            owl:onProperty enh:haCurrentLocation ;
+                            owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                            owl:onClass enh:Location
+                          ] ,
+                          [ rdf:type owl:Restriction ;
+                            owl:onProperty enh:averageSpeed ;
+                            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                            owl:onDataRange xsd:integer
+                          ] ,
+                          [ rdf:type owl:Restriction ;
+                            owl:onProperty enh:chassisNumber ;
+                            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                            owl:onDataRange xsd:string
+                          ] ,
+                          [ rdf:type owl:Restriction ;
+                            owl:onProperty enh:costPerHour ;
+                            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                            owl:onDataRange xsd:decimal
+                          ] ,
+                          [ rdf:type owl:Restriction ;
+                            owl:onProperty enh:costPerkm ;
+                            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                            owl:onDataRange xsd:decimal
+                          ] ,
+                          [ rdf:type owl:Restriction ;
+                            owl:onProperty enh:driveConfiguration ;
+                            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                            owl:onDataRange xsd:string
+                          ] ,
+                          [ rdf:type owl:Restriction ;
+                            owl:onProperty enh:licenceNumber ;
+                            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                            owl:onDataRange xsd:string
+                          ] ,
+                          [ rdf:type owl:Restriction ;
+                            owl:onProperty enh:loadCapacity ;
+                            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                            owl:onDataRange xsd:decimal
+                          ] ,
+                          [ rdf:type owl:Restriction ;
+                            owl:onProperty enh:model ;
+                            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                            owl:onDataRange xsd:string
+                          ] ,
+                          [ rdf:type owl:Restriction ;
+                            owl:onProperty enh:power ;
+                            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                            owl:onDataRange xsd:integer
+                          ] ,
+                          [ rdf:type owl:Restriction ;
+                            owl:onProperty enh:truckNumber ;
+                            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                            owl:onDataRange xsd:string
+                          ] ,
+                          [ rdf:type owl:Restriction ;
+                            owl:onProperty enh:averageFuelConsumption ;
+                            owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                            owl:onDataRange xsd:decimal
+                          ] ,
+                          [ rdf:type owl:Restriction ;
+                            owl:onProperty enh:make ;
+                            owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                            owl:onDataRange xsd:string
+                          ] ,
+                          [ rdf:type owl:Restriction ;
+                            owl:onProperty enh:maximumSpeed ;
+                            owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                            owl:onDataRange xsd:integer
+                          ] ,
+                          [ rdf:type owl:Restriction ;
+                            owl:onProperty enh:totalMileage ;
+                            owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                            owl:onDataRange xsd:string
+                          ] ;
+          rdfs:comment "A truck is a motor vehicle designed to transport cargo. Trucks vary greatly in size, power, and configuration."@en ;
+          rdfs:label "Truck"@en .
+
+
+#################################################################
+#    Individuals
+#################################################################
+
+###  http://ont.enapso.com/truck#DeliveryPlaneb63ee72_a078_4864_bc23_9577da504c9c
+enh:DeliveryPlaneb63ee72_a078_4864_bc23_9577da504c9c rdf:type owl:NamedIndividual ,
+                                                              enh:DeliveryPlan ;
+                                                     enh:hasOrder enh:Ordercf913614_a727_4dc0_99b5_bf99eacdf5bb ;
+                                                     enh:hasTruck enh:Truck025d8a60_50fe_41ce_abd2_1acda942b83a ;
+                                                     enh:status "Delivered"^^xsd:string ;
+                                                     rdfs:label "Order 1 DeliveryPlan"@en .
+
+
+###  http://ont.enapso.com/truck#Location1dccb805_064f_490f_9392_64f3331673d8
+enh:Location1dccb805_064f_490f_9392_64f3331673d8 rdf:type owl:NamedIndividual ,
+                                                          enh:Location ;
+                                                 enh:address "Bremen"^^xsd:string ;
+                                                 rdfs:label "Bremen"@en .
+
+
+###  http://ont.enapso.com/truck#Location2fe7aebd_7b01_4f01_baa1_0482ebf09812
+enh:Location2fe7aebd_7b01_4f01_baa1_0482ebf09812 rdf:type owl:NamedIndividual ,
+                                                          enh:Location ;
+                                                 enh:address "Cologne"^^xsd:string ;
+                                                 rdfs:label "Cologne"@en .
+
+
+###  http://ont.enapso.com/truck#Location3539b55d_2a6b_47f5_b35b_57267ce0f1cc
+enh:Location3539b55d_2a6b_47f5_b35b_57267ce0f1cc rdf:type owl:NamedIndividual ,
+                                                          enh:Location ;
+                                                 enh:address "Hamburg"^^xsd:string ;
+                                                 rdfs:label "Hamburg"@en .
+
+
+###  http://ont.enapso.com/truck#Locationa17eec90_cd8d_45ec_9054_b81bdefa6169
+enh:Locationa17eec90_cd8d_45ec_9054_b81bdefa6169 rdf:type owl:NamedIndividual ,
+                                                          enh:Location ;
+                                                 enh:address "Munich"^^xsd:string ;
+                                                 rdfs:label "Munich"@en .
+
+
+###  http://ont.enapso.com/truck#Locationa8a0aed7_7a82_48f5_98d9_c281b50d1916
+enh:Locationa8a0aed7_7a82_48f5_98d9_c281b50d1916 rdf:type owl:NamedIndividual ,
+                                                          enh:Location ;
+                                                 enh:address "Berlin"^^xsd:string ;
+                                                 rdfs:label "Berlin"@en .
+
+
+###  http://ont.enapso.com/truck#Mapb755fa6e_9f8a_4f2b_92d2_699e185ba601
+enh:Mapb755fa6e_9f8a_4f2b_92d2_699e185ba601 rdf:type owl:NamedIndividual ,
+                                                     enh:Map ;
+                                            enh:hasRoutes enh:Routeb9050b1b_12e4_41c7_91b6_fbde92d954f3 ,
+                                                          enh:Routec6c73b57_9756_45dc_a28f_2ee2a99fdc98 ,
+                                                          enh:Routef195f1f3_6fae_4263_a1d5_300493896a58 ;
+                                            rdfs:label "Map"@en .
+
+
+###  http://ont.enapso.com/truck#Ordercf913614_a727_4dc0_99b5_bf99eacdf5bb
+enh:Ordercf913614_a727_4dc0_99b5_bf99eacdf5bb rdf:type owl:NamedIndividual ,
+                                                       enh:Order ;
+                                              enh:hasRate enh:RateCalculator9738c1c3_3d68_478e_a195_f398c53af784 ;
+                                              enh:hasRoutes enh:Routec6c73b57_9756_45dc_a28f_2ee2a99fdc98 ;
+                                              enh:cargoVolume 40.2 ;
+                                              enh:deliveryAddress "Fasanenstr. 57, 22763 Hamburg, Germany"^^xsd:string ;
+                                              enh:expectedDeliveryDate "2021-06-08"^^xsd:string ;
+                                              enh:loadingCost 150.12 ;
+                                              enh:loadingTime 2 ;
+                                              enh:orderId "3794213"^^xsd:string ;
+                                              enh:orderdate "2021-06-04"^^xsd:string ;
+                                              enh:transportCharges 1520.33 ;
+                                              enh:unLoadingCost 90.12 ;
+                                              enh:unLoadingTime 2 ;
+                                              rdfs:label "Order1"@en .
+
+
+###  http://ont.enapso.com/truck#RateCalculator142bc4a2_5c50_441c_b3db_b2e5985ae0a8
+enh:RateCalculator142bc4a2_5c50_441c_b3db_b2e5985ae0a8 rdf:type owl:NamedIndividual ,
+                                                                enh:Rate ;
+                                                       enh:hasOwner enh:TransportationCompany5cfb2f42_500e_4856_9acb_80901669cb7f ;
+                                                       enh:DeliveryType "Express"^^xsd:string ;
+                                                       enh:ratePerVolume 50 ;
+                                                       rdfs:label "Express Rate"@en .
+
+
+###  http://ont.enapso.com/truck#RateCalculator9738c1c3_3d68_478e_a195_f398c53af784
+enh:RateCalculator9738c1c3_3d68_478e_a195_f398c53af784 rdf:type owl:NamedIndividual ,
+                                                                enh:Rate ;
+                                                       enh:hasOwner enh:TransportationCompany5cfb2f42_500e_4856_9acb_80901669cb7f ;
+                                                       enh:DeliveryType "Normal"^^xsd:string ;
+                                                       enh:ratePerVolume 30.00 ;
+                                                       rdfs:label "Normal Rate"@en .
+
+
+###  http://ont.enapso.com/truck#Routeb9050b1b_12e4_41c7_91b6_fbde92d954f3
+enh:Routeb9050b1b_12e4_41c7_91b6_fbde92d954f3 rdf:type owl:NamedIndividual ,
+                                                       enh:Route ;
+                                              enh:hasEndPoint enh:Location2fe7aebd_7b01_4f01_baa1_0482ebf09812 ;
+                                              enh:hasStartPoint enh:Locationa8a0aed7_7a82_48f5_98d9_c281b50d1916 ;
+                                              enh:deliveryDistance 356 ;
+                                              rdfs:label "Berlin To Cologne Route"@en .
+
+
+###  http://ont.enapso.com/truck#Routec6c73b57_9756_45dc_a28f_2ee2a99fdc98
+enh:Routec6c73b57_9756_45dc_a28f_2ee2a99fdc98 rdf:type owl:NamedIndividual ,
+                                                       enh:Route ;
+                                              enh:hasEndPoint enh:Location3539b55d_2a6b_47f5_b35b_57267ce0f1cc ;
+                                              enh:hasStartPoint enh:Locationa8a0aed7_7a82_48f5_98d9_c281b50d1916 ;
+                                              enh:deliveryDistance 178 ;
+                                              rdfs:label "Berlin To Hamburg Route"@en .
+
+
+###  http://ont.enapso.com/truck#Routef195f1f3_6fae_4263_a1d5_300493896a58
+enh:Routef195f1f3_6fae_4263_a1d5_300493896a58 rdf:type owl:NamedIndividual ,
+                                                       enh:Route ;
+                                              enh:hasEndPoint enh:Locationa17eec90_cd8d_45ec_9054_b81bdefa6169 ;
+                                              enh:hasStartPoint enh:Locationa8a0aed7_7a82_48f5_98d9_c281b50d1916 ;
+                                              enh:deliveryDistance 364 ;
+                                              rdfs:label "Berlin To Munich Route"@en .
+
+
+###  http://ont.enapso.com/truck#TransportationCompany5cfb2f42_500e_4856_9acb_80901669cb7f
+enh:TransportationCompany5cfb2f42_500e_4856_9acb_80901669cb7f rdf:type owl:NamedIndividual ,
+                                                                       enh:TransportCompany ;
+                                                              enh:address "Shahab Pura Road Sialkot"^^xsd:string ;
+                                                              enh:name "Haigo Transportation"^^xsd:string ;
+                                                              rdfs:label "Haigo Transportation"@en .
+
+
+###  http://ont.enapso.com/truck#Truck025d8a60_50fe_41ce_abd2_1acda942b83a
+enh:Truck025d8a60_50fe_41ce_abd2_1acda942b83a rdf:type owl:NamedIndividual ,
+                                                       enh:Truck ;
+                                              enh:haCurrentLocation enh:Locationa8a0aed7_7a82_48f5_98d9_c281b50d1916 ;
+                                              enh:hasOwner enh:TransportationCompany5cfb2f42_500e_4856_9acb_80901669cb7f ;
+                                              enh:averageFuelConsumption 7.2 ;
+                                              enh:averageSpeed 48 ;
+                                              enh:chassisNumber "1GN CS18Z3M0 115561"^^xsd:string ;
+                                              enh:costPerHour 10.22 ;
+                                              enh:costPerkm 2.23 ;
+                                              enh:driveConfiguration "LHD"^^xsd:string ;
+                                              enh:licenceNumber "B-KM 1781"^^xsd:string ;
+                                              enh:loadCapacity 69.7 ;
+                                              enh:maximumSpeed 128 ;
+                                              enh:mileageReadDate "21/01/2021"^^xsd:string ;
+                                              enh:model "190"^^xsd:string ;
+                                              enh:noOfSeats 5 ;
+                                              enh:power 208 ;
+                                              enh:truckNumber "10"^^xsd:string .
+
+
+###  http://ont.enapso.com/truck#Truck316a98e8_51a9_494b_9c0e_5207675f0a40
+enh:Truck316a98e8_51a9_494b_9c0e_5207675f0a40 rdf:type owl:NamedIndividual ,
+                                                       enh:Truck ;
+                                              enh:haCurrentLocation enh:Locationa8a0aed7_7a82_48f5_98d9_c281b50d1916 ;
+                                              enh:hasOwner enh:TransportationCompany5cfb2f42_500e_4856_9acb_80901669cb7f ;
+                                              enh:averageFuelConsumption 9.1 ;
+                                              enh:averageSpeed 64 ;
+                                              enh:chassisNumber "WAU ZZZ8R8AA 042836"^^xsd:string ;
+                                              enh:costPerHour 7.12 ;
+                                              enh:costPerkm 1.10 ;
+                                              enh:driveConfiguration "LHD"^^xsd:string ;
+                                              enh:licenceNumber "B-V 1005"^^xsd:string ;
+                                              enh:loadCapacity 60.1 ;
+                                              enh:maximumSpeed 112 ;
+                                              enh:mileageReadDate "21/01/2020"^^xsd:string ;
+                                              enh:model "267"^^xsd:string ;
+                                              enh:noOfSeats 5 ;
+                                              enh:power 149 ;
+                                              enh:truckNumber "12"^^xsd:string .
+
+
+###  http://ont.enapso.com/truck#Truck558082f1_3f5f_4587_b3a2_8a16256fe440
+enh:Truck558082f1_3f5f_4587_b3a2_8a16256fe440 rdf:type owl:NamedIndividual ,
+                                                       enh:Truck ;
+                                              enh:haCurrentLocation enh:Locationa8a0aed7_7a82_48f5_98d9_c281b50d1916 ;
+                                              enh:hasOwner enh:TransportationCompany5cfb2f42_500e_4856_9acb_80901669cb7f ;
+                                              enh:averageFuelConsumption 6.8 ;
+                                              enh:averageSpeed 56 ;
+                                              enh:chassisNumber "WAU ZZZ8R8AA 76543"^^xsd:string ;
+                                              enh:costPerHour 14.13 ;
+                                              enh:costPerkm 1.12 ;
+                                              enh:driveConfiguration "RHD"^^xsd:string ;
+                                              enh:licenceNumber "B-BR 987"^^xsd:string ;
+                                              enh:loadCapacity 50.1 ;
+                                              enh:maximumSpeed 120 ;
+                                              enh:mileageReadDate "21/1/2020"^^xsd:string ;
+                                              enh:model "140"^^xsd:string ;
+                                              enh:noOfSeats 4 ;
+                                              enh:power 179 ;
+                                              enh:truckNumber "13"^^xsd:string .
+
+
+###  Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi

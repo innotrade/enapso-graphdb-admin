@@ -33,6 +33,7 @@ const GRAPHDB_BASE_URL = encfg.getConfig(
         'enapsoDefaultGraphDB.ContextShacl',
         'http://rdf4j.org/schema/rdf4j#SHACLShapeGraph'
     ),
+    GRAPHDB_API_TYPE = 'RDF4J',
     GRAPHDB_VERSION = 10;
 // // the default prefixes for all SPARQL queries
 const GRAPHDB_DEFAULT_PREFIXES = [
@@ -55,7 +56,8 @@ const EnapsoGraphDBAdminDemo = {
             return new EnapsoGraphDBClient.Endpoint({
                 baseURL: GRAPHDB_BASE_URL,
                 repository: GRAPHDB_REPOSITORY,
-                prefixes: GRAPHDB_DEFAULT_PREFIXES
+                prefixes: GRAPHDB_DEFAULT_PREFIXES,
+                apiType: GRAPHDB_API_TYPE
                 // version: GRAPHDB_VERSION
             });
         } catch (err) {
@@ -267,7 +269,7 @@ const EnapsoGraphDBAdminDemo = {
         // upload a file
         try {
             let resp = await this.graphDBEndpoint.uploadFromFile({
-                filename: '../ontologies/EnapsoTest.owl',
+                filename: './ontologies/dotnetpro_demo_ontology_2.owl',
                 format: 'application/rdf+xml',
                 baseIRI: 'http://ont.enapso.com/test#',
                 context: 'http://ont.enapso.com/test'
@@ -700,11 +702,11 @@ const EnapsoGraphDBAdminDemo = {
         // this.demoGetContexts();
         // this.demoGetSavedQueries();
 
-        // this.demoUploadFromFile();
+        this.demoUploadFromFile();
         // this.demoDownloadToFile();
         // this.demoDownloadToText();
 
-        this.demoShacl();
+        // this.demoShacl();
         // await this.demoDropShaclGraph();
 
         // enLogger.info('--- Inserting new triple --- ');
