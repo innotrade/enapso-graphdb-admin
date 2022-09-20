@@ -52,9 +52,12 @@ let graphDBEndpoint = new EnapsoGraphDBClient.Endpoint({
     baseURL: GRAPHDB_BASE_URL,
     repository: GRAPHDB_REPOSITORY,
     prefixes: GRAPHDB_DEFAULT_PREFIXES,
-    version: GRAPHDB_VERSION
+    version: GRAPHDB_VERSION,
+    apiType: 'RDF4J'
 });
 ```
+
+apiType(optional) parameter use to specify which type of api ('workbench' or 'RDF4J') use for import method by default it use graphdb workbench apis.
 
 ## Login to GraphDB
 

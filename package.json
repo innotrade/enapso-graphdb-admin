@@ -1,6 +1,6 @@
 {
     "name": "@innotrade/enapso-graphdb-admin",
-    "version": "1.4.4",
+    "version": "1.4.6",
     "description": "ENAPSO Ontotext GraphDB 8.x/9.x Admin Tools for Node.js",
     "main": "index.js",
     "scripts": {
