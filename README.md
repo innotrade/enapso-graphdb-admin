@@ -7,6 +7,10 @@ Admin client for Ontotext GraphDB to easily perform administrative and monitorin
 **The following demos require a running GraphDB 8.x/9.x instance on localhost at port 7200. The demos as well as the automated tests require a fully working Ontotext GraphDB repository "Test" and a user "admin" with the password "root" being set up as an administrator and repository ruleset must have OWL RDFS Plus(Optimized) Base URL: http://ont.enapso.com/test#, graph: http://ont.enapso.com/test#**
 Get the latest version of GraphDB for free at https://www.ontotext.com/free-graphdb-download-copy/.
 
+## Test Suite
+
+To run the test suite against GraphDB run the following command `npm test`. Following file (`test/config.js`) need to configure before running the test suite.
+
 **This project is actively developed and maintained.**
 To discuss questions and suggestions with the enapso and GraphDB community, we'll be happy to meet you in our forum at https://www.innotrade.com/forum/.
 

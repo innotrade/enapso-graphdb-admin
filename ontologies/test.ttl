@@ -1,8 +1,55 @@
-@prefix : <http://ont.enapso.com/test#> .
-@prefix path: <http://www.ontotext.com/path#> .
+@prefix : <http://ont.enapso.com/repo#> .
 @prefix wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix gn: <http://www.geonames.org/ontology#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix fn: <http://www.w3.org/2005/xpath-functions#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix path: <http://www.ontotext.com/path#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix protons: <http://proton.semanticweb.org/protonsys#> .
+@prefix sesame: <http://www.openrdf.org/schema/sesame#> .
+@prefix sfn: <http://www.w3.org/ns/sparql#> .
+@prefix rdf4j: <http://rdf4j.org/schema/rdf4j#> .
+
+<http://ont.enapso.com/test#TestClass> a owl:Class .
+
+<http://ont.enapso.com/test> a owl:Ontology;
+  rdfs:comment "(C) Copyright 2019-2020 Innotrade GmbH, Herzogenrath, NRW, Germany"@en,
+    "Enapso Test Ontology"@en;
+  owl:versionIRI <http://ont.enapso.com/test/1.0.0> .
+
+<http://ont.enapso.com/test#firstName> a owl:DatatypeProperty;
+  rdfs:subPropertyOf <http://ont.enapso.com/test#name> .
+
+<http://ont.enapso.com/test#name> a owl:DatatypeProperty .
+
+<http://ont.enapso.com/test#lastName> a owl:DatatypeProperty;
+  rdfs:subPropertyOf <http://ont.enapso.com/test#name> .
+
+<http://ont.enapso.com/test#Instance> a owl:Class .
+
+<http://ont.enapso.com/test#Person> a owl:Class;
+  rdfs:subClassOf _:node161, _:node162 .
+
+_:node161 a owl:Restriction;
+  owl:onProperty <http://ont.enapso.com/test#firstName>;
+  owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger;
+  owl:onDataRange xsd:string .
+
+_:node162 a owl:Restriction;
+  owl:onProperty <http://ont.enapso.com/test#lastName>;
+  owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger;
+  owl:onDataRange xsd:string .
+
+<http://ont.enapso.com/test#Person_AlexanderSchulze> a owl:NamedIndividual, <http://ont.enapso.com/test#Person>;
+  <http://ont.enapso.com/test#firstName> "Alexander";
+  <http://ont.enapso.com/test#lastName> "Schulze" .
+
+<http://ont.enapso.com/test#Person_AsheshGoplani> a owl:NamedIndividual, <http://ont.enapso.com/test#Person>;
+  <http://ont.enapso.com/test#firstName> "Ashesh";
+  <http://ont.enapso.com/test#lastName> "Goplani" .
+
+<http://ont.enapso.com/test#Person_MuhammadYasir> a owl:NamedIndividual, <http://ont.enapso.com/test#Person>;
+  <http://ont.enapso.com/test#firstName> "Muhammad";
+  <http://ont.enapso.com/test#lastName> "Yasir" .
