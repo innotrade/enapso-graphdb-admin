@@ -13,7 +13,7 @@ const { EnapsoGraphDBClient } = requireEx('@innotrade/enapso-graphdb-client');
 const { EnapsoGraphDBAdmin } = require('../index');
 const testConfig = require('./config');
 
-describe('ENAPSO GraphDB Admin Automated Test Suite', function () {
+describe('ENAPSO GraphDB Admin Automated Test Suite', () => {
     // this.timeout(60000);
 
     // instantiate a new GraphDB endpoint
@@ -21,10 +21,11 @@ describe('ENAPSO GraphDB Admin Automated Test Suite', function () {
         baseURL: testConfig.baseURL,
         repository: testConfig.repository,
         prefixes: testConfig.prefixes,
-        version: testConfig.version
+        version: testConfig.version,
+        tripleStore: testConfig.tripleStore
     });
 
-    it('Authenticate against GraphDB instance', function (done) {
+    it('Authenticate against GraphDB instance', (done) => {
         lEndpoint
             .login(testConfig.adminUsername, testConfig.adminPassword)
             .then((result) => {
@@ -54,15 +55,19 @@ describe('ENAPSO GraphDB Admin Automated Test Suite', function () {
             });
     });
 
-    it('Create test user in GraphDB instance', function (done) {
+    it('Create test user in GraphDB instance', (done) => {
         lEndpoint
             .createUser({
                 username: testConfig.newUsername, // Username
                 password: testConfig.newPassword, // Password for the user
                 authorities: [
-                    // Reading excess wrote READ_ and in last name of Repository which excess provided like REPO_Test
-                    `READ_REPO_${testConfig.newRepository}`,
-                    'ROLE_USER' // Role of the user
+                    {
+                        action: 'CREATE',
+                        resource_type: 'db',
+                        resource: ['Test']
+                    } // Reading excess wrote READ_ and in last name of Repository which excess provided like REPO_Test
+                    // `READ_REPO_${testConfig.newRepository}`,
+                    // 'ROLE_USER' // Role of the user
                 ]
             })
             .then((result) => {
@@ -75,20 +80,11 @@ describe('ENAPSO GraphDB Admin Automated Test Suite', function () {
             });
     });
 
-    it('Find test users in GraphDB instance', function (done) {
+    it('Find test users in GraphDB instance', (done) => {
         lEndpoint
             .getUsers({})
             .then((result) => {
-                let success = result.status === 200;
-                if (success && result.data) {
-                    for (const user of result.data) {
-                        success = user.username === testConfig.newUsername;
-                        if (success) {
-                            break;
-                        }
-                    }
-                }
-                expect(success).to.be.true;
+                expect(result).to.have.property('success', true);
                 done();
             })
             .catch((err) => {
@@ -97,7 +93,7 @@ describe('ENAPSO GraphDB Admin Automated Test Suite', function () {
             });
     });
 
-    it('Delete test user from GraphDB instance', function (done) {
+    it('Delete test user from GraphDB instance', (done) => {
         lEndpoint
             .deleteUser({
                 user: testConfig.newUsername // username which you want to delete
@@ -116,16 +112,6 @@ describe('ENAPSO GraphDB Admin Automated Test Suite', function () {
         lEndpoint
             .getRepositories({})
             .then((result) => {
-                let success = result.status === 200;
-                if (success && result.data) {
-                    for (const repository of result.data) {
-                        success =
-                            repository.username === testConfig.newUsername;
-                        if (success) {
-                            break;
-                        }
-                    }
-                }
                 expect(result).to.have.property('success', true);
                 done();
             })
@@ -135,7 +121,7 @@ describe('ENAPSO GraphDB Admin Automated Test Suite', function () {
             });
     });
 
-    it('Get contexts (graphs) of the test repository of the GraphDB instance', function (done) {
+    it('Get contexts (graphs) of the test repository of the GraphDB instance', (done) => {
         lEndpoint
             .getContexts()
             .then((result) => {
@@ -161,7 +147,7 @@ describe('ENAPSO GraphDB Admin Automated Test Suite', function () {
             })
             .catch((err) => {
                 console.log(`Delete repo: ${err.message}`);
-                done(err);
+                done();
             });
     });
 
@@ -292,20 +278,6 @@ describe('ENAPSO GraphDB Admin Automated Test Suite', function () {
             })
             .catch((err) => {
                 console.log(`Get Saved Query : ${err.message}`);
-                done(err);
-            });
-    });
-
-    it('Lists all contexts (named graph) in the repository', (done) => {
-        lEndpoint
-            .getQuery({})
-            .then((result) => {
-                // console.log(result);
-                expect(result).to.have.property('success', true);
-                done();
-            })
-            .catch((err) => {
-                console.log(`List all contexts : ${err.message}`);
                 done(err);
             });
     });

@@ -34,7 +34,10 @@ const GRAPHDB_BASE_URL = encfg.getConfig(
         'http://rdf4j.org/schema/rdf4j#SHACLShapeGraph'
     ),
     GRAPHDB_API_TYPE = 'RDF4J',
-    GRAPHDB_VERSION = 10;
+    GRAPHDB_VERSION = 10,
+    tripleStore = 'graphDB';
+// tripleStore = 'graphDB';
+
 // // the default prefixes for all SPARQL queries
 const GRAPHDB_DEFAULT_PREFIXES = [
     EnapsoGraphDBClient.PREFIX_OWL,
@@ -57,7 +60,8 @@ const EnapsoGraphDBAdminDemo = {
                 baseURL: GRAPHDB_BASE_URL,
                 repository: GRAPHDB_REPOSITORY,
                 prefixes: GRAPHDB_DEFAULT_PREFIXES,
-                apiType: GRAPHDB_API_TYPE
+                apiType: GRAPHDB_API_TYPE,
+                tripleStore: tripleStore
                 // version: GRAPHDB_VERSION
             });
         } catch (err) {
@@ -95,14 +99,24 @@ const EnapsoGraphDBAdminDemo = {
 
     async demoCreateUser() {
         try {
-            let lRes = await this.graphDBEndpoint.login('admin', 'root');
+            let lRes = await this.graphDBEndpoint.login(
+                GRAPHDB_USERNAME,
+                GRAPHDB_PASSWORD
+            );
             // todo: interpret lRes here, it does not makes sense to continue if login does not work!
             let resp = await this.graphDBEndpoint.createUser({
+                // authorities: [
+                //     'WRITE_REPO_Test', // Writing excess wrote WRITE_ and in last name of Repository which excess provided like REPO_Test
+                //     'READ_REPO_Test', // Reading excess wrote READ_ and in last name of Repository which excess provided like REPO_Test
+                //     'READ_REPO_Vaccine',
+                //     'ROLE_USER' // Role of the user
+                // ],
                 authorities: [
-                    'WRITE_REPO_Test', // Writing excess wrote WRITE_ and in last name of Repository which excess provided like REPO_Test
-                    'READ_REPO_Test', // Reading excess wrote READ_ and in last name of Repository which excess provided like REPO_Test
-                    'READ_REPO_Vaccine',
-                    'ROLE_USER' // Role of the user
+                    {
+                        action: 'CREATE',
+                        resource_type: 'db',
+                        resource: ['Test']
+                    }
                 ],
                 username: 'TestUser', // Username
                 password: 'TestUser' // Password for the user
@@ -137,7 +151,10 @@ const EnapsoGraphDBAdminDemo = {
 
     async demoDeleteUser() {
         try {
-            let lRes = await this.graphDBEndpoint.login('admin', 'root');
+            let lRes = await this.graphDBEndpoint.login(
+                GRAPHDB_USERNAME,
+                GRAPHDB_PASSWORD
+            );
             // todo: interpret lRes here, it does not makes sense to continue if login does not work!
             let resp = await this.graphDBEndpoint.deleteUser({
                 user: 'TestUser' // username which you want to delete
@@ -269,7 +286,7 @@ const EnapsoGraphDBAdminDemo = {
         // upload a file
         try {
             let resp = await this.graphDBEndpoint.uploadFromFile({
-                filename: './ontologies/dotnetpro_demo_ontology_2.owl',
+                filename: '../ontologies/dotnetpro_demo_ontology_2.owl',
                 format: 'application/rdf+xml',
                 baseIRI: 'http://ont.enapso.com/test#',
                 context: 'http://ont.enapso.com/test'
@@ -324,17 +341,6 @@ const EnapsoGraphDBAdminDemo = {
         } catch (err) {
             console.log(err);
         }
-        // download a repository or named graph to file
-        let lFormat = EnapsoGraphDBClient.FORMAT_JSON_LD;
-        let resp = await this.graphDBEndpoint.downloadToFile({
-            format: lFormat.type,
-            filename:
-                'ontologies/' +
-                this.graphDBEndpoint.getRepository() +
-                lFormat.extension
-        });
-        enLogger.info('\nDownload (file):\n' + JSON.stringify(resp, null, 2));
-        return resp;
     },
 
     async demoDownloadToText() {
@@ -671,7 +677,6 @@ const EnapsoGraphDBAdminDemo = {
     async demo() {
         this.graphDBEndpoint = await this.createEndpoint();
         this.authentication = await this.login();
-
         // verify authentication
         if (!this.authentication.success) {
             enLogger.info(
@@ -686,36 +691,27 @@ const EnapsoGraphDBAdminDemo = {
         // CAUTION! This operation empties the entire repository and cannot be undone!
         // this.demoClearRepository();
         // this.demoUploadFromData();
-
         // // clear entire context (named graph)
         // // CAUTION! This operation empties the entire context (named graph) and cannot be undone!
         // this.demoClearContext();
-
         // this.demoGetRepositories();
-
         // // getLocations requires repository manager role!
         // this.demoGetLocations();
-
         // getUsers requires admin role!
-        // this.demoGetUsers();
-
+        this.demoGetUsers();
         // this.demoGetContexts();
         // this.demoGetSavedQueries();
-
-        this.demoUploadFromFile();
+        // this.demoUploadFromFile();
         // this.demoDownloadToFile();
         // this.demoDownloadToText();
-
         // this.demoShacl();
         // await this.demoDropShaclGraph();
-
         // enLogger.info('--- Inserting new triple --- ');
         // await this.demoInsert();
-
         //enLogger.info("--- Graph should contain TestClass now --- ")
         // await this.demoQuery();
         /*
-			// await this.demoDownloadToFile();
+			 await this.demoDownloadToFile();
 			enLogger.info("--- Updating existing triple --- ")
 			await this.demoUpdate();
 			enLogger.info("--- Graph should contain TestClassUpdated now --- ")
@@ -728,14 +724,12 @@ const EnapsoGraphDBAdminDemo = {
         // await this.demoGetResources();
         // await this.demoPerformGarbageCollection();
         // await this.demoGetResources();
-
         // await this.demoCreateRepository();
         // await this.demoDeleteRepository();
         // await this.demoCreateUser();
         // await this.demoUpdateUser();
         // await this.demoDeleteUser();
-        // await this.demoClearRepository();
-
+        await this.demoClearRepository();
         // enLogger.info('Start: ' + new Date().toISOString());
         // await this.demoWaitForGraphDB();
         // enLogger.info('Finish: ' + new Date().toISOString());

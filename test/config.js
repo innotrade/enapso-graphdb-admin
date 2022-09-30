@@ -8,16 +8,16 @@ require('@innotrade/enapso-config');
 module.exports = Object.freeze({
     baseURL: encfg.getConfig(
         'enapsoDefaultGraphDB.baseUrl',
-        'http://localhost:7200'
+        'http://localhost:5820'
     ),
 
     repository: encfg.getConfig('enapsoDefaultGraphDB.repository', 'Test'),
     adminUsername: encfg.getConfig('enapsoDefaultGraphDB.userName', 'admin'),
-    adminPassword: encfg.getConfig('enapsoDefaultGraphDB.password', 'root'),
-
+    adminPassword: encfg.getConfig('enapsoDefaultGraphDB.password', 'admin'),
+    tripleStore: 'stardog',
     testBaseIRI: 'http://ont.enapso.com/test#',
     testContext: 'http://ont.enapso.com/test',
-    version: 9,
+    // version: 9,
     newRepository: 'EnapsoAutomatedRepo',
     newUsername: 'EnapsoAutomatedUser',
     newPassword: 'EnapsoAutomatedPass',
