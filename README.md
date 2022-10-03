@@ -16,7 +16,7 @@ Get the latest version of GraphDB for free at https://www.ontotext.com/products/
 **Fuseki instance running on localhost at port 3030. A fully working Fuseki Dataset "Test"**
 Get the latest version of Apache jena Fuseki for free at https://jena.apache.org/download/index.cgi.
 
-### Configuration for Apache Jena Fuseki
+### Configuration for Stardog
 
 **Stardog instance running on localhost at port 5820. A fully working Database "Test" and a user "Test" with the password "Test" being set up, which has read/write access to the "Test" Database.**
 Get the latest version of stardog free at https://www.stardog.com/.
