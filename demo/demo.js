@@ -14,7 +14,7 @@ enLogger.setLevel(EnapsoLogger.ALL);
 
 const GRAPHDB_BASE_URL = encfg.getConfig(
         'enapsoDefaultGraphDB.baseUrl',
-        'http://localhost:7200'
+        'http://localhost:5820'
     ),
     GRAPHDB_REPOSITORY = encfg.getConfig(
         'enapsoDefaultGraphDB.repository',
@@ -24,7 +24,10 @@ const GRAPHDB_BASE_URL = encfg.getConfig(
         'enapsoDefaultGraphDB.userName',
         'admin'
     ),
-    GRAPHDB_PASSWORD = encfg.getConfig('enapsoDefaultGraphDB.password', 'root'),
+    GRAPHDB_PASSWORD = encfg.getConfig(
+        'enapsoDefaultGraphDB.password',
+        'admin'
+    ),
     GRAPHDB_CONTEXT_TEST = encfg.getConfig(
         'enapsoDefaultGraphDB.ContextTest',
         'http://ont.enapso.com/test'
@@ -35,7 +38,7 @@ const GRAPHDB_BASE_URL = encfg.getConfig(
     ),
     GRAPHDB_API_TYPE = 'RDF4J',
     GRAPHDB_VERSION = 10,
-    triplestore = 'graphDB';
+    triplestore = 'stardog';
 // triplestore = 'graphDB';
 
 // // the default prefixes for all SPARQL queries
@@ -146,6 +149,28 @@ const EnapsoGraphDBAdminDemo = {
             );
         } catch (err) {
             console.log(err);
+        }
+    },
+    async demoAssignRoles(args) {
+        try {
+            let resp = await this.graphDBEndpoint.assignRoles(args);
+            enLogger.log(
+                'Assign Role to User:' + JSON.stringify(resp, null, 2)
+            );
+        } catch (err) {
+            console.log(err);
+            return err;
+        }
+    },
+    async demoRemoveRoles(args) {
+        try {
+            let resp = await this.graphDBEndpoint.removeRoles(args);
+            enLogger.log(
+                'Remove Role from User:' + JSON.stringify(resp, null, 2)
+            );
+        } catch (err) {
+            console.log(err);
+            return err;
         }
     },
 
@@ -686,7 +711,36 @@ const EnapsoGraphDBAdminDemo = {
             return;
         }
         enLogger.info('\nLogin successful');
-
+        // await this.demoAssignRoles({
+        //     userName: 'ashesh',
+        //     authorities: [
+        //         {
+        //             action: 'READ',
+        //             resource_type: 'db',
+        //             resource: ['Test']
+        //         },
+        //         {
+        //             action: 'WRITE',
+        //             resource_type: 'db',
+        //             resource: ['Test']
+        //         }
+        //     ]
+        // });
+        await this.demoRemoveRoles({
+            userName: 'ashesh',
+            authorities: [
+                {
+                    action: 'CREATE',
+                    resource_type: 'db',
+                    resource: ['Test']
+                },
+                {
+                    action: 'WRITE',
+                    resource_type: 'db',
+                    resource: ['Test']
+                }
+            ]
+        });
         // clear entire repository
         // CAUTION! This operation empties the entire repository and cannot be undone!
         // this.demoClearRepository();
@@ -698,7 +752,7 @@ const EnapsoGraphDBAdminDemo = {
         // // getLocations requires repository manager role!
         // this.demoGetLocations();
         // getUsers requires admin role!
-        this.demoGetUsers();
+        // this.demoGetUsers();
         // this.demoGetContexts();
         // this.demoGetSavedQueries();
         // this.demoUploadFromFile();

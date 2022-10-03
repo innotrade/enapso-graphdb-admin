@@ -103,6 +103,65 @@ describe('ENAPSO GraphDB Admin Automated Test Suite', () => {
         }
     });
 
+    it('Update test users roles in GraphDB instance', (done) => {
+        if (testConfig.triplestore == 'graphDB') {
+            lEndpoint
+                .updateUser({
+                    authorities: testConfig.updateGraphDBUserRole,
+                    username: testConfig.newUsername
+                })
+                .then((result) => {
+                    expect(result).to.have.property('success', true);
+                    done();
+                })
+                .catch((err) => {
+                    console.log(`Find user: ${err.message}`);
+                    done(err);
+                });
+        } else {
+            done();
+        }
+    });
+
+    it('Assign Role to users stardog instance', (done) => {
+        if (testConfig.triplestore == 'stardog') {
+            lEndpoint
+                .assignRoles({
+                    authorities: testConfig.roles,
+                    username: testConfig.newUsername
+                })
+                .then((result) => {
+                    expect(result).to.have.property('success', true);
+                    done();
+                })
+                .catch((err) => {
+                    console.log(`Assign role to user: ${err.message}`);
+                    done(err);
+                });
+        } else {
+            done();
+        }
+    });
+
+    it('Remove Role to users stardog instance', (done) => {
+        if (testConfig.triplestore == 'stardog') {
+            lEndpoint
+                .removeRoles({
+                    authorities: testConfig.roles,
+                    username: testConfig.newUsername
+                })
+                .then((result) => {
+                    done();
+                })
+                .catch((err) => {
+                    console.log(`Remove user role: ${err.message}`);
+                    done(err);
+                });
+        } else {
+            done();
+        }
+    });
+
     it('Delete test user from GraphDB instance', (done) => {
         if (testConfig.triplestore != 'fuseki') {
             lEndpoint

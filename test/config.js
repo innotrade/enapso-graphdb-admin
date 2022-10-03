@@ -8,15 +8,27 @@ require('@innotrade/enapso-config');
 module.exports = Object.freeze({
     baseURL: encfg.getConfig(
         'enapsoDefaultGraphDB.baseUrl',
-        'http://localhost:3030'
+        'http://localhost:5820'
     ),
 
     repository: encfg.getConfig('enapsoDefaultGraphDB.repository', 'Test'),
     adminUsername: encfg.getConfig('enapsoDefaultGraphDB.userName', 'admin'),
-    adminPassword: encfg.getConfig('enapsoDefaultGraphDB.password', 'root'),
-    triplestore: 'fuseki',
+    adminPassword: encfg.getConfig('enapsoDefaultGraphDB.password', 'admin'),
+    triplestore: 'stardog',
     testBaseIRI: 'http://ont.enapso.com/test#',
     testContext: 'http://ont.enapso.com/test',
+    roles: [
+        {
+            action: 'READ',
+            resource_type: 'db',
+            resource: ['Test']
+        },
+        {
+            action: 'WRITE',
+            resource_type: 'db',
+            resource: ['Test']
+        }
+    ],
     stardogUserAuthorities: [
         {
             action: 'CREATE',
@@ -28,6 +40,13 @@ module.exports = Object.freeze({
     newRepository: 'EnapsoAutomatedRepo',
     newUsername: 'EnapsoAutomatedUser',
     newPassword: 'EnapsoAutomatedPass',
+    updateGraphDBUserRole: [
+        // Writing excess wrote WRITE_ and in last name of Repository which excess provided like REPO_Test
+        'READ_REPO_Test', // Reading excess wrote READ_ and in last name of Repository which excess provided like REPO_Test
+        'WRITE_REPO_Vaccine',
+        'READ_REPO_Vaccine',
+        'ROLE_USER' // Role of the user
+    ],
     authorities: [
         `READ_REPO_EnapsoAutomatedRepo`,
         'ROLE_USER' // Role of the user

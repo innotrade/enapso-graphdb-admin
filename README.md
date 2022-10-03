@@ -84,6 +84,9 @@ version parameter is optional by default it work with GraphDB 10.x but to make i
 | [Get Repositories](#list-all-repositories-operated-in-a-graphdb-instance)           | ✔                | ✔                  | ✔       |
 | [Create User](#create-new-user-and-assign-role)                                     | ✔                | ✘                  | ✔       |
 | [Get Users](#list-all-users-of-a-graphdb-instance)                                  | ✔                | ✘                  | ✔       |
+| [Update User](#update-user)                                                         | ✔                | ✘                  | ✘       |
+| [Assign Role](#assign-roles)                                                        | ✘                | ✘                  | ✔       |
+| [Remove Role](#remove-roles)                                                        | ✘                | ✘                  | ✔       |
 | [Delete User](#delete-user)                                                         | ✔                | ✘                  | ✔       |
 | [Drop SHACL Graph](#drop-shacl-shape-in-a-graphdb-instance)                         | ✔                | ✘                  | ✘       |
 | [Get Contexts](#list-all-contexts-name-graphs-used-in-a-given-repository)           | ✔                | ✔                  | ✔       |
@@ -271,6 +274,83 @@ graphDBEndpoint
             'ROLE_USER' // Role of the user
         ],
         username: 'TestUser' // Username
+    })
+    .then((result) => {
+        console.log(result);
+    })
+    .catch((err) => {
+        console.log(err);
+    });
+```
+
+## Update User
+
+Update a user roles from the Ontotext GraphDB instance:
+
+```javascript
+graphDBEndpoint
+    .deleteUser({
+        username: 'TestUser',
+        authorities: [
+            // Writing excess wrote WRITE_ and in last name of Repository which excess provided
+            'READ_REPO_Test', // Reading excess wrote READ_ and in last name of Repository which excess provided like REPO_Test
+            'WRITE_REPO_Vaccine',
+            'READ_REPO_Vaccine',
+            'ROLE_USER' // Role of the user
+        ]
+    })
+    .then((result) => {
+        console.log(result);
+    })
+    .catch((err) => {
+        console.log(err);
+    });
+```
+
+## Assign Role
+
+Update a user roles from the stardog instance:
+
+```javascript
+graphDBEndpoint
+    .assignRoles({
+        userName: 'ashesh',
+        roles: [
+            {
+                action: 'READ',
+                resource_type: 'db',
+                resource: ['Test']
+            },
+            {
+                action: 'WRITE',
+                resource_type: 'db',
+                resource: ['Test']
+            }
+        ]
+    })
+    .then((result) => {
+        console.log(result);
+    })
+    .catch((err) => {
+        console.log(err);
+    });
+```
+
+## Remove Role
+
+Remove a user roles from the stardog instance:
+
+```javascript
+graphDBEndpoint
+    .removeRoles({
+        username: 'TestUser',
+        authorities: [
+            // Writing excess wrote WRITE_ and in last name of Repository which excess provided
+            'READ_REPO_Test', // Reading excess wrote READ_ and in last name of Repository which excess provided like REPO_Test
+            'WRITE_REPO_Vaccine',
+            'READ_REPO_Vaccine',
+            'ROLE_USER' // Role of the user
+        ]
     })
     .then((result) => {
         console.log(result);

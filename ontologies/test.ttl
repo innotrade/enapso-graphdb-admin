@@ -1,34 +1,6 @@
-<http://ont.enapso.com/test> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Ontology> <http://ont.enapso.com/test> .
-<http://ont.enapso.com/test> <http://www.w3.org/2002/07/owl#versionIRI> <http://ont.enapso.com/test/1.0.0> <http://ont.enapso.com/test> .
-<http://ont.enapso.com/test> <http://www.w3.org/2000/01/rdf-schema#comment> "(C) Copyright 2019-2020 Innotrade GmbH, Herzogenrath, NRW, Germany"@en <http://ont.enapso.com/test> .
-<http://ont.enapso.com/test> <http://www.w3.org/2000/01/rdf-schema#comment> "Enapso Test Ontology"@en <http://ont.enapso.com/test> .
-<http://ont.enapso.com/test#TestClass> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> <http://ont.enapso.com/test> .
-<http://ont.enapso.com/test#firstName> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> <http://ont.enapso.com/test> .
-<http://ont.enapso.com/test#firstName> <http://www.w3.org/2000/01/rdf-schema#subPropertyOf> <http://ont.enapso.com/test#name> <http://ont.enapso.com/test> .
-<http://ont.enapso.com/test#name> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> <http://ont.enapso.com/test> .
-<http://ont.enapso.com/test#lastName> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> <http://ont.enapso.com/test> .
-<http://ont.enapso.com/test#lastName> <http://www.w3.org/2000/01/rdf-schema#subPropertyOf> <http://ont.enapso.com/test#name> <http://ont.enapso.com/test> .
-<http://ont.enapso.com/test#Instance> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> <http://ont.enapso.com/test> .
-<http://ont.enapso.com/test#Person> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> <http://ont.enapso.com/test> .
-<http://ont.enapso.com/test#Person> <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:Bbb0ae68fX2Dc50bX2D4995X2Daa88X2Dcf3293e1273e <http://ont.enapso.com/test> .
-<http://ont.enapso.com/test#Person> <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:B9a556813X2D8b3dX2D44b2X2DacfdX2D3261abc315a9 <http://ont.enapso.com/test> .
-<http://ont.enapso.com/test#Person_AlexanderSchulze> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> <http://ont.enapso.com/test> .
-<http://ont.enapso.com/test#Person_AlexanderSchulze> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://ont.enapso.com/test#Person> <http://ont.enapso.com/test> .
-<http://ont.enapso.com/test#Person_AlexanderSchulze> <http://ont.enapso.com/test#firstName> "Alexander" <http://ont.enapso.com/test> .
-<http://ont.enapso.com/test#Person_AlexanderSchulze> <http://ont.enapso.com/test#lastName> "Schulze" <http://ont.enapso.com/test> .
-<http://ont.enapso.com/test#Person_AsheshGoplani> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> <http://ont.enapso.com/test> .
-<http://ont.enapso.com/test#Person_AsheshGoplani> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://ont.enapso.com/test#Person> <http://ont.enapso.com/test> .
-<http://ont.enapso.com/test#Person_AsheshGoplani> <http://ont.enapso.com/test#firstName> "Ashesh" <http://ont.enapso.com/test> .
-<http://ont.enapso.com/test#Person_AsheshGoplani> <http://ont.enapso.com/test#lastName> "Goplani" <http://ont.enapso.com/test> .
-<http://ont.enapso.com/test#Person_MuhammadYasir> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> <http://ont.enapso.com/test> .
-<http://ont.enapso.com/test#Person_MuhammadYasir> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://ont.enapso.com/test#Person> <http://ont.enapso.com/test> .
-<http://ont.enapso.com/test#Person_MuhammadYasir> <http://ont.enapso.com/test#firstName> "Muhammad" <http://ont.enapso.com/test> .
-<http://ont.enapso.com/test#Person_MuhammadYasir> <http://ont.enapso.com/test#lastName> "Yasir" <http://ont.enapso.com/test> .
-_:Bbb0ae68fX2Dc50bX2D4995X2Daa88X2Dcf3293e1273e <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> <http://ont.enapso.com/test> .
-_:Bbb0ae68fX2Dc50bX2D4995X2Daa88X2Dcf3293e1273e <http://www.w3.org/2002/07/owl#qualifiedCardinality> "1"^^<http://www.w3.org/2001/XMLSchema#nonNegativeInteger> <http://ont.enapso.com/test> .
-_:Bbb0ae68fX2Dc50bX2D4995X2Daa88X2Dcf3293e1273e <http://www.w3.org/2002/07/owl#onProperty> <http://ont.enapso.com/test#firstName> <http://ont.enapso.com/test> .
-_:Bbb0ae68fX2Dc50bX2D4995X2Daa88X2Dcf3293e1273e <http://www.w3.org/2002/07/owl#onDataRange> <http://www.w3.org/2001/XMLSchema#string> <http://ont.enapso.com/test> .
-_:B9a556813X2D8b3dX2D44b2X2DacfdX2D3261abc315a9 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> <http://ont.enapso.com/test> .
-_:B9a556813X2D8b3dX2D44b2X2DacfdX2D3261abc315a9 <http://www.w3.org/2002/07/owl#qualifiedCardinality> "1"^^<http://www.w3.org/2001/XMLSchema#nonNegativeInteger> <http://ont.enapso.com/test> .
-_:B9a556813X2D8b3dX2D44b2X2DacfdX2D3261abc315a9 <http://www.w3.org/2002/07/owl#onProperty> <http://ont.enapso.com/test#lastName> <http://ont.enapso.com/test> .
-_:B9a556813X2D8b3dX2D44b2X2DacfdX2D3261abc315a9 <http://www.w3.org/2002/07/owl#onDataRange> <http://www.w3.org/2001/XMLSchema#string> <http://ont.enapso.com/test> .
+@prefix : <http://api.stardog.com/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix stardog: <tag:stardog:api:> .
