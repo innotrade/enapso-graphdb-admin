@@ -17,16 +17,18 @@ module.exports = Object.freeze({
     triplestore: 'fuseki',
     testBaseIRI: 'http://ont.enapso.com/test#',
     testContext: 'http://ont.enapso.com/test',
+    stardogUserAuthorities: [
+        {
+            action: 'CREATE',
+            resource_type: 'db',
+            resource: ['Test']
+        }
+    ],
     // version: 9,
     newRepository: 'EnapsoAutomatedRepo',
     newUsername: 'EnapsoAutomatedUser',
     newPassword: 'EnapsoAutomatedPass',
     authorities: [
-        // {
-        //     action: 'CREATE',
-        //     resource_type: 'db',
-        //     resource: ['Test']
-        // } // Reading excess wrote READ_ and in last name of Repository which excess provided like REPO_Test
         `READ_REPO_EnapsoAutomatedRepo`,
         'ROLE_USER' // Role of the user
     ],

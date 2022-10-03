@@ -61,11 +61,17 @@ describe('ENAPSO GraphDB Admin Automated Test Suite', () => {
 
     it('Create test user in GraphDB instance', (done) => {
         if (testConfig.triplestore != 'fuseki') {
+            let role;
+            if (testConfig.triplestore == 'stardog') {
+                role = testConfig.stardogUserAuthorities;
+            } else {
+                role = testConfig.authorities;
+            }
             lEndpoint
                 .createUser({
                     username: testConfig.newUsername, // Username
                     password: testConfig.newPassword, // Password for the user
-                    authorities: testConfig.authorities
+                    authorities: role
                 })
                 .then((result) => {
                     expect(result).to.have.property('status', 201);

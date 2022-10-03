@@ -1,15 +1,25 @@
 # enapso-graphdb-admin
 
-enapso Ontotext GraphDB 8.x/9.x Administration Toolbox for Node.js
+enapso GraphDB Administration Toolbox for Node.js
 
-Admin client for Ontotext GraphDB to easily perform administrative and monitoring operations against your RDF stores, your OWL ontologies or knowledge graphs in nodes.js applications. This client supports an easy import of existing RDF stores and ontologies to GraphDB by upload via file, strings or URLs as well as an export in numerous formats and also a context management. You can monitor the cpu load and memory usage of GraphDB and run the garbage collector on demand to optimally trigger huge batch operations also provide the user managememt, the creation and listing of new repositories as well as an location and cluster management of Ontotext GraphDB.
+Admin client for Ontotext GraphDB, Apache Jena Fuseki and stardog to easily perform administrative and monitoring operations against your RDF stores, your OWL ontologies or knowledge graphs in nodes.js applications. This client supports an easy import of existing RDF stores and ontologies to Graph DB by upload via file, strings or URLs as well as an export in numerous formats and also a context management. You can monitor the cpu load and memory usage of GraphDB and run the garbage collector on demand to optimally trigger huge batch operations also provide the user managememt, the creation and listing of new repositories as well as an location and cluster management of GraphDB.
 
-**The following demos require a running GraphDB 8.x/9.x instance on localhost at port 7200. The demos as well as the automated tests require a fully working Ontotext GraphDB repository "Test" and a user "admin" with the password "root" being set up as an administrator and repository ruleset must have OWL RDFS Plus(Optimized) Base URL: http://ont.enapso.com/test#, graph: http://ont.enapso.com/test#**
-Get the latest version of GraphDB for free at https://www.ontotext.com/free-graphdb-download-copy/.
+**To run the test suite against triplestores (Ontotext GraphDB/stardog/Apache Jena Fuseki) run the following command `npm test`. In the following file (`test/config.js`) variable triplestore value (graphDB/fuseki/stardog) and baseURL need to be set depend on triplestore before running the test suite**
 
-## Test Suite
+# Configuration for Ontotext GraphDB
 
-To run the test suite against GraphDB run the following command `npm test`. Following file (`test/config.js`) need to configure before running the test suite.
+**GraphDB 8.x/9.x/10.x instance running on localhost at port 7200. A fully working Ontotext GraphDB repository "Test" and a user "Test" with the password "Test" being set up, which has read/write access to the "Test" Repository.**
+Get the latest version of GraphDB for free at https://www.ontotext.com/products/graphdb/.
+
+# Configuration for Apache Jena Fuseki
+
+**Fuseki instance running on localhost at port 3030. A fully working Fuseki Dataset "Test"**
+Get the latest version of Apache jena Fuseki for free at https://jena.apache.org/download/index.cgi.
+
+# Configuration for Apache Jena Fuseki
+
+**Stardog instance running on localhost at port 5820. A fully working Database "Test" and a user "Test" with the password "Test" being set up, which has read/write access to the "Test" Database.**
+Get the latest version of stardog free at https://www.stardog.com/.
 
 **This project is actively developed and maintained.**
 To discuss questions and suggestions with the enapso and GraphDB community, we'll be happy to meet you in our forum at https://www.innotrade.com/forum/.
@@ -22,7 +32,7 @@ npm i @innotrade/enapso-graphdb-admin --save
 
 # Example
 
-## Instantiate an enapso GraphDB and Admin Client
+## Instantiate of enapso GraphDB admin
 
 ```javascript
 // require the enapso GraphDB Client and Admin packages
@@ -49,8 +59,6 @@ const GRAPHDB_DEFAULT_PREFIXES = [
 
 Create an endpoint client with graphdb to perform operation:
 
-version parameter is optional by default it work with GraphDB 10.x but to make it also compartiable with GraphDB 8.x/9.x pass the versio.
-
 ```javascript
 let graphDBEndpoint = new EnapsoGraphDBClient.Endpoint({
     baseURL: GRAPHDB_BASE_URL,
@@ -62,6 +70,32 @@ let graphDBEndpoint = new EnapsoGraphDBClient.Endpoint({
 ```
 
 apiType(optional) parameter use to specify which type of api ('workbench' or 'RDF4J') use for import method by default it use graphdb workbench apis.
+
+version parameter is optional by default it work with GraphDB 10.x but to make it also compartiable with GraphDB 8.x/9.x pass the version.
+
+# Feature List of triplestores
+
+| Feature                     | Ontotext GraphDB | Apache Jena Fuseki | Stardog |
+| --------------------------- | ---------------- | ------------------ | ------- |
+| Login(#Login-to-GraphDB)    | ✔                | ✘                  | ✔       |
+| Create Repository           | ✔                | ✔                  | ✔       |
+| Delete Repository           | ✔                | ✔                  | ✔       |
+| Clear Repository            | ✔                | ✔                  | ✔       |
+| Get Repositories            | ✔                | ✔                  | ✔       |
+| Create User                 | ✔                | ✘                  | ✔       |
+| Get Users                   | ✔                | ✘                  | ✔       |
+| Delete User                 | ✔                | ✘                  | ✔       |
+| Drop SHACL Graph            | ✔                | ✘                  | ✘       |
+| Get Contexts                | ✔                | ✔                  | ✔       |
+| Upload From File            | ✔                | ✔                  | ✔       |
+| Upload From Data            | ✔                | ✘                  | ✔       |
+| Download To File            | ✔                | ✔                  | ✔       |
+| Download To Text            | ✔                | ✔                  | ✔       |
+| Clear Context               | ✔                | ✔                  | ✔       |
+| Get Query                   | ✔                | ✘                  | ✔       |
+| Get Locations               | ✔                | ✘                  | ✘       |
+| Perform Garbage Collections | ✔                | ✘                  | ✘       |
+| Get Saved Queries           | ✔                | ✘                  | ✘       |
 
 ## Login to GraphDB
 
