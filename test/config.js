@@ -8,20 +8,28 @@ require('@innotrade/enapso-config');
 module.exports = Object.freeze({
     baseURL: encfg.getConfig(
         'enapsoDefaultGraphDB.baseUrl',
-        'http://localhost:5820'
+        'http://localhost:3030'
     ),
 
     repository: encfg.getConfig('enapsoDefaultGraphDB.repository', 'Test'),
     adminUsername: encfg.getConfig('enapsoDefaultGraphDB.userName', 'admin'),
-    adminPassword: encfg.getConfig('enapsoDefaultGraphDB.password', 'admin'),
-    tripleStore: 'stardog',
+    adminPassword: encfg.getConfig('enapsoDefaultGraphDB.password', 'root'),
+    triplestore: 'fuseki',
     testBaseIRI: 'http://ont.enapso.com/test#',
     testContext: 'http://ont.enapso.com/test',
     // version: 9,
     newRepository: 'EnapsoAutomatedRepo',
     newUsername: 'EnapsoAutomatedUser',
     newPassword: 'EnapsoAutomatedPass',
-
+    authorities: [
+        // {
+        //     action: 'CREATE',
+        //     resource_type: 'db',
+        //     resource: ['Test']
+        // } // Reading excess wrote READ_ and in last name of Repository which excess provided like REPO_Test
+        `READ_REPO_EnapsoAutomatedRepo`,
+        'ROLE_USER' // Role of the user
+    ],
     prefixes: {
         PREFIX_OWL: {
             prefix: 'owl',

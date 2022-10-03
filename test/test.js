@@ -22,20 +22,24 @@ describe('ENAPSO GraphDB Admin Automated Test Suite', () => {
         repository: testConfig.repository,
         prefixes: testConfig.prefixes,
         version: testConfig.version,
-        tripleStore: testConfig.tripleStore
+        triplestore: testConfig.triplestore
     });
 
     it('Authenticate against GraphDB instance', (done) => {
-        lEndpoint
-            .login(testConfig.adminUsername, testConfig.adminPassword)
-            .then((result) => {
-                expect(result).to.have.property('status', 200);
-                done();
-            })
-            .catch((err) => {
-                console.log(`Authentication: ${err.message}`);
-                done(err);
-            });
+        if (testConfig.triplestore != 'fuseki') {
+            lEndpoint
+                .login(testConfig.adminUsername, testConfig.adminPassword)
+                .then((result) => {
+                    expect(result).to.have.property('status', 200);
+                    done();
+                })
+                .catch((err) => {
+                    console.log(`Authentication: ${err.message}`);
+                    done(err);
+                });
+        } else {
+            done();
+        }
     });
 
     it('Create new repository in Graphdb', (done) => {
@@ -56,56 +60,60 @@ describe('ENAPSO GraphDB Admin Automated Test Suite', () => {
     });
 
     it('Create test user in GraphDB instance', (done) => {
-        lEndpoint
-            .createUser({
-                username: testConfig.newUsername, // Username
-                password: testConfig.newPassword, // Password for the user
-                authorities: [
-                    {
-                        action: 'CREATE',
-                        resource_type: 'db',
-                        resource: ['Test']
-                    } // Reading excess wrote READ_ and in last name of Repository which excess provided like REPO_Test
-                    // `READ_REPO_${testConfig.newRepository}`,
-                    // 'ROLE_USER' // Role of the user
-                ]
-            })
-            .then((result) => {
-                expect(result).to.have.property('status', 201);
-                done();
-            })
-            .catch((err) => {
-                console.log(`Create new user: ${err.message}`);
-                done(err);
-            });
+        if (testConfig.triplestore != 'fuseki') {
+            lEndpoint
+                .createUser({
+                    username: testConfig.newUsername, // Username
+                    password: testConfig.newPassword, // Password for the user
+                    authorities: testConfig.authorities
+                })
+                .then((result) => {
+                    expect(result).to.have.property('status', 201);
+                    done();
+                })
+                .catch((err) => {
+                    console.log(`Create new user: ${err.message}`);
+                    done(err);
+                });
+        } else {
+            done();
+        }
     });
 
     it('Find test users in GraphDB instance', (done) => {
-        lEndpoint
-            .getUsers({})
-            .then((result) => {
-                expect(result).to.have.property('success', true);
-                done();
-            })
-            .catch((err) => {
-                console.log(`Find user: ${err.message}`);
-                done(err);
-            });
+        if (testConfig.triplestore != 'fuseki') {
+            lEndpoint
+                .getUsers({})
+                .then((result) => {
+                    expect(result).to.have.property('success', true);
+                    done();
+                })
+                .catch((err) => {
+                    console.log(`Find user: ${err.message}`);
+                    done(err);
+                });
+        } else {
+            done();
+        }
     });
 
     it('Delete test user from GraphDB instance', (done) => {
-        lEndpoint
-            .deleteUser({
-                user: testConfig.newUsername // username which you want to delete
-            })
-            .then((result) => {
-                expect(result).to.have.property('status', 204);
-                done();
-            })
-            .catch((err) => {
-                console.log(`Delete user: ${err.message}`);
-                done(err);
-            });
+        if (testConfig.triplestore != 'fuseki') {
+            lEndpoint
+                .deleteUser({
+                    user: testConfig.newUsername // username which you want to delete
+                })
+                .then((result) => {
+                    expect(result).to.have.property('status', 204);
+                    done();
+                })
+                .catch((err) => {
+                    console.log(`Delete user: ${err.message}`);
+                    done(err);
+                });
+        } else {
+            done();
+        }
     });
 
     it('Find Newly created repository in GraphDB', (done) => {
@@ -141,7 +149,6 @@ describe('ENAPSO GraphDB Admin Automated Test Suite', () => {
                 id: testConfig.newRepository
             })
             .then((result) => {
-                // console.log(result);
                 expect(result).to.have.property('success', true);
                 done();
             })
@@ -165,16 +172,23 @@ describe('ENAPSO GraphDB Admin Automated Test Suite', () => {
     });
 
     it('Drop SHACL from GraphDB', (done) => {
-        lEndpoint
-            .dropShaclGraph()
-            .then((result) => {
-                expect(result).to.have.property('success', true);
-                done();
-            })
-            .catch((err) => {
-                console.log(`Drop shacl: ${err.message}`);
-                done(err);
-            });
+        if (
+            testConfig.triplestore != 'fuseki' &&
+            testConfig.triplestore != 'stardog'
+        ) {
+            lEndpoint
+                .dropShaclGraph()
+                .then((result) => {
+                    expect(result).to.have.property('success', true);
+                    done();
+                })
+                .catch((err) => {
+                    console.log(`Drop shacl: ${err.message}`);
+                    done(err);
+                });
+        } else {
+            done();
+        }
     });
 
     it('Upload Ontology to GraphDB', (done) => {
@@ -229,56 +243,81 @@ describe('ENAPSO GraphDB Admin Automated Test Suite', () => {
     });
 
     it('Get running queries from GraphDB', (done) => {
-        lEndpoint
-            .getQuery({})
-            .then((result) => {
-                // console.log(result);
-                expect(result).to.have.property('success', true);
-                done();
-            })
-            .catch((err) => {
-                console.log(`Get Queries: ${err.message}`);
-                done(err);
-            });
+        if (testConfig.triplestore != 'fuseki') {
+            lEndpoint
+                .getQuery({})
+                .then((result) => {
+                    // console.log(result);
+                    expect(result).to.have.property('success', true);
+                    done();
+                })
+                .catch((err) => {
+                    console.log(`Get Queries: ${err.message}`);
+                    done(err);
+                });
+        } else {
+            done();
+        }
     });
 
     it('Get Location requires repository manager role', (done) => {
-        lEndpoint
-            .getLocations()
-            .then((result) => {
-                // console.log(result);
-                expect(result).to.exist;
-                done();
-            })
-            .catch((err) => {
-                console.log(`Get Location: ${err.message}`);
-                done(err);
-            });
+        if (
+            testConfig.triplestore != 'fuseki' &&
+            testConfig.triplestore != 'stardog'
+        ) {
+            lEndpoint
+                .getLocations()
+                .then((result) => {
+                    // console.log(result);
+                    expect(result).to.exist;
+                    done();
+                })
+                .catch((err) => {
+                    console.log(`Get Location: ${err.message}`);
+                    done(err);
+                });
+        } else {
+            done();
+        }
     });
 
     it('Perform garbage collection', (done) => {
-        lEndpoint
-            .performGarbageCollection({})
-            .then((result) => {
-                expect(result.status).to.equal(200);
-                done();
-            })
-            .catch((err) => {
-                console.log(`Perform garbage collection: ${err.message}`);
-                done(err);
-            });
+        if (
+            testConfig.triplestore != 'fuseki' &&
+            testConfig.triplestore != 'stardog'
+        ) {
+            lEndpoint
+                .performGarbageCollection({})
+                .then((result) => {
+                    expect(result.status).to.equal(200);
+                    done();
+                })
+                .catch((err) => {
+                    console.log(`Perform garbage collection: ${err.message}`);
+                    done(err);
+                });
+        } else {
+            done();
+        }
     });
 
     it('Get Saved Query from Graphdb', (done) => {
-        lEndpoint
-            .getSavedQueries()
-            .then((result) => {
-                expect(result).to.have.property('success', true);
-                done();
-            })
-            .catch((err) => {
-                console.log(`Get Saved Query : ${err.message}`);
-                done(err);
-            });
+        if (
+            testConfig.triplestore != 'fuseki' &&
+            testConfig.triplestore != 'stardog'
+        ) {
+            lEndpoint
+                .getSavedQueries()
+                .then((result) => {
+                    expect(result).to.have.property('success', true);
+                    done();
+                })
+                .catch((err) => {
+                    console.log(`Get Saved Query : ${err.message}`);
+                    done(err);
+                });
+        } else {
+            done();
+        }
     });
 });

@@ -35,8 +35,8 @@ const GRAPHDB_BASE_URL = encfg.getConfig(
     ),
     GRAPHDB_API_TYPE = 'RDF4J',
     GRAPHDB_VERSION = 10,
-    tripleStore = 'graphDB';
-// tripleStore = 'graphDB';
+    triplestore = 'graphDB';
+// triplestore = 'graphDB';
 
 // // the default prefixes for all SPARQL queries
 const GRAPHDB_DEFAULT_PREFIXES = [
@@ -61,7 +61,7 @@ const EnapsoGraphDBAdminDemo = {
                 repository: GRAPHDB_REPOSITORY,
                 prefixes: GRAPHDB_DEFAULT_PREFIXES,
                 apiType: GRAPHDB_API_TYPE,
-                tripleStore: tripleStore
+                triplestore: triplestore
                 // version: GRAPHDB_VERSION
             });
         } catch (err) {
