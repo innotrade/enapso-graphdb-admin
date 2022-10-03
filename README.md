@@ -6,17 +6,17 @@ Admin client for Ontotext GraphDB, Apache Jena Fuseki and stardog to easily perf
 
 **To run the test suite against triplestores (Ontotext GraphDB/stardog/Apache Jena Fuseki) run the following command `npm test`. In the following file (`test/config.js`) variable triplestore value (graphDB/fuseki/stardog) and baseURL need to be set depend on triplestore before running the test suite**
 
-# Configuration for Ontotext GraphDB
+### Configuration for Ontotext GraphDB
 
 **GraphDB 8.x/9.x/10.x instance running on localhost at port 7200. A fully working Ontotext GraphDB repository "Test" and a user "Test" with the password "Test" being set up, which has read/write access to the "Test" Repository.**
 Get the latest version of GraphDB for free at https://www.ontotext.com/products/graphdb/.
 
-# Configuration for Apache Jena Fuseki
+### Configuration for Apache Jena Fuseki
 
 **Fuseki instance running on localhost at port 3030. A fully working Fuseki Dataset "Test"**
 Get the latest version of Apache jena Fuseki for free at https://jena.apache.org/download/index.cgi.
 
-# Configuration for Apache Jena Fuseki
+### Configuration for Apache Jena Fuseki
 
 **Stardog instance running on localhost at port 5820. A fully working Database "Test" and a user "Test" with the password "Test" being set up, which has read/write access to the "Test" Database.**
 Get the latest version of stardog free at https://www.stardog.com/.
@@ -75,27 +75,27 @@ version parameter is optional by default it work with GraphDB 10.x but to make i
 
 # Feature List of triplestores
 
-| Feature                     | Ontotext GraphDB | Apache Jena Fuseki | Stardog |
-| --------------------------- | ---------------- | ------------------ | ------- |
-| Login(#Login-to-GraphDB)    | ✔                | ✘                  | ✔       |
-| Create Repository           | ✔                | ✔                  | ✔       |
-| Delete Repository           | ✔                | ✔                  | ✔       |
-| Clear Repository            | ✔                | ✔                  | ✔       |
-| Get Repositories            | ✔                | ✔                  | ✔       |
-| Create User                 | ✔                | ✘                  | ✔       |
-| Get Users                   | ✔                | ✘                  | ✔       |
-| Delete User                 | ✔                | ✘                  | ✔       |
-| Drop SHACL Graph            | ✔                | ✘                  | ✘       |
-| Get Contexts                | ✔                | ✔                  | ✔       |
-| Upload From File            | ✔                | ✔                  | ✔       |
-| Upload From Data            | ✔                | ✘                  | ✔       |
-| Download To File            | ✔                | ✔                  | ✔       |
-| Download To Text            | ✔                | ✔                  | ✔       |
-| Clear Context               | ✔                | ✔                  | ✔       |
-| Get Query                   | ✔                | ✘                  | ✔       |
-| Get Locations               | ✔                | ✘                  | ✘       |
-| Perform Garbage Collections | ✔                | ✘                  | ✘       |
-| Get Saved Queries           | ✔                | ✘                  | ✘       |
+| Feature                                                                             | Ontotext GraphDB | Apache Jena Fuseki | Stardog |
+| ----------------------------------------------------------------------------------- | ---------------- | ------------------ | ------- |
+| [Login](#login-to-graphdb)                                                          | ✔                | ✘                  | ✔       |
+| [Create Repository](#create-new-repository-in-your-graphdb-instance)                | ✔                | ✔                  | ✔       |
+| [Delete Repository](#delete-repository-in-a-graphdb-instance)                       | ✔                | ✔                  | ✔       |
+| [Clear Repository](#clear-entire-repository-of-your-graphdb-instance)               | ✔                | ✔                  | ✔       |
+| [Get Repositories](#list-all-repositories-operated-in-a-graphdb-instance)           | ✔                | ✔                  | ✔       |
+| [Create User](#create-new-user-and-assign-role)                                     | ✔                | ✘                  | ✔       |
+| [Get Users](#list-all-users-of-a-graphdb-instance)                                  | ✔                | ✘                  | ✔       |
+| [Delete User](#delete-user)                                                         | ✔                | ✘                  | ✔       |
+| [Drop SHACL Graph](#drop-shacl-shape-in-a-graphdb-instance)                         | ✔                | ✘                  | ✘       |
+| [Get Contexts](#list-all-contexts-name-graphs-used-in-a-given-repository)           | ✔                | ✔                  | ✔       |
+| [Upload From File](#upload-a-file-to-graphdb)                                       | ✔                | ✔                  | ✔       |
+| [Upload From Data](#upload-from-data-to-graphdb)                                    | ✔                | ✘                  | ✔       |
+| [Download To File](#download-a-graph-from-graphdb-directly-to-a-local-file)         | ✔                | ✔                  | ✔       |
+| [Download To Text](#download-a-graph-from-graphdb-to-a-text-variable)               | ✔                | ✔                  | ✔       |
+| [Clear Context](#clear-entire-context-named-graph-of-a-given-repository)            | ✔                | ✔                  | ✔       |
+| [Get Query](#get-query-from-graphdb)                                                | ✔                | ✘                  | ✔       |
+| [Get Locations](#list-all-graphdb-locations)                                        | ✔                | ✘                  | ✘       |
+| [Perform Garbage Collections](#perform-garbage-collection-in-your-graphdb-instance) | ✔                | ✘                  | ✘       |
+| [Get Saved Queries](#list-all-saved-queries-in-a-graphdb-instance)                  | ✔                | ✘                  | ✘       |
 
 ## Login to GraphDB
 
