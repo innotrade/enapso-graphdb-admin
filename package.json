@@ -1,10 +1,13 @@
 {
     "name": "@innotrade/enapso-graphdb-admin",
-    "version": "1.4.8",
+    "version": "1.4.9",
     "description": "ENAPSO Ontotext GraphDB 8.x/9.x Admin Tools for Node.js",
     "main": "index.js",
     "scripts": {
-        "test": "mocha --timeout 10000"
+        "test": "mocha --timeout 10000 --baseURL 'http://localhost:7200' --triplestore 'ontotext-graphDB' --username 'admin' --password 'root'",
+        "test:fuseki": "mocha --timeout 10000 --baseURL 'http://localhost:3030' --triplestore 'fuseki' --username 'admin' --password 'admin'",
+        "test:stardog": "mocha --timeout 10000 --baseURL 'http://localhost:5820' --triplestore 'stardog' --username 'admin' --password 'admin'",
+        "test:ontotext-graphDB": "mocha --timeout 10000 --baseURL 'http://localhost:7200' --triplestore 'ontotext-graphDB' --username 'admin' --password 'root'"
     },
     "repository": {
         "type": "git",
@@ -32,7 +35,7 @@
     "homepage": "https://github.com/innotrade/enapso-graphdb-admin#readme",
     "dependencies": {
         "@innotrade/enapso-config": "^1.3.3",
-        "@innotrade/enapso-graphdb-client": "^1.8.11",
+        "@innotrade/enapso-graphdb-client": "^1.8.12",
         "@innotrade/enapso-logger": "^1.1.0",
         "chai": "^4.3.6",
         "mocha": "^10.0.0",

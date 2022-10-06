@@ -4,6 +4,7 @@
 // (C) Copyright 2019-2020 Innotrade GmbH, Herzogenrath, NRW, Germany
 // Author: Alexander Schulze and Muhammad Yasir
 require('@innotrade/enapso-config');
+const { use } = require('chai');
 const chai = require('chai');
 
 const { expect } = chai;
@@ -12,23 +13,26 @@ const { EnapsoGraphDBClient } = requireEx('@innotrade/enapso-graphdb-client');
 // this is required to add the admin features for the client
 const { EnapsoGraphDBAdmin } = require('../index');
 const testConfig = require('./config');
-
+const baseURL = process.argv[5].replace(/'/g, '');
+const triplestore = process.argv[7].replace(/'/g, '');
+const username = process.argv[9].replace(/'/g, '');
+const password = process.argv[11].replace(/'/g, '');
 describe('ENAPSO GraphDB Admin Automated Test Suite', () => {
     // this.timeout(60000);
 
     // instantiate a new GraphDB endpoint
     const lEndpoint = new EnapsoGraphDBClient.Endpoint({
-        baseURL: testConfig.baseURL,
+        baseURL,
         repository: testConfig.repository,
         prefixes: testConfig.prefixes,
         version: testConfig.version,
-        triplestore: testConfig.triplestore
+        triplestore
     });
 
     it('Authenticate against GraphDB instance', (done) => {
-        if (testConfig.triplestore != 'fuseki') {
+        if (triplestore != 'fuseki') {
             lEndpoint
-                .login(testConfig.adminUsername, testConfig.adminPassword)
+                .login(username, password)
                 .then((result) => {
                     expect(result).to.have.property('status', 200);
                     done();
@@ -60,9 +64,9 @@ describe('ENAPSO GraphDB Admin Automated Test Suite', () => {
     });
 
     it('Create test user in GraphDB instance', (done) => {
-        if (testConfig.triplestore != 'fuseki') {
+        if (triplestore != 'fuseki') {
             let role;
-            if (testConfig.triplestore == 'stardog') {
+            if (triplestore == 'stardog') {
                 role = testConfig.stardogUserAuthorities;
             } else {
                 role = testConfig.authorities;
@@ -87,7 +91,7 @@ describe('ENAPSO GraphDB Admin Automated Test Suite', () => {
     });
 
     it('Find test users in GraphDB instance', (done) => {
-        if (testConfig.triplestore != 'fuseki') {
+        if (triplestore != 'fuseki') {
             lEndpoint
                 .getUsers({})
                 .then((result) => {
@@ -104,7 +108,7 @@ describe('ENAPSO GraphDB Admin Automated Test Suite', () => {
     });
 
     it('Update test users roles in GraphDB instance', (done) => {
-        if (testConfig.triplestore == 'graphDB') {
+        if (triplestore == 'ontotext-graphDB') {
             lEndpoint
                 .updateUser({
                     authorities: testConfig.updateGraphDBUserRole,
@@ -124,7 +128,7 @@ describe('ENAPSO GraphDB Admin Automated Test Suite', () => {
     });
 
     it('Assign Role to users stardog instance', (done) => {
-        if (testConfig.triplestore == 'stardog') {
+        if (triplestore == 'stardog') {
             lEndpoint
                 .assignRoles({
                     authorities: testConfig.roles,
@@ -144,7 +148,7 @@ describe('ENAPSO GraphDB Admin Automated Test Suite', () => {
     });
 
     it('Remove Role to users stardog instance', (done) => {
-        if (testConfig.triplestore == 'stardog') {
+        if (triplestore == 'stardog') {
             lEndpoint
                 .removeRoles({
                     authorities: testConfig.roles,
@@ -163,7 +167,7 @@ describe('ENAPSO GraphDB Admin Automated Test Suite', () => {
     });
 
     it('Delete test user from GraphDB instance', (done) => {
-        if (testConfig.triplestore != 'fuseki') {
+        if (triplestore != 'fuseki') {
             lEndpoint
                 .deleteUser({
                     user: testConfig.newUsername // username which you want to delete
@@ -237,10 +241,7 @@ describe('ENAPSO GraphDB Admin Automated Test Suite', () => {
     });
 
     it('Drop SHACL from GraphDB', (done) => {
-        if (
-            testConfig.triplestore != 'fuseki' &&
-            testConfig.triplestore != 'stardog'
-        ) {
+        if (triplestore != 'fuseki' && triplestore != 'stardog') {
             lEndpoint
                 .dropShaclGraph()
                 .then((result) => {
@@ -308,7 +309,7 @@ describe('ENAPSO GraphDB Admin Automated Test Suite', () => {
     });
 
     it('Get running queries from GraphDB', (done) => {
-        if (testConfig.triplestore != 'fuseki') {
+        if (triplestore != 'fuseki') {
             lEndpoint
                 .getQuery({})
                 .then((result) => {
@@ -326,10 +327,7 @@ describe('ENAPSO GraphDB Admin Automated Test Suite', () => {
     });
 
     it('Get Location requires repository manager role', (done) => {
-        if (
-            testConfig.triplestore != 'fuseki' &&
-            testConfig.triplestore != 'stardog'
-        ) {
+        if (triplestore != 'fuseki' && triplestore != 'stardog') {
             lEndpoint
                 .getLocations()
                 .then((result) => {
@@ -347,10 +345,7 @@ describe('ENAPSO GraphDB Admin Automated Test Suite', () => {
     });
 
     it('Perform garbage collection', (done) => {
-        if (
-            testConfig.triplestore != 'fuseki' &&
-            testConfig.triplestore != 'stardog'
-        ) {
+        if (triplestore != 'fuseki' && triplestore != 'stardog') {
             lEndpoint
                 .performGarbageCollection({})
                 .then((result) => {
@@ -367,10 +362,7 @@ describe('ENAPSO GraphDB Admin Automated Test Suite', () => {
     });
 
     it('Get Saved Query from Graphdb', (done) => {
-        if (
-            testConfig.triplestore != 'fuseki' &&
-            testConfig.triplestore != 'stardog'
-        ) {
+        if (triplestore != 'fuseki' && triplestore != 'stardog') {
             lEndpoint
                 .getSavedQueries()
                 .then((result) => {

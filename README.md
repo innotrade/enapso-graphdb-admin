@@ -4,21 +4,37 @@ enapso GraphDB Administration Toolbox for Node.js
 
 Admin client for Ontotext GraphDB, Apache Jena Fuseki and stardog to easily perform administrative and monitoring operations against your RDF stores, your OWL ontologies or knowledge graphs in nodes.js applications. This client supports an easy import of existing RDF stores and ontologies to Graph DB by upload via file, strings or URLs as well as an export in numerous formats and also a context management. You can monitor the cpu load and memory usage of GraphDB and run the garbage collector on demand to optimally trigger huge batch operations also provide the user managememt, the creation and listing of new repositories as well as an location and cluster management of GraphDB.
 
-**To run the test suite against triplestores (Ontotext GraphDB/stardog/Apache Jena Fuseki) run the following command `npm test`. In the following file (`test/config.js`) variable triplestore value (graphDB/fuseki/stardog) and baseURL need to be set depend on triplestore before running the test suite**
-
 ### Configuration for Ontotext GraphDB
 
-**GraphDB 8.x/9.x/10.x instance running on localhost at port 7200. A fully working Ontotext GraphDB repository "Test" and a user "Test" with the password "Test" being set up, which has read/write access to the "Test" Repository.**
+**GraphDB 8.x/9.x/10.x instance running on localhost at port 7200. A fully working Ontotext GraphDB repository "Test".**
+
+```
+npm run test:ontotext-graphDB
+
+```
+
 Get the latest version of GraphDB for free at https://www.ontotext.com/products/graphdb/.
 
 ### Configuration for Apache Jena Fuseki
 
 **Fuseki instance running on localhost at port 3030. A fully working Fuseki Dataset "Test"**
+
+```
+npm run test:fuseki
+
+```
+
 Get the latest version of Apache jena Fuseki for free at https://jena.apache.org/download/index.cgi.
 
 ### Configuration for Stardog
 
-**Stardog instance running on localhost at port 5820. A fully working Database "Test" and a user "Test" with the password "Test" being set up, which has read/write access to the "Test" Database.**
+**Stardog instance running on localhost at port 5820. A fully working Database "Test".**
+
+```
+npm run test:stardog
+
+```
+
 Get the latest version of stardog free at https://www.stardog.com/.
 
 **This project is actively developed and maintained.**
@@ -27,7 +43,9 @@ To discuss questions and suggestions with the enapso and GraphDB community, we'l
 # Installation
 
 ```
+
 npm i @innotrade/enapso-graphdb-admin --save
+
 ```
 
 # Example
