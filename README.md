@@ -59,7 +59,12 @@ const { EnapsoGraphDBAdmin } = require('@innotrade/enapso-graphdb-admin');
 let graphDBEndpoint = new EnapsoGraphDBClient.Endpoint({
     baseURL: 'http://localhost:7200',
     repository: 'Test',
-    prefixes: GRAPHDB_DEFAULT_PREFIXES,
+    prefixes: [
+        {
+            prefix: 'entest',
+            iri: 'http://ont.enapso.com/test#'
+        }
+    ],
     triplestore: 'ontotext-graphDB',
     version: 9,
     apiType: 'RDF4J'
@@ -78,33 +83,32 @@ let graphDBEndpoint = new EnapsoGraphDBClient.Endpoint({
 
 # Feature List of triplestores
 
-| Feature                                       | Ontotext GraphDB | Apache Jena Fuseki | Stardog |
-| --------------------------------------------- | ---------------- | ------------------ | ------- |
-| [Login](#login-to-graphdb)                    | ✔                | ✘                  | ✔       |
-| [Query](#querying-against-the-graph-database) | ✔                | ✔                  | ✔       |
-| [Update](#updating-triples-in-graph-database) | ✔                | ✔                  | ✔       |
-
-| [Create Repository](#create-new-repository-in-your-graphdb-instance) | ✔ | ✔ | ✔ |
-| [Delete Repository](#delete-repository-in-a-graphdb-instance) | ✔ | ✔ | ✔ |
-| [Clear Repository](#clear-entire-repository-of-your-graphdb-instance) | ✔ | ✔ | ✔ |
-| [Get Repositories](#list-all-repositories-operated-in-a-graphdb-instance) | ✔ | ✔ | ✔ |
-| [Create User](#create-new-user-and-assign-role) | ✔ | ✘ | ✔ |
-| [Get Users](#list-all-users-of-a-graphdb-instance) | ✔ | ✘ | ✔ |
-| [Update User](#update-user) | ✔ | ✘ | ✘ |
-| [Assign Role](#assign-roles) | ✘ | ✘ | ✔ |
-| [Remove Role](#remove-roles) | ✘ | ✘ | ✔ |
-| [Delete User](#delete-user) | ✔ | ✘ | ✔ |
-| [Drop SHACL Graph](#drop-shacl-shape-in-a-graphdb-instance) | ✔ | ✘ | ✘ |
-| [Get Contexts](#list-all-contexts-name-graphs-used-in-a-given-repository) | ✔ | ✔ | ✔ |
-| [Upload From File](#upload-a-file-to-graphdb) | ✔ | ✔ | ✔ |
-| [Upload From Data](#upload-from-data-to-graphdb) | ✔ | ✘ | ✔ |
-| [Download To File](#download-a-graph-from-graphdb-directly-to-a-local-file) | ✔ | ✔ | ✔ |
-| [Download To Text](#download-a-graph-from-graphdb-to-a-text-variable) | ✔ | ✔ | ✔ |
-| [Clear Context](#clear-entire-context-named-graph-of-a-given-repository) | ✔ | ✔ | ✔ |
-| [Get Query](#get-query-from-graphdb) | ✔ | ✘ | ✔ |
-| [Get Locations](#list-all-graphdb-locations) | ✔ | ✘ | ✘ |
-| [Perform Garbage Collections](#perform-garbage-collection-in-your-graphdb-instance) | ✔ | ✘ | ✘ |
-| [Get Saved Queries](#list-all-saved-queries-in-a-graphdb-instance) | ✔ | ✘ | ✘ |
+| Feature                                                                             | Ontotext GraphDB | Apache Jena Fuseki | Stardog |
+| ----------------------------------------------------------------------------------- | ---------------- | ------------------ | ------- |
+| [Login](#login-to-graphdb)                                                          | ✔                | ✘                  | ✔       |
+| [Query](#querying-against-the-graph-database)                                       | ✔                | ✔                  | ✔       |
+| [Update](#updating-triples-in-graph-database)                                       | ✔                | ✔                  | ✔       |
+| [Create Repository](#create-new-repository-in-your-graphdb-instance)                | ✔                | ✔                  | ✔       |
+| [Delete Repository](#delete-repository-in-a-graphdb-instance)                       | ✔                | ✔                  | ✔       |
+| [Clear Repository](#clear-entire-repository-of-your-graphdb-instance)               | ✔                | ✔                  | ✔       |
+| [Get Repositories](#list-all-repositories-operated-in-a-graphdb-instance)           | ✔                | ✔                  | ✔       |
+| [Create User](#create-new-user-and-assign-role)                                     | ✔                | ✘                  | ✔       |
+| [Get Users](#list-all-users-of-a-graphdb-instance)                                  | ✔                | ✘                  | ✔       |
+| [Update User](#update-user)                                                         | ✔                | ✘                  | ✘       |
+| [Assign Role](#assign-roles)                                                        | ✘                | ✘                  | ✔       |
+| [Remove Role](#remove-roles)                                                        | ✘                | ✘                  | ✔       |
+| [Delete User](#delete-user)                                                         | ✔                | ✘                  | ✔       |
+| [Drop SHACL Graph](#drop-shacl-shape-in-a-graphdb-instance)                         | ✔                | ✘                  | ✘       |
+| [Get Contexts](#list-all-contexts-name-graphs-used-in-a-given-repository)           | ✔                | ✔                  | ✔       |
+| [Upload From File](#upload-a-file-to-graphdb)                                       | ✔                | ✔                  | ✔       |
+| [Upload From Data](#upload-from-data-to-graphdb)                                    | ✔                | ✘                  | ✔       |
+| [Download To File](#download-a-graph-from-graphdb-directly-to-a-local-file)         | ✔                | ✔                  | ✔       |
+| [Download To Text](#download-a-graph-from-graphdb-to-a-text-variable)               | ✔                | ✔                  | ✔       |
+| [Clear Context](#clear-entire-context-named-graph-of-a-given-repository)            | ✔                | ✔                  | ✔       |
+| [Get Query](#get-query-from-graphdb)                                                | ✔                | ✘                  | ✔       |
+| [Get Locations](#list-all-graphdb-locations)                                        | ✔                | ✘                  | ✘       |
+| [Perform Garbage Collections](#perform-garbage-collection-in-your-graphdb-instance) | ✔                | ✘                  | ✘       |
+| [Get Saved Queries](#list-all-saved-queries-in-a-graphdb-instance)                  | ✔                | ✘                  | ✘       |
 
 ## Login to Graph Database
 
