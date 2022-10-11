@@ -23,9 +23,9 @@
   <hr />
 </div>
 
-ENAPSO Graph Database Admin client to easily perform administrative and monitoring operations against your RDF stores, your OWL ontologies or knowledge graphs in nodes.js applications. This client supports an easy import of existing RDF stores and ontologies to Graph Database by upload via file, strings or URLs as well as an export in numerous formats and also a context management. You can monitor the cpu load and memory usage of Graph Database and run the garbage collector on demand to optimally trigger huge batch operations also provide the user managememt, the creation and listing of new repositories as well as an location and cluster management of Graph Database.
+ENAPSO Graph Database Admin client to easily perform administrative and monitoring operations against your RDF stores, your OWL ontologies, or knowledge graphs in nodes.js applications. This client supports an easy import of existing RDF stores and ontologies to Graph Database by uploading via file, strings, or URLs as well as an export in numerous formats and also context management. You can monitor the CPU load and memory usage of Graph Database and run the garbage collector on demand to optimally trigger huge batch operations also provide user management, the creation, and listing of new repositories as well as location and cluster management of Graph Database.
 
-As of now we support the connection with three major graph databases
+As of now, we support the connection with three major graph databases
 
 -   [Ontotext GraphDB](https://www.ontotext.com/products/graphdb/)
 -   [Apache Jena fuseki](https://jena.apache.org/)
@@ -36,7 +36,7 @@ There will be more graph databases added to this list in the future.
 You may also find these tools useful
 
 -   [**ENAPSO Graph Database Client**](https://github.com/innotrade/enapso-graphdb-admin): To perform SPARQL queries and update statements against your knowledge graphs or ontologies stored in your graph database.
--   [**ENAPSO Command Line Interface for Graph Databases**](https://github.com/innotrade/enapso-graphdb-admin): To easily perform numeropus scriptable convenience operations on graph databases.
+-   [**ENAPSO Command Line Interface for Graph Databases**](https://github.com/innotrade/enapso-graphdb-admin): To easily perform numerous scriptable convenience operations on graph databases.
 
 [**Tutorial for Test Suite**](https://github.com/innotrade/enapso-graphdb-client/wiki/Tutorial-for-Graph-Databases-Test-Suite): To run the Test suites against the graph database.
 
@@ -50,7 +50,7 @@ npm i @innotrade/enapso-graphdb-admin --save
 
 ```
 
-## Create connection with Graph Database
+## Create a connection with Graph Database
 
 ```javascript
 const { EnapsoGraphDBClient } = require('@innotrade/enapso-graphdb-client');
@@ -73,13 +73,13 @@ let graphDBEndpoint = new EnapsoGraphDBClient.Endpoint({
 
 | Parameter             | Type             | Description                                                                                                                                     | Values                                      |
 | --------------------- | ---------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------- |
-| baseURL(required)     | String           | Pass the URL in which graph databases is running.                                                                                               |                                             |
-| repository(required)  | String           | Pass the name of repository or database of the graph databases with which you want to create connection.                                        |                                             |
-| prefixes(required)    | Array of objects | Pass the prefix and its iri as object which will be used in the SPARQL query to perform crud operations.                                        |                                             |
-| triplestore(optional) | String           | Pass the name of graph database with which you want to create connection by default it create connection with Ontotext GraphDB.                 | ('ontotext-graphDB' , 'stardog' , 'fuseki') |
-| transform(optional)   | String           | Pass the type in which you want to show result of SPARQL query by default it show result in json format.                                        | ('toJSON', 'toCSV' , 'toTSV')               |
-| version(optional)     | Number           | Pass the version of ontotext graphDB to make the tool compatible with older version by default it work with latest version of ontotext graphDB. |                                             |
-| apiType(optional)     | String           | Pass the type of api which will use for importing ontology in ontotext graphDB by default it use ontotext graphDB workbench apis.               | ('workbench', 'RDF4J' )                     |
+| baseURL(required)     | String           | Pass the URL in which graph databases are running.                                                                                               |                                             |
+| repository(required)  | String           | Pass the name of the repository or database of the graph databases with which you want to create a connection.                                        |                                             |
+| prefixes(required)    | Array of objects | Pass the prefix and its IRI as an object which will be used in the SPARQL query to perform crud operations.                                        |                                             |
+| triplestore(optional) | String           | Pass the name of the graph database with which you want to create a connection by default it creates a connection with Ontotext GraphDB.                 | ('ontotext-graphDB' , 'stardog' , 'fuseki') |
+| transform(optional)   | String           | Pass the type in which you want to show the result of the SPARQL query by default it shows the result in JSON format.                                        | ('toJSON', 'toCSV' , 'toTSV')               |
+| version(optional)     | Number           | Pass the version of ontotext graphDB to make the tool compatible with an older version by default it works with the latest version of ontotext graphDB. |                                             |
+| apiType(optional)     | String           | Pass the type of API which will use for importing ontology in ontotext graphDB by default it uses ontotext graphDB workbench APIs.               | ('workbench', 'RDF4J' )                     |
 
 # Feature List of triplestores
 
@@ -167,7 +167,7 @@ graphDBEndpoint
 
 ## Upload a File to Graph Database
 
-Upload an ontology and import it into Graph Database repository automatically if upload was successful. context (graph) and baseIRI paramters are optional :
+Upload an ontology and import it into the Graph Database repository automatically if the upload was successful. context (graph) and baseIRI parameters are optional :
 
 ```javascript
 graphDBEndpoint
@@ -187,7 +187,7 @@ graphDBEndpoint
 
 ## Upload from Data to Graph Database
 
-Upload data (rather than a file) and automatically import the data into a Graph Database repository and context (graph) is optional paramters:
+Upload data (rather than a file) and automatically import the data into a Graph Database repository and context (graph) is an optional parameter:
 
 ```javascript
 fsPromises
@@ -255,7 +255,7 @@ graphDBEndpoint
 ## Perform Garbage Collection in your Graph Database Instance
 
 Perform the garbage collection on the server side to release allocated resources:
-if security is on then for Garbage Collection user role need to be Adminstrator else operation not performed
+if security is on then the Garbage Collection user role needs to be Administrator else operation is not performed
 
 ```javascript
 graphDBEndpoint
@@ -283,10 +283,10 @@ graphDBEndpoint
     });
 ```
 
-## Create New User and Assign Role
+## Create New User and Assign a Role
 
-Create a new user and provide user with read/write access to certain repositories in a Graph Database instance:
-if security is on then for Creating new User, user role need to be Adminstrator else operation not performed
+Create a new user and provide a user with read/write access to certain repositories in a Graph Database instance:
+if security is on then for Creating a new User, the user role needs to be Administrator else operation is not performed
 
 ```javascript
 graphDBEndpoint
@@ -311,14 +311,14 @@ graphDBEndpoint
 ## Update User Role and Authorities
 
 Update the user's roles (read/write rights) for certain repositories:
-if security is on then for Updating Existing User, user role need to be Adminstrator else operation not performed
+if security is on then for Updating Existing User, the user role needs to be Administrator else operation is not performed
 
 ```javascript
 graphDBEndpoint
     .updateUser({
         authorities: [
-            // Writing excess wrote WRITE_ and in last name of Repository which excess provided like REPO_Test
-            'READ_REPO_Test', // Reading excess wrote READ_ and in last name of Repository which excess provided like REPO_Test
+            // Writing excess wrote WRITE_ and in the last name of Repository which excess provided like REPO_Test
+            'READ_REPO_Test', // Reading excess wrote READ_ and in the last name of Repository which excess provided like REPO_Test
             'WRITE_REPO_EnapsoDotNetProDemo',
             'READ_REPO_EnapsoDotNetProDemo',
             'ROLE_USER' // Role of the user
@@ -335,15 +335,15 @@ graphDBEndpoint
 
 ## Update User
 
-Update a user roles in Graph Database instance:
+Update user roles in Graph Database instance:
 
 ```javascript
 graphDBEndpoint
     .deleteUser({
         username: 'TestUser',
         authorities: [
-            // Writing excess wrote WRITE_ and in last name of Repository which excess provided
-            'READ_REPO_Test', // Reading excess wrote READ_ and in last name of Repository which excess provided like REPO_Test
+            // Writing excess wrote WRITE_ and in the last name of Repository which excess provided
+            'READ_REPO_Test', // Reading excess wrote READ_ and in the last name of Repository which excess provided like REPO_Test
             'WRITE_REPO_Vaccine',
             'READ_REPO_Vaccine',
             'ROLE_USER' // Role of the user
@@ -359,7 +359,7 @@ graphDBEndpoint
 
 ## Assign Role
 
-Assign new roles to the user of Graph Database instance:
+Assign new roles to the user of the Graph Database instance:
 
 ```javascript
 graphDBEndpoint
@@ -388,7 +388,7 @@ graphDBEndpoint
 
 ## Remove Role
 
-Remove existing roles of user in Graph Database instance:
+Remove existing roles of a user in the Graph Database instance:
 
 ```javascript
 graphDBEndpoint
@@ -417,9 +417,9 @@ graphDBEndpoint
 
 ## Delete User
 
-**Caution! This deletes the user including all assigend authorities (roles)! This operation cannot be undone!**
+**Caution! This deletes the user including all assigned authorities (roles)! This operation cannot be undone!**
 Deletes a user from the Graph Database instance:
-if security is on then for Deleting User, user role need to be Adminstrator else operation not performed
+if security is on then for Deleting User, the user role needs to be Administrator else operation is not performed
 
 ```javascript
 graphDBEndpoint
@@ -449,7 +449,7 @@ graphDBEndpoint
     });
 ```
 
-## Clear entire Repository of your Graph Database Instance
+## Clear the entire Repository of your Graph Database Instance
 
 **Caution! This removes ALL triples of the given repository! This operation cannot be undone!**
 The entire repository will be emptied, i.e. all data of this repository will be removed. The repository remains active.
@@ -510,7 +510,7 @@ graphDBEndpoint
     });
 ```
 
-## Clear entire Context (Named Graph) of a given Repository
+## Clear the entire Context (Named Graph) of a given Repository
 
 **Caution! This removes ALL triples of the given context! This operation cannot be undone!**
 The entire context will be emptied, i.e. all data from this context will be removed. The repository and other contexts remain active.
@@ -528,7 +528,7 @@ graphDBEndpoint
 
 ## List all Graph Database Locations
 
-Get details of all location which are assosciated with the connected Graph Database instance:
+Get details of all locations which are associated with the connected Graph Database instance:
 
 ```javascript
 graphDBEndpoint
@@ -556,10 +556,10 @@ graphDBEndpoint
     });
 ```
 
-## Create new Repository in your Graph Database Instance
+## Create a new Repository in your Graph Database Instance
 
-Create a new repository in your Graph Database instance, isShacl paramter is optional by defult it is false.
-if security is on then for creating repository, user role need to be Repository Manager else operation not performed
+Create a new repository in your Graph Database instance, isShacl parameter is optional by default it is false.
+if security is on then for creating a repository, the user role needs to be Repository Manager else operation is not performed
 
 ```javascript
 graphDBEndpoint
@@ -580,7 +580,7 @@ graphDBEndpoint
 ## Delete Repository in a Graph Database Instance
 
 Delete a repository in the connected Graph Database instance:
-if security is on then for deleting repository, user role need to be Repository Manager else operation not performed
+if security is on then for deleting the repository, the user role needs to be Repository Manager else operation is not performed
 
 ```javascript
 graphDBEndpoint
@@ -612,7 +612,7 @@ graphDBEndpoint
 
 ## Contribution
 
-If you have a bug to report, do not hesitate to contact us or to file an issue.
+If you have a bug to report, do not hesitate to contact us or file an issue.
 
 If you are willing to fix an issue or propose a [feature](https://www.innotrade.com/forum/); all PRs with clear explanations are welcome and encouraged.
 
