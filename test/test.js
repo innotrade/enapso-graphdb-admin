@@ -13,6 +13,7 @@ const { EnapsoGraphDBClient } = requireEx('@innotrade/enapso-graphdb-client');
 // this is required to add the admin features for the client
 const { EnapsoGraphDBAdmin } = require('../index');
 const testConfig = require('./config');
+
 const baseURL = process.argv[5].replace(/'/g, '');
 const triplestore = process.argv[7].replace(/'/g, '');
 const username = process.argv[9].replace(/'/g, '');
@@ -44,6 +45,42 @@ describe('ENAPSO GraphDB Admin Automated Test Suite', () => {
         } else {
             done();
         }
+    });
+    // first try to insert a class
+    it('Insert a class', (done) => {
+        const lQuery = `
+insert data {
+    sfn:TestClass rdf:type owl:Class
+}`;
+        lEndpoint
+            .update(lQuery)
+            .then((result) => {
+                expect(result).to.have.property('success', true);
+                done();
+            })
+            .catch((err) => {
+                console.log(`Insert class: ${err.message}`);
+                done(err);
+            });
+    });
+    // now try to read the updated class
+    it('Read inserted class', (done) => {
+        const lQuery = `
+select ?class 
+where  {
+		?class a owl:Class
+} limit 1`;
+        lEndpoint
+            .query(lQuery)
+            .then((result) => {
+                // console.log("Success: " + result.success);
+                expect(result.results.bindings).to.have.lengthOf(1);
+                done();
+            })
+            .catch((err) => {
+                console.log(`Read class: ${err.message}`);
+                done(err);
+            });
     });
 
     it('Create new repository in Graphdb', (done) => {
