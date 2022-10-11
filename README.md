@@ -71,15 +71,15 @@ let graphDBEndpoint = new EnapsoGraphDBClient.Endpoint({
 });
 ```
 
-| Parameter             | Type             | Description                                                                                                                                     | Values                                      |
-| --------------------- | ---------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------- |
-| baseURL(required)     | String           | Pass the URL in which graph databases are running.                                                                                               |                                             |
-| repository(required)  | String           | Pass the name of the repository or database of the graph databases with which you want to create a connection.                                        |                                             |
-| prefixes(required)    | Array of objects | Pass the prefix and its IRI as an object which will be used in the SPARQL query to perform crud operations.                                        |                                             |
-| triplestore(optional) | String           | Pass the name of the graph database with which you want to create a connection by default it creates a connection with Ontotext GraphDB.                 | ('ontotext-graphDB' , 'stardog' , 'fuseki') |
-| transform(optional)   | String           | Pass the type in which you want to show the result of the SPARQL query by default it shows the result in JSON format.                                        | ('toJSON', 'toCSV' , 'toTSV')               |
+| Parameter             | Type             | Description                                                                                                                                             | Values                                      |
+| --------------------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------- |
+| baseURL(required)     | String           | Pass the URL in which graph databases are running.                                                                                                      |                                             |
+| repository(required)  | String           | Pass the name of the repository or database of the graph databases with which you want to create a connection.                                          |                                             |
+| prefixes(required)    | Array of objects | Pass the prefix and its IRI as an object which will be used in the SPARQL query to perform crud operations.                                             |                                             |
+| triplestore(optional) | String           | Pass the name of the graph database with which you want to create a connection by default it creates a connection with Ontotext GraphDB.                | ('ontotext-graphDB' , 'stardog' , 'fuseki') |
+| transform(optional)   | String           | Pass the type in which you want to show the result of the SPARQL query by default it shows the result in JSON format.                                   | ('toJSON', 'toCSV' , 'toTSV')               |
 | version(optional)     | Number           | Pass the version of ontotext graphDB to make the tool compatible with an older version by default it works with the latest version of ontotext graphDB. |                                             |
-| apiType(optional)     | String           | Pass the type of API which will use for importing ontology in ontotext graphDB by default it uses ontotext graphDB workbench APIs.               | ('workbench', 'RDF4J' )                     |
+| apiType(optional)     | String           | Pass the type of API which will use for importing ontology in ontotext graphDB by default it uses ontotext graphDB workbench APIs.                      | ('workbench', 'RDF4J' )                     |
 
 # Feature List of triplestores
 
@@ -88,11 +88,11 @@ let graphDBEndpoint = new EnapsoGraphDBClient.Endpoint({
 | [Login](#login-to-graph-database)                                                          | ✔                | ✘                  | ✔       |
 | [Query](#querying-against-the-graph-database)                                              | ✔                | ✔                  | ✔       |
 | [Update](#updating-triples-in-graph-database)                                              | ✔                | ✔                  | ✔       |
-| [Create Repository](#create-new-repository-in-your-graph-database-instance)                | ✔                | ✔                  | ✔       |
+| [Create Repository](#create-a-new-repository-in-your-graph-database-instance)              | ✔                | ✔                  | ✔       |
 | [Delete Repository](#delete-repository-in-a-graph-database-instance)                       | ✔                | ✔                  | ✔       |
-| [Clear Repository](#clear-entire-repository-of-your-graph-database-instance)               | ✔                | ✔                  | ✔       |
+| [Clear Repository](#clear-the-entire-repository-of-your-graph-database-instance)           | ✔                | ✔                  | ✔       |
 | [Get Repositories](#list-all-repositories-operated-in-the-graph-database-instance)         | ✔                | ✔                  | ✔       |
-| [Create User](#create-new-user-and-assign-role)                                            | ✔                | ✘                  | ✔       |
+| [Create User](#create-new-user-and-assign-a-role)                                          | ✔                | ✘                  | ✔       |
 | [Get Users](#list-all-users-of-a-graph-database-instance)                                  | ✔                | ✘                  | ✔       |
 | [Update User](#update-user)                                                                | ✔                | ✘                  | ✘       |
 | [Assign Role](#assign-role)                                                                | ✘                | ✘                  | ✔       |
@@ -104,7 +104,7 @@ let graphDBEndpoint = new EnapsoGraphDBClient.Endpoint({
 | [Upload From Data](#upload-from-data-to-graph-database)                                    | ✔                | ✘                  | ✔       |
 | [Download To File](#download-a-graph-from-graph-database-directly-to-a-local-file)         | ✔                | ✔                  | ✔       |
 | [Download To Text](#download-a-graph-from-graph-database-to-a-text-variable)               | ✔                | ✔                  | ✔       |
-| [Clear Context](#clear-entire-context-named-graph-of-a-given-repository)                   | ✔                | ✔                  | ✔       |
+| [Clear Context](#clear-the-entire-context-named-graph-of-a-given-repository)               | ✔                | ✔                  | ✔       |
 | [Get Query](#get-query-from-graph-database)                                                | ✔                | ✘                  | ✔       |
 | [Get Locations](#list-all-graph-database-locations)                                        | ✔                | ✘                  | ✘       |
 | [Perform Garbage Collections](#perform-garbage-collection-in-your-graph-database-instance) | ✔                | ✘                  | ✘       |
