@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 /* eslint-disable prettier/prettier */
-// Innotrade Enapso GraphDB Client - Configuration for automated tests
+// Innotrade ENAPSO GraphDB Client - Configuration for automated tests
 // (C) Copyright 2019-2020 Innotrade GmbH, Herzogenrath, NRW, Germany
 // Author: Alexander Schulze
 require('@innotrade/enapso-config');

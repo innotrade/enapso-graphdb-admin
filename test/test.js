@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable no-console, func-names, no-undef, no-restricted-syntax, no-unused-expressions */
-// Innotrade enapso GraphDB Admin - Automated Test Suite
+// Innotrade ENAPSO GraphDB Admin - Automated Test Suite
 // (C) Copyright 2019-2020 Innotrade GmbH, Herzogenrath, NRW, Germany
 // Author: Alexander Schulze and Muhammad Yasir
 require('@innotrade/enapso-config');

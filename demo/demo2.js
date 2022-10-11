@@ -3,10 +3,10 @@
 /* eslint-disable no-undef */
 /* eslint-disable prettier/prettier */
 /* eslint-disable no-console */
-// Innotrade enapso - GraphDB Admin Example
-// (C) Copyright 2019-2020 Innotrade GmbH, Herzogenrath, NRW, Germany
+// Innotrade ENAPSO - Graph Database Admin Example
+// (C) Copyright 2021-2022 Innotrade GmbH, Herzogenrath, NRW, Germany
 // Author(s): Alexander Schulze and Muhammad Yasir
-// require the enapso GraphDB Admin Demo module
+// require the ENAPSO Graph Database Admin Demo module
 require('@innotrade/enapso-config');
 // eslint-disable-next-line import/newline-after-import
 const fsPromises = require('fs').promises;
