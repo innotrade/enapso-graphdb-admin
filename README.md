@@ -83,32 +83,32 @@ let graphDBEndpoint = new EnapsoGraphDBClient.Endpoint({
 
 # Feature List of triplestores
 
-| Feature                                                                             | Ontotext GraphDB | Apache Jena Fuseki | Stardog |
-| ----------------------------------------------------------------------------------- | ---------------- | ------------------ | ------- |
-| [Login](#login-to-graphdb)                                                          | ✔                | ✘                  | ✔       |
-| [Query](#querying-against-the-graph-database)                                       | ✔                | ✔                  | ✔       |
-| [Update](#updating-triples-in-graph-database)                                       | ✔                | ✔                  | ✔       |
-| [Create Repository](#create-new-repository-in-your-graphdb-instance)                | ✔                | ✔                  | ✔       |
-| [Delete Repository](#delete-repository-in-a-graphdb-instance)                       | ✔                | ✔                  | ✔       |
-| [Clear Repository](#clear-entire-repository-of-your-graphdb-instance)               | ✔                | ✔                  | ✔       |
-| [Get Repositories](#list-all-repositories-operated-in-a-graphdb-instance)           | ✔                | ✔                  | ✔       |
-| [Create User](#create-new-user-and-assign-role)                                     | ✔                | ✘                  | ✔       |
-| [Get Users](#list-all-users-of-a-graphdb-instance)                                  | ✔                | ✘                  | ✔       |
-| [Update User](#update-user)                                                         | ✔                | ✘                  | ✘       |
-| [Assign Role](#assign-roles)                                                        | ✘                | ✘                  | ✔       |
-| [Remove Role](#remove-roles)                                                        | ✘                | ✘                  | ✔       |
-| [Delete User](#delete-user)                                                         | ✔                | ✘                  | ✔       |
-| [Drop SHACL Graph](#drop-shacl-shape-in-a-graphdb-instance)                         | ✔                | ✘                  | ✘       |
-| [Get Contexts](#list-all-contexts-name-graphs-used-in-a-given-repository)           | ✔                | ✔                  | ✔       |
-| [Upload From File](#upload-a-file-to-graphdb)                                       | ✔                | ✔                  | ✔       |
-| [Upload From Data](#upload-from-data-to-graphdb)                                    | ✔                | ✘                  | ✔       |
-| [Download To File](#download-a-graph-from-graphdb-directly-to-a-local-file)         | ✔                | ✔                  | ✔       |
-| [Download To Text](#download-a-graph-from-graphdb-to-a-text-variable)               | ✔                | ✔                  | ✔       |
-| [Clear Context](#clear-entire-context-named-graph-of-a-given-repository)            | ✔                | ✔                  | ✔       |
-| [Get Query](#get-query-from-graphdb)                                                | ✔                | ✘                  | ✔       |
-| [Get Locations](#list-all-graphdb-locations)                                        | ✔                | ✘                  | ✘       |
-| [Perform Garbage Collections](#perform-garbage-collection-in-your-graphdb-instance) | ✔                | ✘                  | ✘       |
-| [Get Saved Queries](#list-all-saved-queries-in-a-graphdb-instance)                  | ✔                | ✘                  | ✘       |
+| Feature                                                                                    | Ontotext GraphDB | Apache Jena Fuseki | Stardog |
+| ------------------------------------------------------------------------------------------ | ---------------- | ------------------ | ------- |
+| [Login](#login-to-graph-database)                                                          | ✔                | ✘                  | ✔       |
+| [Query](#querying-against-the-graph-database)                                              | ✔                | ✔                  | ✔       |
+| [Update](#updating-triples-in-graph-database)                                              | ✔                | ✔                  | ✔       |
+| [Create Repository](#create-new-repository-in-your-graph-database-instance)                | ✔                | ✔                  | ✔       |
+| [Delete Repository](#delete-repository-in-a-graph-database-instance)                       | ✔                | ✔                  | ✔       |
+| [Clear Repository](#clear-entire-repository-of-your-graph-database-instance)               | ✔                | ✔                  | ✔       |
+| [Get Repositories](#list-all-repositories-operated-in-the-graph-database-instance)         | ✔                | ✔                  | ✔       |
+| [Create User](#create-new-user-and-assign-role)                                            | ✔                | ✘                  | ✔       |
+| [Get Users](#list-all-users-of-a-graph-database-instance)                                  | ✔                | ✘                  | ✔       |
+| [Update User](#update-user)                                                                | ✔                | ✘                  | ✘       |
+| [Assign Role](#assign-role)                                                                | ✘                | ✘                  | ✔       |
+| [Remove Role](#remove-role)                                                                | ✘                | ✘                  | ✔       |
+| [Delete User](#delete-user)                                                                | ✔                | ✘                  | ✔       |
+| [Drop SHACL Graph](#drop-shacl-shape-in-a-graph-database-instance)                         | ✔                | ✘                  | ✘       |
+| [Get Contexts](#list-all-contexts-name-graphs-used-in-a-given-repository)                  | ✔                | ✔                  | ✔       |
+| [Upload From File](#upload-a-file-to-graph-database)                                       | ✔                | ✔                  | ✔       |
+| [Upload From Data](#upload-from-data-to-graph-database)                                    | ✔                | ✘                  | ✔       |
+| [Download To File](#download-a-graph-from-graph-database-directly-to-a-local-file)         | ✔                | ✔                  | ✔       |
+| [Download To Text](#download-a-graph-from-graph-database-to-a-text-variable)               | ✔                | ✔                  | ✔       |
+| [Clear Context](#clear-entire-context-named-graph-of-a-given-repository)                   | ✔                | ✔                  | ✔       |
+| [Get Query](#get-query-from-graph-database)                                                | ✔                | ✘                  | ✔       |
+| [Get Locations](#list-all-graph-database-locations)                                        | ✔                | ✘                  | ✘       |
+| [Perform Garbage Collections](#perform-garbage-collection-in-your-graph-database-instance) | ✔                | ✘                  | ✘       |
+| [Get Saved Queries](#list-all-saved-queries-in-a-graph-database-instance)                  | ✔                | ✘                  | ✘       |
 
 ## Login to Graph Database
 
@@ -165,7 +165,7 @@ graphDBEndpoint
     });
 ```
 
-## Upload a File to GraphDB
+## Upload a File to Graph Database
 
 Upload an ontology and import it into Graph Database repository automatically if upload was successful. context (graph) and baseIRI paramters are optional :
 
