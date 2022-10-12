@@ -23,7 +23,7 @@
   <hr />
 </div>
 
-ENAPSO Graph Database Admin client to easily perform administrative and monitoring operations against your RDF stores, your OWL ontologies, or knowledge graphs in nodes.js applications. This client supports an easy import of existing RDF stores and ontologies to Graph Database by uploading via file, strings, or URLs as well as an export in numerous formats and also context management. You can monitor the CPU load and memory usage of Graph Database and run the garbage collector on demand to optimally trigger huge batch operations also provide user management, the creation, and listing of new repositories as well as location and cluster management of Graph Database.
+ENAPSO Graph Database Admin client to easily perform administrative and monitoring operations against your RDF stores, your OWL ontologies, or knowledge graphs in nodes.js applications. This client supports an easy import of existing RDF stores and ontologies to Graph Database by uploading via file, strings, or URLs as well as an export in numerous formats and also context management. You can monitor the CPU load and memory usage of Graph Database and run the garbage collector on demand to optimally trigger huge batch operations also provide user management, the creation, and listing of new repositories as well as location and cluster management of graph database.
 
 As of now, we support the connection with three major graph databases
 
@@ -46,7 +46,7 @@ npm i @innotrade/enapso-graphdb-admin --save
 
 ```
 
-## Create a connection with Graph Database
+## Create a connection with graph database
 
 ```javascript
 const { EnapsoGraphDBClient } = require('@innotrade/enapso-graphdb-client');
@@ -70,7 +70,7 @@ let graphDBEndpoint = new EnapsoGraphDBClient.Endpoint({
 
 | Parameter             | Type             | Description                                                                                                                                             | Values                                      |
 | --------------------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------- |
-| baseURL(required)     | String           | Pass the URL in which graph databases are running.                                                                                                      |                                             |
+| baseURL(required)     | String           | Pass the URL in which graph database is running.                                                                                                      |                                             |
 | repository(required)  | String           | Pass the name of the repository or database of the graph databases with which you want to create a connection.                                          |                                             |
 | prefixes(required)    | Array of objects | Pass the prefix and its IRI as an object which will be used in the SPARQL query to perform crud operations.                                             |                                             |
 | triplestore(optional) | String           | Pass the name of the graph database with which you want to create a connection by default it creates a connection with Ontotext GraphDB.                | ('ontotext-graphDB' , 'stardog' , 'fuseki') |
@@ -80,43 +80,40 @@ let graphDBEndpoint = new EnapsoGraphDBClient.Endpoint({
 
 # 📋&nbsp;Features
 
-| Feature                                                                                    | Ontotext GraphDB | Apache Jena Fuseki | Stardog |
-| ------------------------------------------------------------------------------------------ | ---------------- | ------------------ | ------- |
-| [Login](#login)                                                          | ✔                | ✘                  | ✔       |
-| [Query](#query)                                              | ✔                | ✔                  | ✔       |
-| [Update](#update)                                              | ✔                | ✔                  | ✔       |
-| [Create Repository](#create-repository)              | ✔                | ✔                  | ✔       |
-| [Delete Repository](#delete-repository)                       | ✔                | ✔                  | ✔       |
-| [Clear Repository](#clear-repository)           | ✔                | ✔                  | ✔       |
-| [Get Repositories](#get-repositories)         | ✔                | ✔                  | ✔       |
-| [Create User](#create-user)                                          | ✔                | ✘                  | ✔       |
-| [Get Users](#get-users)                                  | ✔                | ✘                  | ✔       |
-| [Get Resources](#get-resources)                                  | ✔                | ✘                  | ✘       |
-| [Update User](#update-user)                                                                | ✔                | ✘                  | ✘       |
-| [Assign Role](#assign-role)                                                                | ✘                | ✘                  | ✔       |
-| [Remove Role](#remove-role)                                                                | ✘                | ✘                  | ✔       |
-| [Delete User](#delete-user)                                                                | ✔                | ✘                  | ✔       |
-| [Drop SHACL Graph](#drop-shacl-graph)                         | ✔                | ✘                  | ✘       |
-| [Get Contexts](#get-contexts)                  | ✔                | ✔                  | ✔       |
-| [Upload From File](#upload-from-file)                                       | ✔                | ✔                  | ✔       |
-| [Upload From Data](#upload-from-data)                                    | ✔                | ✘                  | ✔       |
-| [Download To File](#download-to-file)         | ✔                | ✔                  | ✔       |
-| [Download To Text](#download-to-text)               | ✔                | ✔                  | ✔       |
-| [Clear Context](#clear-context)               | ✔                | ✔                  | ✔       |
-| [Get Query](#get-query)                                                | ✔                | ✘                  | ✔       |
-| [Get Locations](#get-locations)                                        | ✔                | ✘                  | ✘       |
-| [Perform Garbage Collection](#perform-garbage-collection) | ✔                | ✘                  | ✘       |
-| [Get Saved Queries](#get-saved-queries)                  | ✔                | ✘                  | ✘       |
-
+| Feature                                                   | Description      | Ontotext GraphDB | Apache Jena Fuseki | Stardog |
+| --------------------------------------------------------- | ---------------- |---------------- | ------------------ | ------- |
+| [Login](#login)                                           | Authenticate against the graph database	                  |✔                | ✘                  | ✔       |
+| [Query](#query)                                           | To retrieve the information from graph database using SPARQL query	|✔                | ✔                  | ✔       |
+| [Update](#update)                                         | To update the triples in the graph database.	| ✔                | ✔                  | ✔       |
+| [Create Repository](#create-repository)                   | Create new repository/database in the graph database. |✔                | ✔                  | ✔       |
+| [Delete Repository](#delete-repository)                   | Delete existing repository/database from graph database.|✔                | ✔                  | ✔       |
+| [Clear Repository](#clear-repository)                     | Remove all triples from graph database repository/database.|✔                | ✔                  | ✔       |
+| [Get Repositories](#get-repositories)                     | Get list of all repsoitory from graph database.|✔                | ✔                  | ✔       |
+| [Create User](#create-user)                               | Create new user and asign the roles in the graph database.|✔                | ✘                  | ✔       |
+| [Get Users](#get-users)                                   | Get list of users from graph database. |✔                | ✘                  | ✔       |
+| [Get Resources](#get-resources)                           | Get list of resources from graph database.|✔                | ✘                  | ✘       |
+| [Update User](#update-user)                               | Update existing user roles from graph database.|✔                | ✘                  | ✘       |
+| [Assign Role](#assign-role)                               | Assign new roles to the existing user of the graph database.|✘                | ✘                  | ✔       |
+| [Remove Role](#remove-role)                               | Remove roles of the existing user of the graph database. |✘                | ✘                  | ✔       |
+| [Delete User](#delete-user)                               | Delete existing user of graph database.|✔                | ✘                  | ✔       |
+| [Drop SHACL Graph](#drop-shacl-graph)                     | Drop SHACL graph from graph database. |✔                | ✘                  | ✘       |
+| [Get Contexts](#get-contexts)                             | Get all context from graph database repository.|✔                | ✔                  | ✔       |
+| [Upload From File](#upload-from-file)                     | Upload ontology from file in the graph database.|✔                | ✔                  | ✔       |
+| [Upload From Data](#upload-from-data)                     | Upoad ontology from data in the graph database. |✔                | ✘                  | ✔       |
+| [Download To File](#download-to-file)                     | Download ontology to file from graph database.|✔                | ✔                  | ✔       |
+| [Download To Text](#download-to-text)                     | Download ontology to text from graph database. |✔                | ✔                  | ✔       |
+| [Clear Context](#clear-context)                           | Clear specific named graph from graph database repository.|✔                | ✔                  | ✔       |
+| [Get Query](#get-query)                                   | Get query from graph database repository.|✔                | ✘                  | ✔       |
+| [Get Locations](#get-locations)                           | Get locations from graph database repository.|✔                | ✘                  | ✘       |
+| [Perform Garbage Collection](#perform-garbage-collection) | Perform garbage collection in the graph database repository.|✔                | ✘                  | ✘       |
+| [Get Saved Queries](#get-saved-queries)                   | Get saved queries from graph database. |✔                | ✘                  | ✘       |
 <details open>
 <summary>
   
 ## Login
 </summary>
 
-Login to Graph Database
-
-Login to authenticate the user against Graph Database and authorize the user according to his roles:
+Login to authenticate the user against graph database and authorize the user according to his roles:
 
 ```javascript
 graphDBEndpoint
@@ -136,7 +133,7 @@ graphDBEndpoint
 ## Query
 </summary>
 
-Querying against the Graph Database
+Querying against the graph database
 
 ```
 graphDBEndpoint
@@ -165,7 +162,7 @@ where {
 ## Update
 </summary>
 
-Updating Triples in Graph Database
+Updating Triples in graph database
 
 ```
 graphDBEndpoint
@@ -190,7 +187,7 @@ graphDBEndpoint
 ## Upload From File
 </summary>
 
-Upload an ontology and import it into the Graph Database repository automatically if the upload was successful. context (graph) and baseIRI parameters are optional :
+Upload an ontology and import it into the graph database repository automatically if the upload was successful. context (graph) and baseIRI parameters are optional :
 
 ```javascript
 graphDBEndpoint
@@ -215,7 +212,7 @@ graphDBEndpoint
 ## Upload From Data
 </summary>
 
-Upload data (rather than a file) and automatically import the data into a Graph Database repository and context (graph) is an optional parameter:
+Upload data (rather than a file) and automatically import the data into a graph database repository and context (graph) is an optional parameter:
 
 ```javascript
 fsPromises
@@ -246,7 +243,7 @@ fsPromises
 ## Download To Text
 </summary>
 
-Download a Graph from Graph Database to a Text Variable.
+Download a Graph from graph database to a Text Variable.
 For the available export formats, please refer to the EnapsoGraphDBClient.FORMAT_xxx constants.
 The context (graph) is optional. If you do not pass a context (graph), the entire repository is exported.
 
@@ -270,7 +267,7 @@ graphDBEndpoint
 ## Download To File
 </summary>
 
-Download a graph from Graph Database directly to a Local File.
+Download a graph from graph database directly to a Local File.
 For the available export formats, please refer to the EnapsoGraphDBClient.FORMAT_xxx constants.
 The context is optional. If you do not pass a context, the entire repository is exported.
 
@@ -340,7 +337,7 @@ graphDBEndpoint
 ## Create User
 </summary>
 
-Create a new user and provide a user with read/write access to certain repositories in a Graph Database instance:
+Create a new user and provide a user with read/write access to certain repositories in a graph database instance:
 if security is on then for Creating a new User, the user role needs to be Administrator else operation is not performed
 
 ```javascript
@@ -400,7 +397,7 @@ graphDBEndpoint
 ## Assign Role
 </summary>
 
-Assign new roles to the user of the Graph Database instance:
+Assign new roles to the user of the graph database instance
 
 ```javascript
 graphDBEndpoint
@@ -434,7 +431,7 @@ graphDBEndpoint
 ## Remove Role
 </summary>
 
-Remove existing roles of a user in the Graph Database instance:
+Remove existing roles of a user in the graph database instance
 
 ```javascript
 graphDBEndpoint
@@ -469,7 +466,7 @@ graphDBEndpoint
 </summary>
 
 **Caution! This deletes the user including all assigned authorities (roles)! This operation cannot be undone!**
-Deletes a user from the Graph Database instance:
+Deletes a user from the graph database instance:
 if security is on then for Deleting User, the user role needs to be Administrator else operation is not performed
 
 ```javascript
@@ -492,7 +489,7 @@ graphDBEndpoint
 ## Get Repositories
 </summary>
 
-Get details of all repositories of the Graph Database repositories operated on the connected host:
+Get details of all repositories of the graph database repositories operated on the connected host:
 
 ```javascript
 graphDBEndpoint
@@ -534,7 +531,7 @@ graphDBEndpoint
 ## Get Users
 </summary>
 
-Get all details of all users of a certain Graph Database instance:
+Get all details of all users of a certain graph database instance:
 
 ```javascript
 graphDBEndpoint
@@ -554,7 +551,7 @@ graphDBEndpoint
 ## Get Query
 </summary>
 
-Get Query from Graph Database:
+Get Query from graph database:
 
 ```javascript
 graphDBEndpoint
@@ -615,7 +612,7 @@ graphDBEndpoint
 ## Get Locations
 </summary>
 
-Get details of all locations which are associated with the connected Graph Database instance:
+Get details of all locations which are associated with the connected graph database instance:
 
 ```javascript
 graphDBEndpoint
@@ -634,7 +631,7 @@ graphDBEndpoint
   
 ## Get Saved Queries
 </summary>
-Get details of all queries which are saved in a Graph Database instance:
+Get details of all queries which are saved in a graph database instance:
 
 ```javascript
 graphDBEndpoint
@@ -654,7 +651,7 @@ graphDBEndpoint
 ## Create Repository
 </summary>
 
-Create a new repository in your Graph Database instance, isShacl parameter is optional by default it is false.
+Create a new repository in the graph database instance, isShacl parameter is optional by default it is false.
 if security is on then for creating a repository, the user role needs to be Repository Manager else operation is not performed
 
 ```javascript
@@ -680,7 +677,7 @@ graphDBEndpoint
 ## Delete Repository
 </summary>
 
-Delete a repository in the connected Graph Database instance:
+Delete a repository in the connected graph database instance:
 if security is on then for deleting the repository, the user role needs to be Repository Manager else operation is not performed
 
 ```javascript
@@ -703,7 +700,7 @@ graphDBEndpoint
 ## Drop SHACL Graph
 </summary>
 
-Drop a shacl Shape from Graph Database to remove all validations:
+Drop a shacl Shape from graph database to remove all validations:
 
 ```javascript
 graphDBEndpoint
