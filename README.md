@@ -745,7 +745,7 @@ document.
 ## 🧑‍🏫&nbsp;Contributors
 
 <a href = "https://github.com/Tanu-N-Prabhu/Python/graphs/contributors">
-  <img src = "https://contrib.rocks/image?repo=innotrade/enapso-graphdb-admin" width="150" />
+  <img src = "https://contrib.rocks/image?repo=innotrade/enapso-graphdb-admin" width="120" />
 </a>
 
 <div>  
