@@ -714,6 +714,10 @@ graphDBEndpoint
 ```
 </details>
 
+<div>  
+  &nbsp; 
+</div>
+
 # 📖&nbsp;Documentation
 
 [View the documentation](https://github.com/innotrade/enapso-graphdb-admin/wiki) for further usage examples.
