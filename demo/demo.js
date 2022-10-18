@@ -39,7 +39,7 @@ const GRAPHDB_BASE_URL = encfg.getConfig(
     GRAPHDB_API_TYPE = 'RDF4J',
     GRAPHDB_VERSION = 10,
     triplestore = 'stardog';
-// triplestore = 'ontotext-graphDB';
+// triplestore = 'graphdb';
 
 // // the default prefixes for all SPARQL queries
 const GRAPHDB_DEFAULT_PREFIXES = [

@@ -61,52 +61,54 @@ let graphDBEndpoint = new EnapsoGraphDBClient.Endpoint({
             iri: 'http://ont.enapso.com/test#'
         }
     ],
-    triplestore: 'ontotext-graphDB',
+    triplestore: 'graphdb',
     version: 9,
     apiType: 'RDF4J'
 });
 ```
+
 ### Parameters
 
-| Parameter             | Type             | Description                                                                                                                                             | Values                                      |
-| --------------------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------- |
-| baseURL(required)     | String           | Pass the URL in which graph database is running.                                                                                                      |                                             |
-| repository(required)  | String           | Pass the name of the repository or database of the graph databases with which you want to create a connection.                                          |                                             |
-| prefixes(required)    | Array of objects | Pass the prefix and its IRI as an object which will be used in the SPARQL query to perform crud operations.                                             |                                             |
-| triplestore(optional) | String           | Pass the name of the graph database with which you want to create a connection by default it creates a connection with Ontotext GraphDB.                | ('ontotext-graphDB' , 'stardog' , 'fuseki') |
-| transform(optional)   | String           | Pass the type in which you want to show the result of the SPARQL query by default it shows the result in JSON format.                                   | ('toJSON', 'toCSV' , 'toTSV')               |
-| version(optional)     | Number           | Pass the version of ontotext graphDB to make the tool compatible with an older version by default it works with the latest version of ontotext graphDB. |                                             |
-| apiType(optional)     | String           | Pass the type of API which will use for importing ontology in ontotext graphDB by default it uses ontotext graphDB workbench APIs.                      | ('workbench', 'RDF4J' )                     |
+| Parameter             | Type             | Description                                                                                                                                             | Values                             |
+| --------------------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------- |
+| baseURL(required)     | String           | Pass the URL in which graph database is running.                                                                                                        |                                    |
+| repository(required)  | String           | Pass the name of the repository or database of the graph databases with which you want to create a connection.                                          |                                    |
+| prefixes(required)    | Array of objects | Pass the prefix and its IRI as an object which will be used in the SPARQL query to perform crud operations.                                             |                                    |
+| triplestore(optional) | String           | Pass the name of the graph database with which you want to create a connection by default it creates a connection with Ontotext GraphDB.                | ('graphdb' , 'stardog' , 'fuseki') |
+| transform(optional)   | String           | Pass the type in which you want to show the result of the SPARQL query by default it shows the result in JSON format.                                   | ('toJSON', 'toCSV' , 'toTSV')      |
+| version(optional)     | Number           | Pass the version of ontotext graphDB to make the tool compatible with an older version by default it works with the latest version of ontotext graphDB. |                                    |
+| apiType(optional)     | String           | Pass the type of API which will use for importing ontology in ontotext graphDB by default it uses ontotext graphDB workbench APIs.                      | ('workbench', 'RDF4J' )            |
 
 # 📋&nbsp;Features
 
-| Feature                                                   | Description      | Ontotext GraphDB | Apache Jena Fuseki | Stardog |
-| --------------------------------------------------------- | ---------------- |---------------- | ------------------ | ------- |
-| [Login](#login)                                           | Authenticate against the graph database	                  |✔                | ✘                  | ✔       |
-| [Query](#query)                                           | To retrieve the information from graph database using SPARQL query	|✔                | ✔                  | ✔       |
-| [Update](#update)                                         | To update the triples in the graph database.	| ✔                | ✔                  | ✔       |
-| [Create Repository](#create-repository)                   | Create new repository/database in the graph database. |✔                | ✔                  | ✔       |
-| [Delete Repository](#delete-repository)                   | Delete existing repository/database from graph database.|✔                | ✔                  | ✔       |
-| [Clear Repository](#clear-repository)                     | Remove all triples from graph database repository/database.|✔                | ✔                  | ✔       |
-| [Get Repositories](#get-repositories)                     | Get list of all repsoitory from graph database.|✔                | ✔                  | ✔       |
-| [Create User](#create-user)                               | Create new user and asign the roles in the graph database.|✔                | ✘                  | ✔       |
-| [Get Users](#get-users)                                   | Get list of users from graph database. |✔                | ✘                  | ✔       |
-| [Get Resources](#get-resources)                           | Get list of resources from graph database.|✔                | ✘                  | ✘       |
-| [Update User](#update-user)                               | Update existing user roles from graph database.|✔                | ✘                  | ✘       |
-| [Assign Role](#assign-role)                               | Assign new roles to the existing user of the graph database.|✘                | ✘                  | ✔       |
-| [Remove Role](#remove-role)                               | Remove roles of the existing user of the graph database. |✘                | ✘                  | ✔       |
-| [Delete User](#delete-user)                               | Delete existing user of graph database.|✔                | ✘                  | ✔       |
-| [Drop SHACL Graph](#drop-shacl-graph)                     | Drop SHACL graph from graph database. |✔                | ✘                  | ✘       |
-| [Get Contexts](#get-contexts)                             | Get all context from graph database repository.|✔                | ✔                  | ✔       |
-| [Upload From File](#upload-from-file)                     | Upload ontology from file in the graph database.|✔                | ✔                  | ✔       |
-| [Upload From Data](#upload-from-data)                     | Upoad ontology from data in the graph database. |✔                | ✘                  | ✔       |
-| [Download To File](#download-to-file)                     | Download ontology to file from graph database.|✔                | ✔                  | ✔       |
-| [Download To Text](#download-to-text)                     | Download ontology to text from graph database. |✔                | ✔                  | ✔       |
-| [Clear Context](#clear-context)                           | Clear specific named graph from graph database repository.|✔                | ✔                  | ✔       |
-| [Get Query](#get-query)                                   | Get query from graph database repository.|✔                | ✘                  | ✔       |
-| [Get Locations](#get-locations)                           | Get locations from graph database repository.|✔                | ✘                  | ✘       |
-| [Perform Garbage Collection](#perform-garbage-collection) | Perform garbage collection in the graph database repository.|✔                | ✘                  | ✘       |
-| [Get Saved Queries](#get-saved-queries)                   | Get saved queries from graph database. |✔                | ✘                  | ✘       |
+| Feature                                                   | Description                                                        | Ontotext GraphDB | Apache Jena Fuseki | Stardog |
+| --------------------------------------------------------- | ------------------------------------------------------------------ | ---------------- | ------------------ | ------- |
+| [Login](#login)                                           | Authenticate against the graph database                            | ✔                | ✘                  | ✔       |
+| [Query](#query)                                           | To retrieve the information from graph database using SPARQL query | ✔                | ✔                  | ✔       |
+| [Update](#update)                                         | To update the triples in the graph database.                       | ✔                | ✔                  | ✔       |
+| [Create Repository](#create-repository)                   | Create new repository/database in the graph database.              | ✔                | ✔                  | ✔       |
+| [Delete Repository](#delete-repository)                   | Delete existing repository/database from graph database.           | ✔                | ✔                  | ✔       |
+| [Clear Repository](#clear-repository)                     | Remove all triples from graph database repository/database.        | ✔                | ✔                  | ✔       |
+| [Get Repositories](#get-repositories)                     | Get list of all repsoitory from graph database.                    | ✔                | ✔                  | ✔       |
+| [Create User](#create-user)                               | Create new user and asign the roles in the graph database.         | ✔                | ✘                  | ✔       |
+| [Get Users](#get-users)                                   | Get list of users from graph database.                             | ✔                | ✘                  | ✔       |
+| [Get Resources](#get-resources)                           | Get list of resources from graph database.                         | ✔                | ✘                  | ✘       |
+| [Update User](#update-user)                               | Update existing user roles from graph database.                    | ✔                | ✘                  | ✘       |
+| [Assign Role](#assign-role)                               | Assign new roles to the existing user of the graph database.       | ✘                | ✘                  | ✔       |
+| [Remove Role](#remove-role)                               | Remove roles of the existing user of the graph database.           | ✘                | ✘                  | ✔       |
+| [Delete User](#delete-user)                               | Delete existing user of graph database.                            | ✔                | ✘                  | ✔       |
+| [Drop SHACL Graph](#drop-shacl-graph)                     | Drop SHACL graph from graph database.                              | ✔                | ✘                  | ✘       |
+| [Get Contexts](#get-contexts)                             | Get all context from graph database repository.                    | ✔                | ✔                  | ✔       |
+| [Upload From File](#upload-from-file)                     | Upload ontology from file in the graph database.                   | ✔                | ✔                  | ✔       |
+| [Upload From Data](#upload-from-data)                     | Upoad ontology from data in the graph database.                    | ✔                | ✘                  | ✔       |
+| [Download To File](#download-to-file)                     | Download ontology to file from graph database.                     | ✔                | ✔                  | ✔       |
+| [Download To Text](#download-to-text)                     | Download ontology to text from graph database.                     | ✔                | ✔                  | ✔       |
+| [Clear Context](#clear-context)                           | Clear specific named graph from graph database repository.         | ✔                | ✔                  | ✔       |
+| [Get Query](#get-query)                                   | Get query from graph database repository.                          | ✔                | ✘                  | ✔       |
+| [Get Locations](#get-locations)                           | Get locations from graph database repository.                      | ✔                | ✘                  | ✘       |
+| [Perform Garbage Collection](#perform-garbage-collection) | Perform garbage collection in the graph database repository.       | ✔                | ✘                  | ✘       |
+| [Get Saved Queries](#get-saved-queries)                   | Get saved queries from graph database.                             | ✔                | ✘                  | ✘       |
+
 <details open>
 <summary>
   
@@ -125,6 +127,7 @@ graphDBEndpoint
         console.log(err, 'process error here...');
     });
 ```
+
 </details>
 
 <details open>
@@ -154,6 +157,7 @@ where {
         console.log(err);
     });
 ```
+
 </details>
 
 <details open>
@@ -179,6 +183,7 @@ graphDBEndpoint
         `console.log(err);
     });
 ```
+
 </details>
 
 <details>
@@ -204,6 +209,7 @@ graphDBEndpoint
         console.log(err, 'process error here...');
     });
 ```
+
 </details>
 
 <details>
@@ -235,6 +241,7 @@ fsPromises
         console.log(err);
     });
 ```
+
 </details>
 
 <details>
@@ -259,6 +266,7 @@ graphDBEndpoint
         console.log(err, 'process error here...');
     });
 ```
+
 </details>
 
 <details>
@@ -288,6 +296,7 @@ graphDBEndpoint
         console.log(err, 'process error here...');
     });
 ```
+
 </details>
 
 <details>
@@ -309,6 +318,7 @@ graphDBEndpoint
         console.log(err, 'process error here...');
     });
 ```
+
 </details>
 
 <details>
@@ -329,6 +339,7 @@ graphDBEndpoint
         console.log(err, 'process error here...');
     });
 ```
+
 </details>
 
 <details>
@@ -359,6 +370,7 @@ graphDBEndpoint
         console.log(err);
     });
 ```
+
 </details>
 
 <details>
@@ -389,6 +401,7 @@ graphDBEndpoint
         console.log(err);
     });
 ```
+
 </details>
 
 <details>
@@ -423,6 +436,7 @@ graphDBEndpoint
         console.log(err);
     });
 ```
+
 </details>
 
 <details>
@@ -457,6 +471,7 @@ graphDBEndpoint
         console.log(err);
     });
 ```
+
 </details>
 
 <details>
@@ -481,6 +496,7 @@ graphDBEndpoint
         console.log(err);
     });
 ```
+
 </details>
 
 <details>
@@ -523,6 +539,7 @@ graphDBEndpoint
         console.log(err);
     });
 ```
+
 </details>
 
 <details>
@@ -543,6 +560,7 @@ graphDBEndpoint
         console.log(err);
     });
 ```
+
 </details>
 
 <details>
@@ -563,6 +581,7 @@ graphDBEndpoint
         console.log(err);
     });
 ```
+
 </details>
 
 <details>
@@ -583,6 +602,7 @@ graphDBEndpoint
         console.log(err, 'process error here...');
     });
 ```
+
 </details>
 
 <details>
@@ -604,6 +624,7 @@ graphDBEndpoint
         console.log(err, 'process error here...');
     });
 ```
+
 </details>
 
 <details>
@@ -624,6 +645,7 @@ graphDBEndpoint
         console.log(err);
     });
 ```
+
 </details>
 
 <details>
@@ -643,6 +665,7 @@ graphDBEndpoint
         console.log(err);
     });
 ```
+
 </details>
 
 <details>
@@ -669,6 +692,7 @@ graphDBEndpoint
         console.log(err);
     });
 ```
+
 </details>
 
 <details>
@@ -692,6 +716,7 @@ graphDBEndpoint
         console.log(err);
     });
 ```
+
 </details>
 
 <details>
@@ -712,6 +737,7 @@ graphDBEndpoint
         console.log(err);
     });
 ```
+
 </details>
 
 # 📖&nbsp;Documentation
@@ -750,7 +776,7 @@ document.
 
 # 💬&nbsp;Bugs and Feature Requests
 
-Do you have a bug report or a feature request? 
+Do you have a bug report or a feature request?
 
 Please feel free to add a [new
 issue](https://github.com/innotrade/enapso-graphdb-admin/issues/new) or write to us in [discussion](https://github.com/innotrade/enapso-graphdb-admin/discussions): Any questions and suggestions are welcome.
@@ -760,5 +786,6 @@ issue](https://github.com/innotrade/enapso-graphdb-admin/issues/new) or write to
 </div>
 
 # 🧾&nbsp;License
+
 This project is licensed under the Apache 2.0 License. See the [LICENSE](./LICENSE) file for more
 details.

@@ -145,7 +145,7 @@ where  {
     });
 
     it('Update test users roles in GraphDB instance', (done) => {
-        if (triplestore == 'ontotext-graphDB') {
+        if (triplestore == 'graphdb') {
             lEndpoint
                 .updateUser({
                     authorities: testConfig.updateGraphDBUserRole,
