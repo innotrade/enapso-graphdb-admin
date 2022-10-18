@@ -1,4 +1,4 @@
-![ENAPSO](https://i.ibb.co/6b3rXrB/enapso-client.png)
+![ENAPSO](https://i.ibb.co/yf9fm5g/enapso-graphdb.png)
 
 <div align="center">
   <h1><span style="font-weight:bold; color: #4299E1;">ENAPSO</span> Graph Database Admin</h1>
@@ -740,6 +740,10 @@ graphDBEndpoint
 
 </details>
 
+<div>  
+  &nbsp; 
+</div>
+
 # 📖&nbsp;Documentation
 
 [View the documentation](https://github.com/innotrade/enapso-graphdb-admin/wiki) for further usage examples.
@@ -767,7 +771,7 @@ document.
 ## 🧑‍🏫&nbsp;Contributors
 
 <a href = "https://github.com/Tanu-N-Prabhu/Python/graphs/contributors">
-  <img src = "https://contrib.rocks/image?repo=innotrade/enapso-graphdb-admin" width="200"/>
+  <img src = "https://contrib.rocks/image?repo=innotrade/enapso-graphdb-admin" width="120" />
 </a>
 
 <div>  
