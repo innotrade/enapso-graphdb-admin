@@ -10,7 +10,7 @@ const fsPromises = require('fs').promises,
 EnapsoLoggerFactory.createGlobalLogger('enLogger');
 enLogger.setLevel(EnapsoLogger.ALL);
 
-// // connection data to the running GraphDB instance
+// // connection data to the running Graph Database instance
 
 const GRAPHDB_BASE_URL = encfg.getConfig(
         'enapsoDefaultGraphDB.baseUrl',
@@ -49,7 +49,7 @@ const GRAPHDB_DEFAULT_PREFIXES = [
 ];
 
 enLogger.info(
-    'ENAPSO GraphDB Admin Demo\n(C) Copyright 2019-2020 Innotrade GmbH, Herzogenrath, NRW, Germany'
+    'ENAPSO Graph Database Admin Demo\n(C) Copyright 2021-2022 Innotrade GmbH, Herzogenrath, NRW, Germany'
 );
 
 const EnapsoGraphDBAdminDemo = {
@@ -58,7 +58,7 @@ const EnapsoGraphDBAdminDemo = {
 
     createEndpoint() {
         try {
-            // instantiate a new GraphDB endpoint
+            // instantiate a new Graph Database endpoint
             return new EnapsoGraphDBClient.Endpoint({
                 baseURL: GRAPHDB_BASE_URL,
                 repository: GRAPHDB_REPOSITORY,
@@ -75,7 +75,7 @@ const EnapsoGraphDBAdminDemo = {
     // login: async function () {
     async login() {
         try {
-            // login into GraphDB using JWT
+            // login into Graph Database using JWT
             let lRes = await this.graphDBEndpoint.login(
                 GRAPHDB_USERNAME,
                 GRAPHDB_PASSWORD

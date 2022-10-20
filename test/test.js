@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable no-console, func-names, no-undef, no-restricted-syntax, no-unused-expressions */
-// Innotrade ENAPSO GraphDB Admin - Automated Test Suite
-// (C) Copyright 2019-2020 Innotrade GmbH, Herzogenrath, NRW, Germany
+// Innotrade ENAPSO Graph Database Admin - Automated Test Suite
+// (C) Copyright 2021-2022 Innotrade GmbH, Herzogenrath, NRW, Germany
 // Author: Alexander Schulze and Muhammad Yasir
 require('@innotrade/enapso-config');
 const { use } = require('chai');
@@ -18,10 +18,10 @@ const baseURL = process.argv[5].replace(/'/g, '');
 const triplestore = process.argv[7].replace(/'/g, '');
 const username = process.argv[9].replace(/'/g, '');
 const password = process.argv[11].replace(/'/g, '');
-describe('ENAPSO GraphDB Admin Automated Test Suite', () => {
+describe('ENAPSO Graph Database Admin Automated Test Suite', () => {
     // this.timeout(60000);
 
-    // instantiate a new GraphDB endpoint
+    // instantiate a new Graph Database endpoint
     const lEndpoint = new EnapsoGraphDBClient.Endpoint({
         baseURL,
         repository: testConfig.repository,
@@ -30,7 +30,7 @@ describe('ENAPSO GraphDB Admin Automated Test Suite', () => {
         triplestore
     });
 
-    it('Authenticate against GraphDB instance', (done) => {
+    it('Authenticate against Graph Database instance', (done) => {
         if (triplestore != 'fuseki') {
             lEndpoint
                 .login(username, password)
@@ -100,7 +100,7 @@ where  {
             });
     });
 
-    it('Create test user in GraphDB instance', (done) => {
+    it('Create test user in Graph Database instance', (done) => {
         if (triplestore != 'fuseki') {
             let role;
             if (triplestore == 'stardog') {
@@ -127,7 +127,7 @@ where  {
         }
     });
 
-    it('Find test users in GraphDB instance', (done) => {
+    it('Find test users in Graph Database instance', (done) => {
         if (triplestore != 'fuseki') {
             lEndpoint
                 .getUsers({})
@@ -144,7 +144,7 @@ where  {
         }
     });
 
-    it('Update test users roles in GraphDB instance', (done) => {
+    it('Update test users roles in Graph Database instance', (done) => {
         if (triplestore == 'graphdb') {
             lEndpoint
                 .updateUser({
@@ -203,7 +203,7 @@ where  {
         }
     });
 
-    it('Delete test user from GraphDB instance', (done) => {
+    it('Delete test user from Graph Database instance', (done) => {
         if (triplestore != 'fuseki') {
             lEndpoint
                 .deleteUser({
@@ -222,7 +222,7 @@ where  {
         }
     });
 
-    it('Find Newly created repository in GraphDB', (done) => {
+    it('Find Newly created repository in Graph Database', (done) => {
         lEndpoint
             .getRepositories({})
             .then((result) => {
@@ -235,7 +235,7 @@ where  {
             });
     });
 
-    it('Get contexts (graphs) of the test repository of the GraphDB instance', (done) => {
+    it('Get contexts (graphs) of the test repository of the Graph Database instance', (done) => {
         lEndpoint
             .getContexts()
             .then((result) => {
@@ -277,7 +277,7 @@ where  {
             });
     });
 
-    it('Drop SHACL from GraphDB', (done) => {
+    it('Drop SHACL from Graph Database', (done) => {
         if (triplestore != 'fuseki' && triplestore != 'stardog') {
             lEndpoint
                 .dropShaclGraph()
@@ -294,7 +294,7 @@ where  {
         }
     });
 
-    it('Upload Ontology to GraphDB', (done) => {
+    it('Upload Ontology to Graph Database', (done) => {
         lEndpoint
             .uploadFromFile({
                 filename: './ontologies/EnapsoTest.owl',
@@ -312,7 +312,7 @@ where  {
             });
     });
 
-    it('Download Ontology from GraphDB', (done) => {
+    it('Download Ontology from Graph Database', (done) => {
         const lFormat = EnapsoGraphDBClient.FORMAT_TURTLE;
         lEndpoint
             .downloadToFile({
@@ -345,7 +345,7 @@ where  {
             });
     });
 
-    it('Get running queries from GraphDB', (done) => {
+    it('Get running queries from Graph Database', (done) => {
         if (triplestore != 'fuseki') {
             lEndpoint
                 .getQuery({})

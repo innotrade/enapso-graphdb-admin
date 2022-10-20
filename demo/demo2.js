@@ -15,7 +15,7 @@ const { EnapsoGraphDBClient } = requireEx('@innotrade/enapso-graphdb-client');
 // this is required to add the admin features for the client
 const { EnapsoGraphDBAdmin } = require('../index');
 
-// connection data to the running GraphDB instance
+// connection data to the running Graph Database instance
 const GRAPHDB_BASE_URL = encfg.getConfig(
         'enapsoDefaultGraphDB.baseUrl',
         'http://localhost:7200'
@@ -75,7 +75,7 @@ graphDBEndpoint
 graphDBEndpoint
     .createRepository({
         id: 'AutomatedTest4',
-        title: 'Enapso Automated Test Repository',
+        title: 'ENAPSO Automated Test Repository',
         location: ''
     })
     .then((result) => {
