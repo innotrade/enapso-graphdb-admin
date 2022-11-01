@@ -239,7 +239,6 @@ where  {
         lEndpoint
             .getContexts()
             .then((result) => {
-                // console.log(JSON.stringify(result, null, 2));
                 expect(result).to.have.property('success', true);
                 done();
             })

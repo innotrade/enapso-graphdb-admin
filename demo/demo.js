@@ -14,7 +14,7 @@ enLogger.setLevel(EnapsoLogger.ALL);
 
 const GRAPHDB_BASE_URL = encfg.getConfig(
         'enapsoDefaultGraphDB.baseUrl',
-        'http://localhost:5820'
+        'http://localhost:7200'
     ),
     GRAPHDB_REPOSITORY = encfg.getConfig(
         'enapsoDefaultGraphDB.repository',
@@ -24,10 +24,7 @@ const GRAPHDB_BASE_URL = encfg.getConfig(
         'enapsoDefaultGraphDB.userName',
         'admin'
     ),
-    GRAPHDB_PASSWORD = encfg.getConfig(
-        'enapsoDefaultGraphDB.password',
-        'admin'
-    ),
+    GRAPHDB_PASSWORD = encfg.getConfig('enapsoDefaultGraphDB.password', 'root'),
     GRAPHDB_CONTEXT_TEST = encfg.getConfig(
         'enapsoDefaultGraphDB.ContextTest',
         'http://ont.enapso.com/test'
@@ -38,7 +35,7 @@ const GRAPHDB_BASE_URL = encfg.getConfig(
     ),
     GRAPHDB_API_TYPE = 'RDF4J',
     GRAPHDB_VERSION = 10,
-    triplestore = 'stardog';
+    triplestore = 'graphdb';
 // triplestore = 'graphdb';
 
 // // the default prefixes for all SPARQL queries
@@ -311,7 +308,7 @@ const EnapsoGraphDBAdminDemo = {
         // upload a file
         try {
             let resp = await this.graphDBEndpoint.uploadFromFile({
-                filename: '../ontologies/dotnetpro_demo_ontology_2.owl',
+                filename: './ontologies/dotnetpro_demo_ontology_2.owl',
                 format: 'application/rdf+xml',
                 baseIRI: 'http://ont.enapso.com/test#',
                 context: 'http://ont.enapso.com/test'
@@ -702,15 +699,15 @@ const EnapsoGraphDBAdminDemo = {
     async demo() {
         this.graphDBEndpoint = await this.createEndpoint();
         this.authentication = await this.login();
-        // verify authentication
-        if (!this.authentication.success) {
-            enLogger.info(
-                '\nLogin failed:\n' +
-                    JSON.stringify(this.authentication, null, 2)
-            );
-            return;
-        }
-        enLogger.info('\nLogin successful');
+        // // verify authentication
+        // if (!this.authentication.success) {
+        //     enLogger.info(
+        //         '\nLogin failed:\n' +
+        //             JSON.stringify(this.authentication, null, 2)
+        //     );
+        //     return;
+        // }
+        // enLogger.info('\nLogin successful');
         // await this.demoAssignRoles({
         //     userName: 'ashesh',
         //     authorities: [
@@ -726,21 +723,21 @@ const EnapsoGraphDBAdminDemo = {
         //         }
         //     ]
         // });
-        await this.demoRemoveRoles({
-            userName: 'ashesh',
-            authorities: [
-                {
-                    action: 'CREATE',
-                    resource_type: 'db',
-                    resource: ['Test']
-                },
-                {
-                    action: 'WRITE',
-                    resource_type: 'db',
-                    resource: ['Test']
-                }
-            ]
-        });
+        // await this.demoRemoveRoles({
+        //     userName: 'ashesh',
+        //     authorities: [
+        //         {
+        //             action: 'CREATE',
+        //             resource_type: 'db',
+        //             resource: ['Test']
+        //         },
+        //         {
+        //             action: 'WRITE',
+        //             resource_type: 'db',
+        //             resource: ['Test']
+        //         }
+        //     ]
+        // });
         // clear entire repository
         // CAUTION! This operation empties the entire repository and cannot be undone!
         // this.demoClearRepository();
@@ -753,7 +750,7 @@ const EnapsoGraphDBAdminDemo = {
         // this.demoGetLocations();
         // getUsers requires admin role!
         // this.demoGetUsers();
-        // this.demoGetContexts();
+        this.demoGetContexts();
         // this.demoGetSavedQueries();
         // this.demoUploadFromFile();
         // this.demoDownloadToFile();
@@ -783,7 +780,7 @@ const EnapsoGraphDBAdminDemo = {
         // await this.demoCreateUser();
         // await this.demoUpdateUser();
         // await this.demoDeleteUser();
-        await this.demoClearRepository();
+        // await this.demoClearRepository();
         // enLogger.info('Start: ' + new Date().toISOString());
         // await this.demoWaitForGraphDB();
         // enLogger.info('Finish: ' + new Date().toISOString());
