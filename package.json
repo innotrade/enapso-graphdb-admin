@@ -1,6 +1,6 @@
 {
     "name": "@innotrade/enapso-graphdb-admin",
-    "version": "1.4.15",
+    "version": "1.4.16",
     "description": "ENAPSO Graph Database Admin Tools for Node.js",
     "main": "index.js",
     "scripts": {
@@ -35,16 +35,16 @@
     "homepage": "https://github.com/innotrade/enapso-graphdb-admin#readme",
     "dependencies": {
         "@innotrade/enapso-config": "^1.3.3",
-        "@innotrade/enapso-graphdb-client": "^1.8.18",
+        "@innotrade/enapso-graphdb-client": "^1.8.19",
         "@innotrade/enapso-logger": "^1.1.0",
         "axios": "^1.1.3",
-        "chai": "^4.3.6",
+        "chai": "^4.3.7",
         "form-data": "^4.0.0",
         "mocha": "^10.1.0",
         "qs": "^6.11.0"
     },
     "devDependencies": {
-        "eslint": "^8.26.0",
+        "eslint": "^8.27.0",
         "eslint-config-airbnb": "^19.0.4",
         "eslint-config-prettier": "^8.5.0",
         "eslint-plugin-import": "^2.26.0",
