@@ -750,7 +750,7 @@ const EnapsoGraphDBAdminDemo = {
         // this.demoGetLocations();
         // getUsers requires admin role!
         // this.demoGetUsers();
-        this.demoGetContexts();
+        // this.demoGetContexts();
         // this.demoGetSavedQueries();
         // this.demoUploadFromFile();
         // this.demoDownloadToFile();
@@ -772,7 +772,7 @@ const EnapsoGraphDBAdminDemo = {
 			enLogger.info("--- Graph should not contain TestClassUpdated anymore --- ")
 			await this.demoQuery();
 			*/
-        // await this.demoGetResources();
+        await this.demoGetResources();
         // await this.demoPerformGarbageCollection();
         // await this.demoGetResources();
         // await this.demoCreateRepository();
