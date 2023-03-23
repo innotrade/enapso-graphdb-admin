@@ -3,7 +3,7 @@
 <div align="center">
   <h1><span style="font-weight:bold; color: #4299E1;">ENAPSO</span> Graph Database Admin</h1>
   <a href="https://www.npmjs.com/package/@innotrade/enapso-graphdb-admin"><img src="https://img.shields.io/npm/v/@innotrade/enapso-graphdb-admin" /></a>
-  <a href="https://github.com/innotrade/enapso-graphdb-client/blob/main/CODE_OF_CONDUCT.md"><img src="https://img.shields.io/badge/connect-Community-brightgreen" /></a>
+  <a href="https://github.com/innotrade/enapso-graphdb-admin/discussions"><img src="https://img.shields.io/badge/connect-Community-brightgreen" /></a>
   <a href="https://github.com/innotrade/enapso-graphdb-admin/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-Apache%202-blue" /></a>
   <a href="https://github.com/innotrade/enapso-graphdb-admin/blob/main/CODE_OF_CONDUCT.md"><img src="https://img.shields.io/badge/code-Conduct-orange" /></a>
   <br />
@@ -14,11 +14,11 @@
   <span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
   <a href="https://github.com/innotrade/enapso-graphdb-admin/discussions">Discussion</a>
   <span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
-  <a href="#">Facebook</a>
+  <a href="https://www.facebook.com/InnotradeGmbH/">Facebook</a>
   <span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
-  <a href="#">Twitter</a>
+  <a href="https://twitter.com/innotrade?lang=en">Twitter</a>
   <span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
-  <a href="#">LinkedIn</a>
+  <a href="https://de.linkedin.com/company/innotrade-gmbh">LinkedIn</a>
   <br />
   <hr />
 </div>
@@ -35,8 +35,8 @@ There will be more graph databases added to this list in the future.
 
 You may also find these tools useful
 
--   [**ENAPSO Graph Database Client**](https://github.com/innotrade/enapso-graphdb-admin): To perform SPARQL queries and update statements against your knowledge graphs or ontologies stored in your graph database.
--   [**ENAPSO Command Line Interface for Graph Databases**](https://github.com/innotrade/enapso-graphdb-admin): To easily perform numerous scriptable convenience operations on graph databases.
+-   [**ENAPSO Graph Database Client**](https://github.com/innotrade/enapso-graphdb-client): To perform SPARQL queries and update statements against your knowledge graphs or ontologies stored in your graph database.
+-   [**ENAPSO Command Line Interface for Graph Databases**](https://github.com/innotrade/enapso-graphdb-cli): To easily perform numerous scriptable convenience operations on graph databases.
 
 # 🛠️&nbsp;Installation
 
