@@ -296,7 +296,7 @@ where  {
     it('Upload Ontology to Graph Database', (done) => {
         lEndpoint
             .uploadFromFile({
-                filename: './ontologies/EnapsoTest.owl',
+                filename: 'ontologies/EnapsoTest.owl',
                 format: 'application/rdf+xml',
                 baseIRI: 'http://ont.enapso.com/test#',
                 context: 'http://ont.enapso.com/test'
