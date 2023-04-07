@@ -753,7 +753,7 @@ const EnapsoGraphDBAdminDemo = {
         // this.demoGetContexts();
         // this.demoGetSavedQueries();
         // this.demoUploadFromFile();
-        // this.demoDownloadToFile();
+         this.demoDownloadToFile();
         // this.demoDownloadToText();
         // this.demoShacl();
         // await this.demoDropShaclGraph();
@@ -772,7 +772,7 @@ const EnapsoGraphDBAdminDemo = {
 			enLogger.info("--- Graph should not contain TestClassUpdated anymore --- ")
 			await this.demoQuery();
 			*/
-        await this.demoGetResources();
+        // await this.demoGetResources();
         // await this.demoPerformGarbageCollection();
         // await this.demoGetResources();
         // await this.demoCreateRepository();
