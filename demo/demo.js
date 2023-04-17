@@ -308,10 +308,22 @@ const EnapsoGraphDBAdminDemo = {
         // upload a file
         try {
             let resp = await this.graphDBEndpoint.uploadFromFile({
-                filename: './ontologies/dotnetpro_demo_ontology_2.owl',
-                format: 'application/rdf+xml',
-                baseIRI: 'http://ont.enapso.com/test#',
-                context: 'http://ont.enapso.com/test'
+                filename: './ontologies/Test.ttl',
+                format: 'text/turtle'
+            });
+            enLogger.info(
+                '\nUploadFromFile:\n' + JSON.stringify(resp, null, 2)
+            );
+            return resp;
+        } catch (err) {
+            console.log(err);
+        }
+    },
+    async demoImportServerFile() {
+        // upload a file
+        try {
+            let resp = await this.graphDBEndpoint.importServerFile({
+                filename: 'Test.ttl'
             });
             enLogger.info(
                 '\nUploadFromFile:\n' + JSON.stringify(resp, null, 2)
@@ -752,8 +764,9 @@ const EnapsoGraphDBAdminDemo = {
         // this.demoGetUsers();
         // this.demoGetContexts();
         // this.demoGetSavedQueries();
+        this.demoImportServerFile();
         // this.demoUploadFromFile();
-         this.demoDownloadToFile();
+        // this.demoDownloadToFile();
         // this.demoDownloadToText();
         // this.demoShacl();
         // await this.demoDropShaclGraph();
