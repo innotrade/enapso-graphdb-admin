@@ -34,7 +34,7 @@ const GRAPHDB_BASE_URL = encfg.getConfig(
         'http://rdf4j.org/schema/rdf4j#SHACLShapeGraph'
     ),
     GRAPHDB_API_TYPE = 'RDF4J',
-    GRAPHDB_VERSION = 10,
+    GRAPHDB_VERSION = 10.2,
     triplestore = 'graphdb';
 // triplestore = 'graphdb';
 
@@ -61,8 +61,8 @@ const EnapsoGraphDBAdminDemo = {
                 repository: GRAPHDB_REPOSITORY,
                 prefixes: GRAPHDB_DEFAULT_PREFIXES,
                 apiType: GRAPHDB_API_TYPE,
-                triplestore: triplestore
-                // version: GRAPHDB_VERSION
+                triplestore: triplestore,
+                version: GRAPHDB_VERSION
             });
         } catch (err) {
             console.log(err);
@@ -764,7 +764,7 @@ const EnapsoGraphDBAdminDemo = {
         // this.demoGetUsers();
         // this.demoGetContexts();
         // this.demoGetSavedQueries();
-        this.demoImportServerFile();
+        // this.demoImportServerFile();
         // this.demoUploadFromFile();
         // this.demoDownloadToFile();
         // this.demoDownloadToText();
@@ -786,7 +786,7 @@ const EnapsoGraphDBAdminDemo = {
 			await this.demoQuery();
 			*/
         // await this.demoGetResources();
-        // await this.demoPerformGarbageCollection();
+        await this.demoPerformGarbageCollection();
         // await this.demoGetResources();
         // await this.demoCreateRepository();
         // await this.demoDeleteRepository();
