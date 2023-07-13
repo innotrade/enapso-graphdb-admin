@@ -249,6 +249,19 @@ where  {
             });
     });
 
+    it('Get Resource of the test repository of the Graph Database instance', (done) => {
+        lEndpoint
+            .getResources()
+            .then((result) => {
+                expect(result).to.have.property('success', true);
+                done();
+            })
+            .catch((err) => {
+                console.log(`Get Resources: ${err.message}`);
+                done(err);
+            });
+    });
+
     it('Delete newly created repository in Graphdb', (done) => {
         lEndpoint
             .deleteRepository({

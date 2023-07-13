@@ -28,7 +28,7 @@ module.exports = Object.freeze({
             resource: ['Test']
         }
     ],
-    version: 10.2,
+    // version: 10.2,
     newRepository: 'EnapsoAutomatedRepo',
     newUsername: 'EnapsoAutomatedUser',
     newPassword: 'EnapsoAutomatedPass',
