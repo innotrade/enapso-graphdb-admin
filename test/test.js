@@ -18,6 +18,7 @@ const baseURL = process.argv[5].replace(/'/g, '');
 const triplestore = process.argv[7].replace(/'/g, '');
 const username = process.argv[9].replace(/'/g, '');
 const password = process.argv[11].replace(/'/g, '');
+const version = testConfig.version;
 describe('ENAPSO Graph Database Admin Automated Test Suite', () => {
     // this.timeout(60000);
 
@@ -381,7 +382,11 @@ where  {
     });
 
     it('Perform garbage collection', (done) => {
-        if (triplestore != 'fuseki' && triplestore != 'stardog') {
+        if (
+            triplestore != 'fuseki' &&
+            triplestore != 'stardog' &&
+            version < 10.2
+        ) {
             lEndpoint
                 .performGarbageCollection({})
                 .then((result) => {
