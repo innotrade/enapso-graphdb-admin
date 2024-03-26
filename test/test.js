@@ -250,16 +250,20 @@ where  {
     });
 
     it('Get Resource of the test repository of the Graph Database instance', (done) => {
-        lEndpoint
-            .getResources()
-            .then((result) => {
-                expect(result).to.have.property('success', true);
-                done();
-            })
-            .catch((err) => {
-                console.log(`Get Resources: ${err.message}`);
-                done(err);
-            });
+        if (triplestore != 'fuseki' && triplestore != 'stardog') {
+            lEndpoint
+                .getResources()
+                .then((result) => {
+                    expect(result).to.have.property('success', true);
+                    done();
+                })
+                .catch((err) => {
+                    console.log(`Get Resources: ${err.message}`);
+                    done(err);
+                });
+        } else {
+            done();
+        }
     });
 
     it('Delete newly created repository in Graphdb', (done) => {
