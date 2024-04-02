@@ -1,29 +1,514 @@
-@prefix : <http://www.semanticweb.org/robotcommunication#> .
-@prefix owl: <http://www.w3.org/2002/07/owl#> .
-@prefix ns: <http://creativecommons.org/ns#> .
-@prefix enrepo: <http://ont.enapso.com/repo#> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-@prefix fn: <http://www.w3.org/2005/xpath-functions#> .
-@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix foundation: <http://ont.enapso.com/foundation#> .
-@prefix path: <http://www.ontotext.com/path#> .
-@prefix terms: <http://purl.org/dc/terms/> .
-@prefix xml: <http://www.w3.org/XML/1998/namespace> .
-@prefix vann: <http://purl.org/vocab/vann/> .
-@prefix ec: <http://www.ebu.ch/metadata/ontologies/ebucoreplus#> .
-@prefix rdf4j: <http://rdf4j.org/schema/rdf4j#> .
-@prefix wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
-@prefix enterms: <http://ont.enapso.com/terms#> .
-@prefix entest: <http://ont.enapso.com/test#> .
-@prefix gn: <http://www.geonames.org/ontology#> .
-@prefix dnp: <http://ont.enapso.com/dotnetpro#> .
-@prefix xkos: <https://rdf-vocabulary.ddialliance.org/xkos/> .
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix spin: <http://spinrdf.org/spin#> .
-@prefix protons: <http://proton.semanticweb.org/protonsys#> .
-@prefix sfn: <http://www.w3.org/ns/sparql#> .
-@prefix sesame: <http://www.openrdf.org/schema/sesame#> .
-@prefix time: <http://www.w3.org/2006/time#> .
-@prefix vs: <http://www.w3.org/2003/06/sw-vocab-status/ns#> .
-@prefix dc: <http://purl.org/dc/elements/1.1/> .
+PREFIX :     <http://ont.enapso.com/dotnetpro#>
+PREFIX dnp:  <http://ont.enapso.com/dotnetpro#>
+PREFIX owl:  <http://www.w3.org/2002/07/owl#>
+PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xml:  <http://www.w3.org/XML/1998/namespace>
+PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#>
+
+<http://ont.enapso.com/test> {
+    <http://ont.enapso.com/dotnetpro>
+            rdf:type        owl:Ontology;
+            rdfs:comment    "Demo Ontologie für dotnetpro - Semantic Web - Protégé."@de , "Demo Ontology for dotnetpro - Semantic Web - Protégé."@en;
+            owl:versionIRI  <http://ont.enapso.com/dotnetpro/1.0.0> .
+    
+    :hasAddress  rdf:type  owl:ObjectProperty;
+            rdfs:label  "Address"@en , "Adresse"@de;
+            rdfs:range  :Address .
+    
+    :Address  rdf:type       owl:Class;
+            rdfs:label       "Address"@en , "Anschrift"@de;
+            rdfs:subClassOf  [ rdf:type                  owl:Restriction;
+                               owl:onDataRange           xsd:string;
+                               owl:onProperty            :city;
+                               owl:qualifiedCardinality  "1"^^xsd:nonNegativeInteger
+                             ];
+            rdfs:subClassOf  [ rdf:type                  owl:Restriction;
+                               owl:onDataRange           xsd:string;
+                               owl:onProperty            :street;
+                               owl:qualifiedCardinality  "1"^^xsd:nonNegativeInteger
+                             ];
+            rdfs:subClassOf  [ rdf:type                  owl:Restriction;
+                               owl:onDataRange           xsd:string;
+                               owl:onProperty            :zipcode;
+                               owl:qualifiedCardinality  "1"^^xsd:nonNegativeInteger
+                             ] .
+    
+    :hasCustomer  rdf:type  owl:ObjectProperty;
+            rdfs:label  "Customer"@en , "Kunde"@de .
+    
+    :hasDeliveryAddress
+            rdf:type            owl:ObjectProperty;
+            rdfs:label          "Delivery Address"@en , "Lieferanschrift"@de;
+            rdfs:subPropertyOf  :hasAddress .
+    
+    :hasDocumentItem  rdf:type  owl:ObjectProperty;
+            rdfs:label  "Item"@en , "Position"@de .
+    
+    :hasInvoiceAddress
+            rdf:type            owl:ObjectProperty;
+            rdfs:label          "Invoice Address"@en , "Rechnungsanschrift"@de;
+            rdfs:subPropertyOf  :hasAddress .
+    
+    :hasProduct  rdf:type  owl:ObjectProperty;
+            rdfs:label  "Product"@en , "Produkt"@de .
+    
+    :CustomerId  rdf:type       owl:DatatypeProperty;
+            rdfs:label          "Customer Id"@en , "Kunden-Nr."@de;
+            rdfs:subPropertyOf  :Id .
+    
+    :Id     rdf:type    owl:DatatypeProperty;
+            rdfs:label  "Identification Number"@en , "Identifikations-Nr."@de .
+    
+    :Description  rdf:type  owl:DatatypeProperty;
+            rdfs:label  "Beschreibung"@de , "Description"@en .
+    
+    :LongDescription  rdf:type  owl:DatatypeProperty;
+            rdfs:label          "Langbeschreibung"@de , "Long Description"@en;
+            rdfs:subPropertyOf  :Description .
+    
+    :ShortDescription
+            rdf:type            owl:DatatypeProperty;
+            rdfs:label          "Kurzbeschreibung"@de , "Short Description"@en;
+            rdfs:subPropertyOf  :Description .
+    
+    :SupplierId  rdf:type       owl:DatatypeProperty;
+            rdfs:label          "Lieferanten-Nr."@de , "Supplier Id"@en;
+            rdfs:subPropertyOf  :Id .
+    
+    :amount  rdf:type   owl:DatatypeProperty;
+            rdfs:label  "Amount"@en , "Anzahl"@de .
+    
+    :artno  rdf:type    owl:DatatypeProperty;
+            rdfs:label  "Artikel-Nr."@de , "Product-Code"@en .
+    
+    :city   rdf:type    owl:DatatypeProperty;
+            rdfs:label  "City"@en , "Stadt"@de .
+    
+    :companyName  rdf:type      owl:DatatypeProperty;
+            rdfs:label          "Company Name"@en , "Firmenname"@de;
+            rdfs:subPropertyOf  :name .
+    
+    :name   rdf:type    owl:DatatypeProperty;
+            rdfs:label  "Name"@de , "Name"@en .
+    
+    :email  rdf:type            owl:DatatypeProperty;
+            rdfs:label          "E-Mail"@de , "Email"@en;
+            rdfs:subPropertyOf  owl:topDataProperty .
+    
+    :faxNumber  rdf:type        owl:DatatypeProperty;
+            rdfs:label          "Fax Number"@en , "Fax-Nummer"@de;
+            rdfs:subPropertyOf  :phoneNumber .
+    
+    :phoneNumber  rdf:type  owl:DatatypeProperty;
+            rdfs:label  "Phone No."@en , "Telefon-Nr."@de .
+    
+    :givenname  rdf:type        owl:DatatypeProperty;
+            rdfs:label          "Givenname"@en , "Vorname"@de;
+            rdfs:subPropertyOf  :name .
+    
+    :mobilePhoneNumber
+            rdf:type            owl:DatatypeProperty;
+            rdfs:label          "Cell Phone"@en , "Mobil-Telefon"@de;
+            rdfs:subPropertyOf  :phoneNumber .
+    
+    :price  rdf:type    owl:DatatypeProperty;
+            rdfs:label  "Preis"@de , "Price"@en .
+    
+    :privateEmail  rdf:type     owl:DatatypeProperty;
+            rdfs:label          "Private E-Mail"@de , "Private Email"@en;
+            rdfs:subPropertyOf  :email .
+    
+    :privatePhoneNumber
+            rdf:type            owl:DatatypeProperty;
+            rdfs:label          "Private Phone No."@en , "Private Telefon-Nr."@de;
+            rdfs:subPropertyOf  :phoneNumber .
+    
+    :productUrl  rdf:type       owl:DatatypeProperty;
+            rdfs:domain         :ImmaterialProduct;
+            rdfs:subPropertyOf  :url .
+    
+    :url    rdf:type    owl:DatatypeProperty;
+            rdfs:label  "Uniform Resource Locator"@de , "Uniform Resource Locator"@en .
+    
+    :ImmaterialProduct
+            rdf:type         owl:Class;
+            rdfs:label       "Download Product"@en , "Download-Artikel"@de;
+            rdfs:subClassOf  :Product .
+    
+    :purchasePrice  rdf:type    owl:DatatypeProperty;
+            rdfs:comment        "Der netto Einkaufspreis eines Produktes, ohne Berücksichtigung von Steuern und Frachtkosten."@de , "The net purchase price of a product, excluding taxes and freight costs."@en;
+            rdfs:label          "Einkaufspreis"@de , "Purchase Price"@en;
+            rdfs:subPropertyOf  :price .
+    
+    :salesPrice  rdf:type       owl:DatatypeProperty;
+            rdfs:label          "Sales Price"@en , "Verkaufspreis"@de;
+            rdfs:subPropertyOf  :price .
+    
+    :street  rdf:type   owl:DatatypeProperty;
+            rdfs:label  "Anschrift"@de , "Street"@en .
+    
+    :surname  rdf:type          owl:DatatypeProperty;
+            rdfs:label          "Nachname"@de , "Surname"@en;
+            rdfs:subPropertyOf  :name .
+    
+    :testDataProp  rdf:type  owl:DatatypeProperty .
+    
+    :vatRate  rdf:type          owl:DatatypeProperty;
+            rdfs:label          "Mehrwertsteuersatz"@de , "VAT Rate"@en;
+            rdfs:range          [ rdf:type   rdfs:Datatype;
+                                  owl:oneOf  [ rdf:type   rdf:List;
+                                               rdf:first  "0.0"^^xsd:float;
+                                               rdf:rest   [ rdf:type   rdf:List;
+                                                            rdf:first  "19.0"^^xsd:float;
+                                                            rdf:rest   [ rdf:type   rdf:List;
+                                                                         rdf:first  "7.0"^^xsd:float;
+                                                                         rdf:rest   ()
+                                                                       ]
+                                                          ]
+                                             ]
+                                ];
+            rdfs:subPropertyOf  owl:topDataProperty .
+    
+    :weight  rdf:type    owl:DatatypeProperty;
+            rdfs:domain  :MaterialProduct;
+            rdfs:label   "Gewicht in kg"@de , "Weight in kg"@en;
+            rdfs:range   xsd:float .
+    
+    :MaterialProduct  rdf:type  owl:Class;
+            rdfs:label       "Shipped Product"@en , "Versand-Artikel"@de;
+            rdfs:subClassOf  :Product .
+    
+    :workEmail  rdf:type        owl:DatatypeProperty;
+            rdfs:label          "Business Email"@en , "Geschäftliche E-Mail"@de;
+            rdfs:subPropertyOf  :email .
+    
+    :workPhoneNumber  rdf:type  owl:DatatypeProperty;
+            rdfs:label          "Business Phone No."@en , "Geschäftliche Telefon-Nr."@de;
+            rdfs:subPropertyOf  :phoneNumber .
+    
+    :zipcode  rdf:type  owl:DatatypeProperty;
+            rdfs:label  "Postleitzahl"@de , "Zipcode"@en .
+    
+    :Architect  rdf:type     owl:Class;
+            rdfs:label       "Architect"@en , "Architekt"@de;
+            rdfs:subClassOf  :Role .
+    
+    :Role   rdf:type      owl:Class;
+            rdfs:comment  "Die Verantwortlichkeit(en) oder Tätigkeit(en) einer Person im Unternehmen."@de , "The responsibilities or activities of a person in a company."@en;
+            rdfs:label    "Role"@en , "Rolle"@de .
+    
+    :BusinessRelation
+            rdf:type    owl:Class;
+            rdfs:label  "Business Relation"@en , "Geschäfliche Beziehung"@de .
+    
+    :Company  rdf:type       owl:Class;
+            rdfs:label       "Company"@en , "Firma"@de;
+            rdfs:subClassOf  [ rdf:type            owl:Restriction;
+                               owl:onProperty      :hasAddress;
+                               owl:someValuesFrom  :Address
+                             ];
+            rdfs:subClassOf  [ rdf:type                  owl:Restriction;
+                               owl:onDataRange           xsd:string;
+                               owl:onProperty            :companyName;
+                               owl:qualifiedCardinality  "1"^^xsd:nonNegativeInteger
+                             ] .
+    
+    :ContactData  rdf:type   owl:Class;
+            rdfs:label       "Contact Data"@en , "Kontaktdaten"@de;
+            rdfs:subClassOf  [ rdf:type           owl:Restriction;
+                               owl:allValuesFrom  xsd:string;
+                               owl:onProperty     :faxNumber
+                             ];
+            rdfs:subClassOf  [ rdf:type           owl:Restriction;
+                               owl:allValuesFrom  xsd:string;
+                               owl:onProperty     :mobilePhoneNumber
+                             ];
+            rdfs:subClassOf  [ rdf:type           owl:Restriction;
+                               owl:allValuesFrom  xsd:string;
+                               owl:onProperty     :privateEmail
+                             ];
+            rdfs:subClassOf  [ rdf:type           owl:Restriction;
+                               owl:allValuesFrom  xsd:string;
+                               owl:onProperty     :privatePhoneNumber
+                             ];
+            rdfs:subClassOf  [ rdf:type           owl:Restriction;
+                               owl:allValuesFrom  xsd:string;
+                               owl:onProperty     :workEmail
+                             ];
+            rdfs:subClassOf  [ rdf:type           owl:Restriction;
+                               owl:allValuesFrom  xsd:string;
+                               owl:onProperty     :workPhoneNumber
+                             ] .
+    
+    :Customer  rdf:type      owl:Class;
+            rdfs:label       "Customer"@en , "Kunde"@de;
+            rdfs:subClassOf  :BusinessRelation;
+            rdfs:subClassOf  [ rdf:type           owl:Restriction;
+                               owl:allValuesFrom  :Address;
+                               owl:onProperty     :hasDeliveryAddress
+                             ];
+            rdfs:subClassOf  [ rdf:type                  owl:Restriction;
+                               owl:onClass               :Address;
+                               owl:onProperty            :hasInvoiceAddress;
+                               owl:qualifiedCardinality  "1"^^xsd:nonNegativeInteger
+                             ] .
+    
+    :Developer  rdf:type     owl:Class;
+            rdfs:label       "Developer"@en , "Entwickler"@de;
+            rdfs:subClassOf  :Role .
+    
+    :Document  rdf:type  owl:Class;
+            rdfs:label  "Document"@en , "Dokument"@de .
+    
+    :DocumentItem  rdf:type  owl:Class;
+            rdfs:label       "Position"@de , "Document Item"@en;
+            rdfs:subClassOf  [ rdf:type                  owl:Restriction;
+                               owl:onClass               :Product;
+                               owl:onProperty            :hasProduct;
+                               owl:qualifiedCardinality  "1"^^xsd:nonNegativeInteger
+                             ];
+            rdfs:subClassOf  [ rdf:type                  owl:Restriction;
+                               owl:onDataRange           xsd:float;
+                               owl:onProperty            :Description;
+                               owl:qualifiedCardinality  "1"^^xsd:nonNegativeInteger
+                             ];
+            rdfs:subClassOf  [ rdf:type                  owl:Restriction;
+                               owl:onDataRange           xsd:float;
+                               owl:onProperty            :amount;
+                               owl:qualifiedCardinality  "1"^^xsd:nonNegativeInteger
+                             ];
+            rdfs:subClassOf  [ rdf:type                  owl:Restriction;
+                               owl:onDataRange           xsd:float;
+                               owl:onProperty            :price;
+                               owl:qualifiedCardinality  "1"^^xsd:nonNegativeInteger
+                             ] .
+    
+    :Product  rdf:type       owl:Class;
+            rdfs:label       "Product"@en , "Artikel"@de;
+            rdfs:subClassOf  [ rdf:type                  owl:Restriction;
+                               owl:onDataRange           xsd:string;
+                               owl:onProperty            :LongDescription;
+                               owl:qualifiedCardinality  "1"^^xsd:nonNegativeInteger
+                             ];
+            rdfs:subClassOf  [ rdf:type                  owl:Restriction;
+                               owl:onDataRange           xsd:string;
+                               owl:onProperty            :ShortDescription;
+                               owl:qualifiedCardinality  "1"^^xsd:nonNegativeInteger
+                             ];
+            rdfs:subClassOf  [ rdf:type                  owl:Restriction;
+                               owl:onDataRange           xsd:string;
+                               owl:onProperty            :artno;
+                               owl:qualifiedCardinality  "1"^^xsd:nonNegativeInteger
+                             ];
+            rdfs:subClassOf  [ rdf:type                  owl:Restriction;
+                               owl:onDataRange           xsd:string;
+                               owl:onProperty            :name;
+                               owl:qualifiedCardinality  "1"^^xsd:nonNegativeInteger
+                             ];
+            rdfs:subClassOf  [ rdf:type                  owl:Restriction;
+                               owl:onDataRange           xsd:float;
+                               owl:onProperty            :purchasePrice;
+                               owl:qualifiedCardinality  "1"^^xsd:nonNegativeInteger
+                             ];
+            rdfs:subClassOf  [ rdf:type                  owl:Restriction;
+                               owl:onDataRange           xsd:float;
+                               owl:onProperty            :salesPrice;
+                               owl:qualifiedCardinality  "1"^^xsd:nonNegativeInteger
+                             ];
+            rdfs:subClassOf  [ rdf:type                  owl:Restriction;
+                               owl:onDataRange           xsd:float;
+                               owl:onProperty            :vatRate;
+                               owl:qualifiedCardinality  "1"^^xsd:nonNegativeInteger
+                             ] .
+    
+    :Employee  rdf:type      owl:Class;
+            rdfs:label       "Angestellter"@de , "Employee"@en;
+            rdfs:subClassOf  :Staff .
+    
+    :Staff  rdf:type    owl:Class;
+            rdfs:label  "Belegschaft"@de , "Staff"@en .
+    
+    :Freelancer  rdf:type    owl:Class;
+            rdfs:label       "Freelancer"@en , "Freiberufler"@de;
+            rdfs:subClassOf  :Staff .
+    
+    :Invoice  rdf:type       owl:Class;
+            rdfs:label       "Invoice"@en , "Rechnung"@de;
+            rdfs:subClassOf  :Document;
+            rdfs:subClassOf  [ rdf:type            owl:Restriction;
+                               owl:onProperty      :hasDocumentItem;
+                               owl:someValuesFrom  :DocumentItem
+                             ] .
+    
+    :Manager  rdf:type       owl:Class;
+            rdfs:subClassOf  :Role .
+    
+    :MediaPartner  rdf:type  owl:Class;
+            rdfs:label       "Media Partner"@en , "Media-Partner"@de;
+            rdfs:subClassOf  :BusinessRelation .
+    
+    :Person  rdf:type        owl:Class;
+            rdfs:label       "Person"@de , "Person"@en;
+            rdfs:subClassOf  [ rdf:type                  owl:Restriction;
+                               owl:onDataRange           xsd:string;
+                               owl:onProperty            :givenname;
+                               owl:qualifiedCardinality  "1"^^xsd:nonNegativeInteger
+                             ];
+            rdfs:subClassOf  [ rdf:type                  owl:Restriction;
+                               owl:onDataRange           xsd:string;
+                               owl:onProperty            :surname;
+                               owl:qualifiedCardinality  "1"^^xsd:nonNegativeInteger
+                             ] .
+    
+    :Sales  rdf:type         owl:Class;
+            rdfs:label       "Sales"@en , "Vertrieb"@de;
+            rdfs:subClassOf  :Role .
+    
+    :ShoppingBasket  rdf:type  owl:Class;
+            rdfs:label       "Einkaufskorb"@de , "Shopping Basket"@en;
+            rdfs:subClassOf  [ rdf:type           owl:Restriction;
+                               owl:allValuesFrom  :Product;
+                               owl:onProperty     :hasProduct
+                             ] .
+    
+    :Supplier  rdf:type      owl:Class;
+            rdfs:label       "Lieferant"@de , "Supplier"@en;
+            rdfs:subClassOf  :BusinessRelation .
+    
+    :TestClass  rdf:type     owl:Class;
+            rdfs:label       "Test Class"@en , "Test-Klasse"@de;
+            rdfs:subClassOf  [ rdf:type            owl:Restriction;
+                               owl:onProperty      :testDataProp;
+                               owl:someValuesFrom  xsd:string
+                             ];
+            rdfs:subClassOf  [ rdf:type           owl:Restriction;
+                               owl:allValuesFrom  xsd:string;
+                               owl:onProperty     :testDataProp
+                             ];
+            rdfs:subClassOf  [ rdf:type                     owl:Restriction;
+                               owl:minQualifiedCardinality  "1"^^xsd:nonNegativeInteger;
+                               owl:onDataRange              xsd:string;
+                               owl:onProperty               :testDataProp
+                             ];
+            rdfs:subClassOf  [ rdf:type                  owl:Restriction;
+                               owl:onDataRange           xsd:string;
+                               owl:onProperty            :testDataProp;
+                               owl:qualifiedCardinality  "3"^^xsd:nonNegativeInteger
+                             ];
+            rdfs:subClassOf  [ rdf:type                     owl:Restriction;
+                               owl:maxQualifiedCardinality  "2"^^xsd:nonNegativeInteger;
+                               owl:onDataRange              xsd:string;
+                               owl:onProperty               :testDataProp
+                             ] .
+    
+    :Tester  rdf:type        owl:Class;
+            rdfs:label       "Tester"@de , "Tester"@en;
+            rdfs:subClassOf  :Role .
+    
+    :Address_1d09d629_2577_4cbd_8186_c57391e63429
+            rdf:type    :Address , owl:NamedIndividual;
+            rdfs:label  "Innotrade GmbH Hauptsitz";
+            :city       "Herzogenrath";
+            :street     "An Vieslapp 29";
+            :zipcode    "52134" .
+    
+    :Address_cee4a7b4_3a4c_4361_9d80_d6b72adbf2d0
+            rdf:type    :Address , owl:NamedIndividual;
+            rdfs:label  "Ebner Mediagroup GmbH & Co. KG";
+            :city       "Ulm";
+            :street     "Karlstraße 3";
+            :zipcode    "89073" .
+    
+    :Address_eabaf8ce_0935_4286_9d61_2d9b3f5e8154
+            rdf:type    :Address , owl:NamedIndividual;
+            rdfs:label  "Innotrade GmbH TPH";
+            :city       "Herzogenrath";
+            :street     "Kaiserstraße 100";
+            :zipcode    "52134" .
+    
+    :Company_6a7379f7_61ca_49c1_b37a_dabd64edd39d
+            rdf:type      :Company , owl:NamedIndividual;
+            rdfs:label    "Innotrade";
+            :companyName  "Innotrade GmbH";
+            :hasAddress   :Address_1d09d629_2577_4cbd_8186_c57391e63429 , :Address_eabaf8ce_0935_4286_9d61_2d9b3f5e8154 .
+    
+    :Company_de49dbf5_102d_4bb0_b022_f5bd0023713c
+            rdf:type      :Company , :MediaPartner , owl:NamedIndividual;
+            rdfs:label    "Ebner";
+            :companyName  "Ebner Media Group GmbH & Co. KG";
+            :hasAddress   :Address_cee4a7b4_3a4c_4361_9d80_d6b72adbf2d0 .
+    
+    :Person_8e7980b9_bec9_4e39_af50_a8f3e6c0d349
+            rdf:type    :Person , owl:NamedIndividual;
+            rdfs:label  "Max Mustermann";
+            :givenname  "Max";
+            :surname    "Mustermann" .
+    
+    :Person_da0b7612_c956_45f9_a974_314d01849659
+            rdf:type    :Architect , :Freelancer , :Manager , :Person , owl:NamedIndividual;
+            rdfs:label  "Susanne Musterfrau";
+            :givenname  "Susanne";
+            :surname    "Musterfrau" .
+    
+    :Product_c2318c23_2db8_4c8b_9dbf_cd20970d7723
+            rdf:type        :Product , owl:NamedIndividual;
+            rdfs:comment    "Blueray Player, HD, inklusive Kabel"@de;
+            rdfs:label      "Blueray Player, HD, including cables"@en;
+            :artno          "0001";
+            :name           "Blueray Player";
+            :purchasePrice  "145.0"^^xsd:float;
+            :salesPrice     "199.5"^^xsd:float;
+            :vatRate        "19.0"^^xsd:float;
+            :weight         "1.3"^^xsd:float .
+    
+    :Product_c2aafc2e_b820_4eec_a792_ecf56fb4695e
+            rdf:type        :Product , owl:NamedIndividual;
+            rdfs:label      "Product Antivirus Suite";
+            :artno          "0003";
+            :name           "Antivirus Suite";
+            :purchasePrice  "49.9"^^xsd:float;
+            :salesPrice     "129.5"^^xsd:float;
+            :url            "http://www.innotrade.com/downloads#avsuite";
+            :vatRate        "19.0"^^xsd:float .
+    
+    :Product_d256c837_ceb4_4182_bf48_8c27e92a33dc
+            rdf:type        :Product , owl:NamedIndividual;
+            rdfs:label      "Product Dictation Suite";
+            :artno          "0004";
+            :name           "Dictation Suite";
+            :purchasePrice  "175.0"^^xsd:float;
+            :salesPrice     "249.99"^^xsd:float;
+            :url            "http://www.innotrade.com/downloads#opsystem";
+            :vatRate        "19.0"^^xsd:float .
+    
+    :Product_d8373cac_94b7_4bff_92cd_48ce93dcfbf1
+            rdf:type        :Product , owl:NamedIndividual;
+            rdfs:label      "Product Smart TV";
+            :artno          "0002";
+            :name           "Smart TV";
+            :purchasePrice  "350.0"^^xsd:float;
+            :salesPrice     "499.0"^^xsd:float;
+            :vatRate        "19.0"^^xsd:float;
+            :weight         "2.5"^^xsd:float .
+    
+    [ rdf:type            owl:Class;
+      rdfs:subClassOf     :ImmaterialProduct;
+      owl:intersectionOf  ( :Product
+                            [ rdf:type            owl:Restriction;
+                              owl:onProperty      :url;
+                              owl:someValuesFrom  xsd:string
+                            ]
+                          )
+    ] .
+    
+    [ rdf:type            owl:Class;
+      rdfs:subClassOf     :MaterialProduct;
+      owl:intersectionOf  ( :Product
+                            [ rdf:type            owl:Restriction;
+                              owl:onProperty      :weight;
+                              owl:someValuesFrom  xsd:float
+                            ]
+                          )
+    ] .
+}

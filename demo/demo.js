@@ -14,7 +14,7 @@ enLogger.setLevel(EnapsoLogger.ALL);
 
 const GRAPHDB_BASE_URL = encfg.getConfig(
         'enapsoDefaultGraphDB.baseUrl',
-        'http://localhost:7200'
+        'http://localhost:3030'
     ),
     GRAPHDB_REPOSITORY = encfg.getConfig(
         'enapsoDefaultGraphDB.repository',
@@ -35,7 +35,7 @@ const GRAPHDB_BASE_URL = encfg.getConfig(
     ),
     GRAPHDB_API_TYPE = 'RDF4J',
     GRAPHDB_VERSION = 10.2,
-    triplestore = 'graphdb';
+    triplestore = 'fuseki';
 // triplestore = 'graphdb';
 
 // // the default prefixes for all SPARQL queries
@@ -279,9 +279,8 @@ const EnapsoGraphDBAdminDemo = {
             // clear context (named graph)
             // CAUTION! This operation empties the named graph
             // of the repository and cannot be undone!
-            let resp = await this.graphDBEndpoint.clearContext(
-                GRAPHDB_CONTEXT_TEST
-            );
+            let resp =
+                await this.graphDBEndpoint.clearContext(GRAPHDB_CONTEXT_TEST);
             enLogger.info('\nClearContext :\n' + JSON.stringify(resp, null, 2));
             return;
         } catch (err) {
@@ -308,8 +307,8 @@ const EnapsoGraphDBAdminDemo = {
         // upload a file
         try {
             let resp = await this.graphDBEndpoint.uploadFromFile({
-                filename: './ontologies/Test.ttl',
-                format: 'text/turtle'
+                filename: 'ontologies/dotnetpro_demo_ontology_2.owl',
+                format: 'application/rdf+xml'
             });
             enLogger.info(
                 '\nUploadFromFile:\n' + JSON.stringify(resp, null, 2)
@@ -710,7 +709,7 @@ const EnapsoGraphDBAdminDemo = {
 
     async demo() {
         this.graphDBEndpoint = await this.createEndpoint();
-        this.authentication = await this.login();
+        // this.authentication = await this.login();
         // // verify authentication
         // if (!this.authentication.success) {
         //     enLogger.info(
@@ -765,7 +764,7 @@ const EnapsoGraphDBAdminDemo = {
         // this.demoGetContexts();
         // this.demoGetSavedQueries();
         // this.demoImportServerFile();
-        // this.demoUploadFromFile();
+        this.demoUploadFromFile();
         // this.demoDownloadToFile();
         // this.demoDownloadToText();
         // this.demoShacl();

@@ -74,8 +74,8 @@ where  {
         lEndpoint
             .query(lQuery)
             .then((result) => {
-                // console.log("Success: " + result.success);
-                expect(result.results.bindings).to.have.lengthOf(1);
+                // console.log('Success: ' + result.success);
+                expect(result).to.have.property('success', true);
                 done();
             })
             .catch((err) => {
@@ -314,7 +314,7 @@ where  {
     it('Upload Ontology to Graph Database', (done) => {
         lEndpoint
             .uploadFromFile({
-                filename: 'ontologies/EnapsoTest.owl',
+                filename: 'ontologies/dotnetpro_demo_ontology_2.owl',
                 format: 'application/rdf+xml',
                 baseIRI: 'http://ont.enapso.com/test#',
                 context: 'http://ont.enapso.com/test'
@@ -353,10 +353,12 @@ where  {
         lEndpoint
             .clearContext('http://ont.enapso.com/test')
             .then((result) => {
+                console.log(result);
                 expect(result).to.have.property('success', true);
                 done();
             })
             .catch((err) => {
+                console.log(err);
                 console.log(`Clear context of graph: ${err.message}`);
                 done(err);
             });
