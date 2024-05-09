@@ -1,6 +1,6 @@
 {
     "name": "@innotrade/enapso-graphdb-admin",
-    "version": "1.5.5",
+    "version": "1.5.6",
     "description": "ENAPSO Graph Database Admin Tools for Node.js",
     "main": "index.js",
     "scripts": {
