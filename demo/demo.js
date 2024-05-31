@@ -14,7 +14,7 @@ enLogger.setLevel(EnapsoLogger.ALL);
 
 const GRAPHDB_BASE_URL = encfg.getConfig(
         'enapsoDefaultGraphDB.baseUrl',
-        'http://localhost:3030'
+        'http://localhost:7200'
     ),
     GRAPHDB_REPOSITORY = encfg.getConfig(
         'enapsoDefaultGraphDB.repository',
@@ -35,7 +35,7 @@ const GRAPHDB_BASE_URL = encfg.getConfig(
     ),
     GRAPHDB_API_TYPE = 'RDF4J',
     GRAPHDB_VERSION = 10.2,
-    triplestore = 'fuseki';
+    triplestore = 'graphdb';
 // triplestore = 'graphdb';
 
 // // the default prefixes for all SPARQL queries
@@ -362,10 +362,9 @@ const EnapsoGraphDBAdminDemo = {
             let lFormat = EnapsoGraphDBClient.FORMAT_TURTLE;
             let resp = await this.graphDBEndpoint.downloadToFile({
                 format: lFormat.type,
+                context:["http://ont.enapso.com/enapso-sparql-templates"],
                 filename:
-                    '../ontologies/' +
-                    this.graphDBEndpoint.getRepository() +
-                    lFormat.extension
+                    'ontologies'
             });
             enLogger.info(
                 '\nDownload (file):\n' + JSON.stringify(resp, null, 2)
@@ -764,8 +763,8 @@ const EnapsoGraphDBAdminDemo = {
         // this.demoGetContexts();
         // this.demoGetSavedQueries();
         // this.demoImportServerFile();
-        this.demoUploadFromFile();
-        // this.demoDownloadToFile();
+        // this.demoUploadFromFile();
+        this.demoDownloadToFile();
         // this.demoDownloadToText();
         // this.demoShacl();
         // await this.demoDropShaclGraph();
@@ -785,7 +784,7 @@ const EnapsoGraphDBAdminDemo = {
 			await this.demoQuery();
 			*/
         // await this.demoGetResources();
-        await this.demoPerformGarbageCollection();
+        // await this.demoPerformGarbageCollection();
         // await this.demoGetResources();
         // await this.demoCreateRepository();
         // await this.demoDeleteRepository();

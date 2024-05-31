@@ -1,10 +1,9 @@
-PREFIX :     <http://ont.enapso.com/dotnetpro#>
-PREFIX dnp:  <http://ont.enapso.com/dotnetpro#>
-PREFIX owl:  <http://www.w3.org/2002/07/owl#>
-PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-PREFIX xml:  <http://www.w3.org/XML/1998/namespace>
-PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#>
+@prefix :     <http://ont.enapso.com/dotnetpro#> .
+@prefix dnp:  <http://ont.enapso.com/dotnetpro#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
 
 <http://ont.enapso.com/test> {
     <http://ont.enapso.com/dotnetpro>
@@ -34,9 +33,6 @@ PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#>
                                owl:qualifiedCardinality  "1"^^xsd:nonNegativeInteger
                              ] .
     
-    :hasCustomer  rdf:type  owl:ObjectProperty;
-            rdfs:label  "Customer"@en , "Kunde"@de .
-    
     :hasDeliveryAddress
             rdf:type            owl:ObjectProperty;
             rdfs:label          "Delivery Address"@en , "Lieferanschrift"@de;
@@ -62,15 +58,6 @@ PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#>
     
     :Description  rdf:type  owl:DatatypeProperty;
             rdfs:label  "Beschreibung"@de , "Description"@en .
-    
-    :LongDescription  rdf:type  owl:DatatypeProperty;
-            rdfs:label          "Langbeschreibung"@de , "Long Description"@en;
-            rdfs:subPropertyOf  :Description .
-    
-    :ShortDescription
-            rdf:type            owl:DatatypeProperty;
-            rdfs:label          "Kurzbeschreibung"@de , "Short Description"@en;
-            rdfs:subPropertyOf  :Description .
     
     :SupplierId  rdf:type       owl:DatatypeProperty;
             rdfs:label          "Lieferanten-Nr."@de , "Supplier Id"@en;
@@ -195,7 +182,7 @@ PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#>
             rdfs:subClassOf  :Role .
     
     :Role   rdf:type      owl:Class;
-            rdfs:comment  "Die Verantwortlichkeit(en) oder Tätigkeit(en) einer Person im Unternehmen."@de , "The responsibilities or activities of a person in a company."@en;
+            rdfs:comment  "The responsibilities or activities of a person in a company."@en , "Die Verantwortlichkeit(en) oder Tätigkeit(en) einer Person im Unternehmen."@de;
             rdfs:label    "Role"@en , "Rolle"@de .
     
     :BusinessRelation
@@ -491,6 +478,18 @@ PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#>
             :salesPrice     "499.0"^^xsd:float;
             :vatRate        "19.0"^^xsd:float;
             :weight         "2.5"^^xsd:float .
+    
+    :hasCustomer  rdf:type  owl:ObjectProperty;
+            rdfs:label  "Customer"@en , "Kunde"@de .
+    
+    :LongDescription  rdf:type  owl:DatatypeProperty;
+            rdfs:label          "Langbeschreibung"@de , "Long Description"@en;
+            rdfs:subPropertyOf  :Description .
+    
+    :ShortDescription
+            rdf:type            owl:DatatypeProperty;
+            rdfs:label          "Kurzbeschreibung"@de , "Short Description"@en;
+            rdfs:subPropertyOf  :Description .
     
     [ rdf:type            owl:Class;
       rdfs:subClassOf     :ImmaterialProduct;
