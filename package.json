@@ -1,6 +1,6 @@
 {
     "name": "@innotrade/enapso-graphdb-admin",
-    "version": "1.5.10",
+    "version": "1.5.11",
     "description": "ENAPSO Graph Database Admin Tools for Node.js",
     "main": "index.js",
     "scripts": {
@@ -36,7 +36,7 @@
     "dependencies": {
         "@innotrade/enapso-config": "^1.3.3",
         "@innotrade/enapso-graphdb-admin": "file:",
-        "@innotrade/enapso-graphdb-client": "^1.9.4",
+        "@innotrade/enapso-graphdb-client": "^1.9.7",
         "@innotrade/enapso-logger": "^1.1.0",
         "archiver": "^7.0.1",
         "axios": "1.1.3",
