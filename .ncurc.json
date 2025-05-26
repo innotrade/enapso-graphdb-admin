@@ -1,7 +1,3 @@
 {
-    "reject": [
-        "axios",
-        "chai",
-        "mocha"
-    ]
+    "reject": [ ]
 }

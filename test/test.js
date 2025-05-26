@@ -4,10 +4,6 @@
 // (C) Copyright 2021-2022 Innotrade GmbH, Herzogenrath, NRW, Germany
 // Author: Alexander Schulze and Muhammad Yasir
 require('@innotrade/enapso-config');
-const { use } = require('chai');
-const chai = require('chai');
-
-const { expect } = chai;
 const { EnapsoGraphDBClient } = requireEx('@innotrade/enapso-graphdb-client');
 /* eslint-disable no-unused-vars */
 // this is required to add the admin features for the client
@@ -21,6 +17,13 @@ const password = process.argv[11].replace(/'/g, '');
 const version = testConfig.version;
 describe('ENAPSO Graph Database Admin Automated Test Suite', () => {
     // this.timeout(60000);
+    let chai, expect;
+    
+    // Setup - load chai using dynamic import before tests run
+    before(async function() {
+        chai = await import('chai');
+        expect = chai.expect;
+    });
 
     // instantiate a new Graph Database endpoint
     const lEndpoint = new EnapsoGraphDBClient.Endpoint({
@@ -353,7 +356,6 @@ where  {
         lEndpoint
             .clearContext('http://ont.enapso.com/test')
             .then((result) => {
-                console.log(result);
                 expect(result).to.have.property('success', true);
                 done();
             })
