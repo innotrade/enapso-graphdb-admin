@@ -10,10 +10,20 @@ const { EnapsoGraphDBClient } = requireEx('@innotrade/enapso-graphdb-client');
 const { EnapsoGraphDBAdmin } = require('../index');
 const testConfig = require('./config');
 
-const baseURL = process.argv[5].replace(/'/g, '');
-const triplestore = process.argv[7].replace(/'/g, '');
-const username = process.argv[9].replace(/'/g, '');
-const password = process.argv[11].replace(/'/g, '');
+// Read a named CLI flag (e.g. --baseURL) from the arguments mocha forwards.
+// Name-based lookup keeps the values correct regardless of flag order and lets
+// stores omit flags they don't need (QLever has no username/password).
+const getArg = (name) => {
+    const idx = process.argv.indexOf(`--${name}`);
+    return idx !== -1 && process.argv[idx + 1]
+        ? process.argv[idx + 1].replace(/'/g, '')
+        : undefined;
+};
+const baseURL = getArg('baseURL');
+const triplestore = getArg('triplestore');
+const username = getArg('username');
+const password = getArg('password');
+const accessToken = getArg('accessToken');
 const version = testConfig.version;
 describe('ENAPSO Graph Database Admin Automated Test Suite', () => {
     // this.timeout(60000);
@@ -34,8 +44,15 @@ describe('ENAPSO Graph Database Admin Automated Test Suite', () => {
         triplestore
     });
 
+    // QLever authenticates privileged operations (INSERT DATA / CLEAR) with an
+    // access token sent as an Authorization Bearer header. Set it up front so it
+    // is applied to every request the test suite makes.
+    if (triplestore == 'qlever' && accessToken) {
+        lEndpoint.setAccessToken(accessToken);
+    }
+
     it('Authenticate against Graph Database instance', (done) => {
-        if (triplestore != 'fuseki') {
+        if (triplestore != 'fuseki' && triplestore != 'qlever') {
             lEndpoint
                 .login(username, password)
                 .then((result) => {
@@ -88,24 +105,29 @@ where  {
     });
 
     it('Create new repository in Graphdb', (done) => {
-        lEndpoint
-            .createRepository({
-                id: testConfig.newRepository,
-                title: 'enapso Automated Test Repository',
-                location: ''
-            })
-            .then((result) => {
-                expect(result).to.have.property('success', true);
-                done();
-            })
-            .catch((err) => {
-                console.log(`Create new repository: ${err.message}`);
-                done(err);
-            });
+        // QLever has no repository management API (index is built offline)
+        if (triplestore != 'qlever') {
+            lEndpoint
+                .createRepository({
+                    id: testConfig.newRepository,
+                    title: 'enapso Automated Test Repository',
+                    location: ''
+                })
+                .then((result) => {
+                    expect(result).to.have.property('success', true);
+                    done();
+                })
+                .catch((err) => {
+                    console.log(`Create new repository: ${err.message}`);
+                    done(err);
+                });
+        } else {
+            done();
+        }
     });
 
     it('Create test user in Graph Database instance', (done) => {
-        if (triplestore != 'fuseki') {
+        if (triplestore != 'fuseki' && triplestore != 'qlever') {
             let role;
             if (triplestore == 'stardog') {
                 role = testConfig.stardogUserAuthorities;
@@ -132,7 +154,7 @@ where  {
     });
 
     it('Find test users in Graph Database instance', (done) => {
-        if (triplestore != 'fuseki') {
+        if (triplestore != 'fuseki' && triplestore != 'qlever') {
             lEndpoint
                 .getUsers({})
                 .then((result) => {
@@ -208,7 +230,7 @@ where  {
     });
 
     it('Delete test user from Graph Database instance', (done) => {
-        if (triplestore != 'fuseki') {
+        if (triplestore != 'fuseki' && triplestore != 'qlever') {
             lEndpoint
                 .deleteUser({
                     user: testConfig.newUsername // username which you want to delete
@@ -227,16 +249,20 @@ where  {
     });
 
     it('Find Newly created repository in Graph Database', (done) => {
-        lEndpoint
-            .getRepositories({})
-            .then((result) => {
-                expect(result).to.have.property('success', true);
-                done();
-            })
-            .catch((err) => {
-                console.log(`Find repo: ${err.message}`);
-                done(err);
-            });
+        if (triplestore != 'qlever') {
+            lEndpoint
+                .getRepositories({})
+                .then((result) => {
+                    expect(result).to.have.property('success', true);
+                    done();
+                })
+                .catch((err) => {
+                    console.log(`Find repo: ${err.message}`);
+                    done(err);
+                });
+        } else {
+            done();
+        }
     });
 
     it('Get contexts (graphs) of the test repository of the Graph Database instance', (done) => {
@@ -253,7 +279,11 @@ where  {
     });
 
     it('Get Resource of the test repository of the Graph Database instance', (done) => {
-        if (triplestore != 'fuseki' && triplestore != 'stardog') {
+        if (
+            triplestore != 'fuseki' &&
+            triplestore != 'stardog' &&
+            triplestore != 'qlever'
+        ) {
             lEndpoint
                 .getResources()
                 .then((result) => {
@@ -270,18 +300,22 @@ where  {
     });
 
     it('Delete newly created repository in Graphdb', (done) => {
-        lEndpoint
-            .deleteRepository({
-                id: testConfig.newRepository
-            })
-            .then((result) => {
-                expect(result).to.have.property('success', true);
-                done();
-            })
-            .catch((err) => {
-                console.log(`Delete repo: ${err.message}`);
-                done();
-            });
+        if (triplestore != 'qlever') {
+            lEndpoint
+                .deleteRepository({
+                    id: testConfig.newRepository
+                })
+                .then((result) => {
+                    expect(result).to.have.property('success', true);
+                    done();
+                })
+                .catch((err) => {
+                    console.log(`Delete repo: ${err.message}`);
+                    done();
+                });
+        } else {
+            done();
+        }
     });
 
     it('Clear Repository', (done) => {
@@ -298,7 +332,11 @@ where  {
     });
 
     it('Drop SHACL from Graph Database', (done) => {
-        if (triplestore != 'fuseki' && triplestore != 'stardog') {
+        if (
+            triplestore != 'fuseki' &&
+            triplestore != 'stardog' &&
+            triplestore != 'qlever'
+        ) {
             lEndpoint
                 .dropShaclGraph()
                 .then((result) => {
@@ -315,41 +353,99 @@ where  {
     });
 
     it('Upload Ontology to Graph Database', (done) => {
-        lEndpoint
-            .uploadFromFile({
-                filename: 'ontologies/dotnetpro_demo_ontology_2.owl',
-                format: 'application/rdf+xml',
-                baseIRI: 'http://ont.enapso.com/test#',
-                context: 'http://ont.enapso.com/test'
-            })
-            .then((result) => {
-                expect(result).to.have.property('success', true);
-                done();
-            })
-            .catch((err) => {
-                console.log(`Upload Ontology: ${err.message}`);
-                done(err);
-            });
+        // RDF/XML cannot be inlined into a QLever INSERT DATA statement, so this
+        // case runs for the REST-based stores; QLever is covered separately below.
+        if (triplestore != 'qlever') {
+            lEndpoint
+                .uploadFromFile({
+                    filename: 'ontologies/dotnetpro_demo_ontology_2.owl',
+                    format: 'application/rdf+xml',
+                    baseIRI: 'http://ont.enapso.com/test#',
+                    context: 'http://ont.enapso.com/test'
+                })
+                .then((result) => {
+                    expect(result).to.have.property('success', true);
+                    done();
+                })
+                .catch((err) => {
+                    console.log(`Upload Ontology: ${err.message}`);
+                    done(err);
+                });
+        } else {
+            done();
+        }
+    });
+
+    it('Upload N-Triples data to QLever via INSERT DATA', (done) => {
+        if (triplestore == 'qlever') {
+            const lData =
+                '<http://ont.enapso.com/test#TestClass> ' +
+                '<http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ' +
+                '<http://www.w3.org/2002/07/owl#Class> .';
+            lEndpoint
+                .uploadFromData({
+                    data: lData,
+                    format: 'text/plain',
+                    context: 'http://ont.enapso.com/test'
+                })
+                .then((result) => {
+                    expect(result).to.have.property('success', true);
+                    done();
+                })
+                .catch((err) => {
+                    console.log(`Upload N-Triples to QLever: ${err.message}`);
+                    done(err);
+                });
+        } else {
+            done();
+        }
+    });
+
+    it('Reject unsupported format for QLever with a 415 response', (done) => {
+        if (triplestore == 'qlever') {
+            lEndpoint
+                .uploadFromData({
+                    data: '<a> <b> <c> .',
+                    format: 'application/rdf+xml',
+                    context: 'http://ont.enapso.com/test'
+                })
+                .then((result) => {
+                    expect(result).to.have.property('success', false);
+                    expect(result).to.have.property('status', 415);
+                    done();
+                })
+                .catch((err) => {
+                    console.log(`QLever format guard: ${err.message}`);
+                    done(err);
+                });
+        } else {
+            done();
+        }
     });
 
     it('Download Ontology from Graph Database', (done) => {
-        const lFormat = EnapsoGraphDBClient.FORMAT_TURTLE;
-        lEndpoint
-            .downloadToFile({
-                format: lFormat.type,
-                filename: `ontologies/${lEndpoint.getRepository()}${
-                    lFormat.extension
-                }`
-            })
-            .then((result) => {
-                // console.log(result);
-                expect(result).to.have.property('success', true);
-                done();
-            })
-            .catch((err) => {
-                console.log(`Download Ontology: ${err.message}`);
-                done(err);
-            });
+        // QLever has no export/download REST endpoint (use a CONSTRUCT query instead)
+        if (triplestore != 'qlever') {
+            const lFormat = EnapsoGraphDBClient.FORMAT_TURTLE;
+            lEndpoint
+                .downloadToFile({
+                    format: lFormat.type,
+                    filename: `ontologies/${lEndpoint.getRepository()}${
+                        lFormat.extension
+                    }`
+                })
+                .then((result) => {
+                    // console.log(result);
+                    expect(result).to.have.property('success', true);
+                    done();
+                })
+                .catch((err) => {
+                    console.log(`Download Ontology: ${err.message}`);
+                    done(err);
+                });
+        } else {
+            done();
+        }
     });
 
     it('Clear context of graph', (done) => {
@@ -367,7 +463,7 @@ where  {
     });
 
     it('Get running queries from Graph Database', (done) => {
-        if (triplestore != 'fuseki') {
+        if (triplestore != 'fuseki' && triplestore != 'qlever') {
             lEndpoint
                 .getQuery({})
                 .then((result) => {
@@ -385,7 +481,11 @@ where  {
     });
 
     it('Get Location requires repository manager role', (done) => {
-        if (triplestore != 'fuseki' && triplestore != 'stardog') {
+        if (
+            triplestore != 'fuseki' &&
+            triplestore != 'stardog' &&
+            triplestore != 'qlever'
+        ) {
             lEndpoint
                 .getLocations()
                 .then((result) => {
@@ -406,6 +506,7 @@ where  {
         if (
             triplestore != 'fuseki' &&
             triplestore != 'stardog' &&
+            triplestore != 'qlever' &&
             version < 10.2
         ) {
             lEndpoint
@@ -424,7 +525,11 @@ where  {
     });
 
     it('Get Saved Query from Graphdb', (done) => {
-        if (triplestore != 'fuseki' && triplestore != 'stardog') {
+        if (
+            triplestore != 'fuseki' &&
+            triplestore != 'stardog' &&
+            triplestore != 'qlever'
+        ) {
             lEndpoint
                 .getSavedQueries()
                 .then((result) => {

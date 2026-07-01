@@ -1,13 +1,14 @@
 {
     "name": "@innotrade/enapso-graphdb-admin",
-    "version": "1.6.0",
+    "version": "1.7.0",
     "description": "ENAPSO Graph Database Admin Tools for Node.js",
     "main": "index.js",
     "scripts": {
         "test": "mocha --timeout 100000 --baseURL 'http://localhost:7200' --triplestore 'graphdb' --username 'admin' --password 'root'",
         "test:fuseki": "mocha --timeout 100000 --baseURL 'http://localhost:3030' --triplestore 'fuseki' --username 'admin' --password 'admin'",
         "test:stardog": "mocha --timeout 100000 --baseURL 'http://localhost:5820' --triplestore 'stardog' --username 'admin' --password 'admin'",
-        "test:graphdb": "mocha --timeout 100000 --baseURL 'http://localhost:7200' --triplestore 'graphdb' --username 'admin' --password 'root'"
+        "test:graphdb": "mocha --timeout 100000 --baseURL 'http://localhost:7200' --triplestore 'graphdb' --username 'admin' --password 'root'",
+        "test:qlever": "mocha --timeout 100000 --baseURL 'http://localhost:8888' --triplestore 'qlever' --accessToken 'j7ULHuWV3773'"
     },
     "repository": {
         "type": "git",

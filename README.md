@@ -25,11 +25,12 @@
 
 ENAPSO Graph Database Admin client to easily perform administrative and monitoring operations against your RDF stores, your OWL ontologies, or knowledge graphs in nodes.js applications. This client supports an easy import of existing RDF stores and ontologies to Graph Database by uploading via file, strings, or URLs as well as an export in numerous formats and also context management. You can monitor the CPU load and memory usage of Graph Database and run the garbage collector on demand to optimally trigger huge batch operations also provide user management, the creation, and listing of new repositories as well as location and cluster management of graph database.
 
-As of now, we support the connection with three major graph databases
+As of now, we support the connection with four major graph databases
 
 -   [Ontotext GraphDB](https://www.ontotext.com/products/graphdb/)
 -   [Apache Jena fuseki](https://jena.apache.org/)
 -   [Stardog](https://www.stardog.com/)
+-   [QLever](https://github.com/ad-freiburg/qlever)
 
 There will be more graph databases added to this list in the future.
 
@@ -74,40 +75,66 @@ let graphDBEndpoint = new EnapsoGraphDBClient.Endpoint({
 | baseURL(required)     | String           | Pass the URL in which graph database is running.                                                                                                        |                                    |
 | repository(required)  | String           | Pass the name of the repository or database of the graph databases with which you want to create a connection.                                          |                                    |
 | prefixes(required)    | Array of objects | Pass the prefix and its IRI as an object which will be used in the SPARQL query to perform crud operations.                                             |                                    |
-| triplestore(optional) | String           | Pass the name of the graph database with which you want to create a connection by default it creates a connection with Ontotext GraphDB.                | ('graphdb' , 'stardog' , 'fuseki') |
+| triplestore(optional) | String           | Pass the name of the graph database with which you want to create a connection by default it creates a connection with Ontotext GraphDB.                | ('graphdb' , 'stardog' , 'fuseki' , 'qlever') |
 | transform(optional)   | String           | Pass the type in which you want to show the result of the SPARQL query by default it shows the result in JSON format.                                   | ('toJSON', 'toCSV' , 'toTSV')      |
 | version(optional)     | Number           | Pass the version of ontotext graphDB to make the tool compatible with an older version by default it works with the latest version of ontotext graphDB. |                                    |
 | apiType(optional)     | String           | Pass the type of API which will use for importing ontology in ontotext graphDB by default it uses ontotext graphDB workbench APIs.                      | ('workbench', 'RDF4J' )            |
 
+## Create a connection with QLever
+
+QLever does not expose dedicated import/upload/clear REST endpoints. The admin layer therefore wraps the incoming data into SPARQL 1.1 Update statements (`INSERT DATA` / `CLEAR`) and runs them through the client. Because SPARQL Update is a privileged operation in QLever, the server access token has to be supplied via `setAccessToken` before performing any write (`Upload From File`, `Upload From Data`, `Clear Context`, `Clear Repository`).
+
+Only data that can be inlined into an `INSERT DATA` block is accepted for QLever, i.e. Turtle (`text/turtle`), N-Triples (`text/plain`) and N3 (`text/rdf+n3`). Any other format (RDF/XML, JSON-LD, TriG, N-Quads, TriX, binary RDF) is rejected with a `415` response.
+
+```javascript
+const { EnapsoGraphDBClient } = require('@innotrade/enapso-graphdb-client');
+const { EnapsoGraphDBAdmin } = require('@innotrade/enapso-graphdb-admin');
+
+let graphDBEndpoint = new EnapsoGraphDBClient.Endpoint({
+    baseURL: 'http://localhost:8888',
+    repository: 'Test',
+    prefixes: [
+        {
+            prefix: 'entest',
+            iri: 'http://ont.enapso.com/test#'
+        }
+    ],
+    triplestore: 'qlever'
+});
+
+// required for privileged operations such as INSERT DATA / CLEAR
+graphDBEndpoint.setAccessToken('your-qlever-access-token');
+```
+
 # 📋&nbsp;Features
 
-| Feature                                                   | Description                                                        | Ontotext GraphDB | Apache Jena Fuseki | Stardog |
-| --------------------------------------------------------- | ------------------------------------------------------------------ | ---------------- | ------------------ | ------- |
-| [Login](#login)                                           | Authenticate against the graph database                            | ✔                | ✘                  | ✔       |
-| [Query](#query)                                           | To retrieve the information from graph database using SPARQL query | ✔                | ✔                  | ✔       |
-| [Update](#update)                                         | To update the triples in the graph database.                       | ✔                | ✔                  | ✔       |
-| [Create Repository](#create-repository)                   | Create new repository/database in the graph database.              | ✔                | ✔                  | ✔       |
-| [Delete Repository](#delete-repository)                   | Delete existing repository/database from graph database.           | ✔                | ✔                  | ✔       |
-| [Clear Repository](#clear-repository)                     | Remove all triples from graph database repository/database.        | ✔                | ✔                  | ✔       |
-| [Get Repositories](#get-repositories)                     | Get list of all repsoitory from graph database.                    | ✔                | ✔                  | ✔       |
-| [Create User](#create-user)                               | Create new user and asign the roles in the graph database.         | ✔                | ✘                  | ✔       |
-| [Get Users](#get-users)                                   | Get list of users from graph database.                             | ✔                | ✘                  | ✔       |
-| [Get Resources](#get-resources)                           | Get list of resources from graph database.                         | ✔                | ✘                  | ✘       |
-| [Update User](#update-user)                               | Update existing user roles from graph database.                    | ✔                | ✘                  | ✘       |
-| [Assign Role](#assign-role)                               | Assign new roles to the existing user of the graph database.       | ✘                | ✘                  | ✔       |
-| [Remove Role](#remove-role)                               | Remove roles of the existing user of the graph database.           | ✘                | ✘                  | ✔       |
-| [Delete User](#delete-user)                               | Delete existing user of graph database.                            | ✔                | ✘                  | ✔       |
-| [Drop SHACL Graph](#drop-shacl-graph)                     | Drop SHACL graph from graph database.                              | ✔                | ✘                  | ✘       |
-| [Get Contexts](#get-contexts)                             | Get all context from graph database repository.                    | ✔                | ✔                  | ✔       |
-| [Upload From File](#upload-from-file)                     | Upload ontology from file in the graph database.                   | ✔                | ✔                  | ✔       |
-| [Upload From Data](#upload-from-data)                     | Upoad ontology from data in the graph database.                    | ✔                | ✘                  | ✔       |
-| [Download To File](#download-to-file)                     | Download ontology to file from graph database.                     | ✔                | ✔                  | ✔       |
-| [Download To Text](#download-to-text)                     | Download ontology to text from graph database.                     | ✔                | ✔                  | ✔       |
-| [Clear Context](#clear-context)                           | Clear specific named graph from graph database repository.         | ✔                | ✔                  | ✔       |
-| [Get Query](#get-query)                                   | Get query from graph database repository.                          | ✔                | ✘                  | ✔       |
-| [Get Locations](#get-locations)                           | Get locations from graph database repository.                      | ✔                | ✘                  | ✘       |
-| [Perform Garbage Collection](#perform-garbage-collection) | Perform garbage collection in the graph database repository.       | ✔                | ✘                  | ✘       |
-| [Get Saved Queries](#get-saved-queries)                   | Get saved queries from graph database.                             | ✔                | ✘                  | ✘       |
+| Feature                                                   | Description                                                        | Ontotext GraphDB | Apache Jena Fuseki | Stardog | QLever |
+| --------------------------------------------------------- | ------------------------------------------------------------------ | ---------------- | ------------------ | ------- | ------ |
+| [Login](#login)                                           | Authenticate against the graph database                            | ✔                | ✘                  | ✔       | ✘      |
+| [Query](#query)                                           | To retrieve the information from graph database using SPARQL query | ✔                | ✔                  | ✔       | ✔      |
+| [Update](#update)                                         | To update the triples in the graph database.                       | ✔                | ✔                  | ✔       | ✔      |
+| [Create Repository](#create-repository)                   | Create new repository/database in the graph database.              | ✔                | ✔                  | ✔       | ✘      |
+| [Delete Repository](#delete-repository)                   | Delete existing repository/database from graph database.           | ✔                | ✔                  | ✔       | ✘      |
+| [Clear Repository](#clear-repository)                     | Remove all triples from graph database repository/database.        | ✔                | ✔                  | ✔       | ✔      |
+| [Get Repositories](#get-repositories)                     | Get list of all repsoitory from graph database.                    | ✔                | ✔                  | ✔       | ✘      |
+| [Create User](#create-user)                               | Create new user and asign the roles in the graph database.         | ✔                | ✘                  | ✔       | ✘      |
+| [Get Users](#get-users)                                   | Get list of users from graph database.                             | ✔                | ✘                  | ✔       | ✘      |
+| [Get Resources](#get-resources)                           | Get list of resources from graph database.                         | ✔                | ✘                  | ✘       | ✘      |
+| [Update User](#update-user)                               | Update existing user roles from graph database.                    | ✔                | ✘                  | ✘       | ✘      |
+| [Assign Role](#assign-role)                               | Assign new roles to the existing user of the graph database.       | ✘                | ✘                  | ✔       | ✘      |
+| [Remove Role](#remove-role)                               | Remove roles of the existing user of the graph database.           | ✘                | ✘                  | ✔       | ✘      |
+| [Delete User](#delete-user)                               | Delete existing user of graph database.                            | ✔                | ✘                  | ✔       | ✘      |
+| [Drop SHACL Graph](#drop-shacl-graph)                     | Drop SHACL graph from graph database.                              | ✔                | ✘                  | ✘       | ✘      |
+| [Get Contexts](#get-contexts)                             | Get all context from graph database repository.                    | ✔                | ✔                  | ✔       | ✔      |
+| [Upload From File](#upload-from-file)                     | Upload ontology from file in the graph database.                   | ✔                | ✔                  | ✔       | ✔      |
+| [Upload From Data](#upload-from-data)                     | Upoad ontology from data in the graph database.                    | ✔                | ✘                  | ✔       | ✔      |
+| [Download To File](#download-to-file)                     | Download ontology to file from graph database.                     | ✔                | ✔                  | ✔       | ✘      |
+| [Download To Text](#download-to-text)                     | Download ontology to text from graph database.                     | ✔                | ✔                  | ✔       | ✘      |
+| [Clear Context](#clear-context)                           | Clear specific named graph from graph database repository.         | ✔                | ✔                  | ✔       | ✔      |
+| [Get Query](#get-query)                                   | Get query from graph database repository.                          | ✔                | ✘                  | ✔       | ✘      |
+| [Get Locations](#get-locations)                           | Get locations from graph database repository.                      | ✔                | ✘                  | ✘       | ✘      |
+| [Perform Garbage Collection](#perform-garbage-collection) | Perform garbage collection in the graph database repository.       | ✔                | ✘                  | ✘       | ✘      |
+| [Get Saved Queries](#get-saved-queries)                   | Get saved queries from graph database.                             | ✔                | ✘                  | ✘       | ✘      |
 
 <details open>
 <summary>
